@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>GREEN HONEY BADGER SYSTEM - School Details</title>
+
+<style>
+
+/* =========================================================
+   GREEN HONEY BADGER SYSTEM
+   FIRST SCHOOL REGISTRATION
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        linear-gradient(
+            135deg,
+            #064e3b,
+            #087f5b,
+            #10b981
+        );
+    color: #17251c;
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+    min-height: 100vh;
+    padding: 30px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.container {
+    width: 100%;
+    max-width: 1050px;
+    background: white;
+    border-radius: 18px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    background:
+        linear-gradient(
+            135deg,
+            #064e3b,
+            #087f5b
+        );
+    color: white;
+    padding: 28px 32px;
+    text-align: center;
+}
+
+.logo-symbol {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+}
+
+.header h2 {
+    margin: 8px 0 0;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.header p {
+    margin: 10px auto 0;
+    max-width: 700px;
+    font-size: 13px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress {
+    padding: 16px 30px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.progress span {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    padding: 30px;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.section-title h3 {
+    margin: 0;
+    color: #065f46;
+    font-size: 19px;
+}
+
+.section-title p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #334155;
+}
+
+.required {
+    color: #dc2626;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
+    background: white;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-group textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #087f5b;
+    box-shadow:
+        0 0 0 3px rgba(8,127,91,0.10);
+}
+
+/* =========================================================
+   LOGO SECTION
+========================================================= */
+
+.logo-area {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 25px;
+    align-items: center;
+}
+
+.logo-preview {
+    width: 160px;
+    height: 160px;
+    border: 2px dashed #94a3b8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f8fafc;
+    color: #64748b;
+    text-align: center;
+    font-size: 12px;
+}
+
+.logo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo-help {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 10px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 13px 22px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #087f5b;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #065f46;
+}
+
+.btn-secondary {
+    background: #64748b;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-light {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+/* =========================================================
+   IMPORTANT NOTICE
+========================================================= */
+
+.notice {
+    background: #ecfdf5;
+    border-left: 5px solid #087f5b;
+    padding: 15px;
+    border-radius: 7px;
+    margin-bottom: 25px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #14532d;
+}
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: min(420px, calc(100% - 40px));
+    z-index: 9999;
+}
+
+.message {
+    display: none;
+    padding: 15px 18px;
+    background: white;
+    border-radius: 9px;
+    box-shadow:
+        0 7px 25px rgba(0,0,0,0.20);
+    font-size: 13px;
+    font-weight: bold;
+    border-left: 5px solid #087f5b;
+}
+
+.message.show {
+    display: block;
+}
+
+.message.success {
+    border-left-color: #16a34a;
+    color: #166534;
+}
+
+.message.error {
+    border-left-color: #dc2626;
+    color: #991b1b;
+}
+
+.message.warning {
+    border-left-color: #d97706;
+    color: #92400e;
+}
+
+.message.info {
+    border-left-color: #2563eb;
+    color: #1e40af;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .page {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 23px 18px;
+    }
+
+    .header h1 {
+        font-size: 21px;
+    }
+
+    .header h2 {
+        font-size: 16px;
+    }
+
+    .content {
+        padding: 20px 16px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .logo-area {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .logo-help {
+        text-align: center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =======================================================
+     POPUP MESSAGE
+======================================================= -->
+
+<div class="message-container">
+
+    <div id="messageBox"
+         class="message">
+    </div>
+
+</div>
+
+
+<div class="page">
+
+<div class="container">
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+    <div class="logo-symbol">
+        🦡
+    </div>
+
+    <h1>
+        GREEN HONEY BADGER SYSTEM
+    </h1>
+
+    <h2>
+        School Registration & Setup
+    </h2>
+
+    <p>
+        Welcome to GREEN HONEY BADGER SYSTEM.
+        Before using the main system, register the school
+        information that will be automatically used throughout
+        the system.
+    </p>
+
+</header>
+
+
+<!-- =======================================================
+     PROGRESS
+======================================================= -->
+
+<div class="progress">
+
+    <span>
+        STEP 1 — SCHOOL REGISTRATION
+    </span>
+
+</div>
+
+
+<!-- =======================================================
+     CONTENT
+======================================================= -->
+
+<div class="content">
+
+
+<!-- =======================================================
+     NOTICE
+======================================================= -->
+
+<div class="notice">
+
+    <strong>Administrator:</strong>
+
+    Please enter the official school information carefully.
+    This information will be stored centrally and automatically
+    displayed on the Students, Teachers, Examination, Fees,
+    Reports, Timetable and other working pages.
+
+</div>
+
+
+<form id="schoolDetailsForm">
+
+
+<!-- =======================================================
+     BASIC SCHOOL INFORMATION
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h3>
+            1. School Information
+        </h3>
+
+        <p>
+            Enter the official identity of the school.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group full">
+
+            <label for="schoolName">
+
+                School Name
+                <span class="required">*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="schoolName"
+                placeholder="Enter official school name"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="schoolCode">
+
+                School Code
+                <span class="required">*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="schoolCode"
+                placeholder="Enter school code"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="knecCode">
+
+                KNEC Code
+
+            </label>
+
+            <input
+                type="text"
+                id="knecCode"
+                placeholder="Enter KNEC code"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="schoolType">
+
+                School Type
+                <span class="required">*</span>
+
+            </label>
+
+            <select
+                id="schoolType"
+                required
+            >
+
+                <option value="">
+                    Select School Type
+                </option>
+
+                <option value="Public">
+                    Public
+                </option>
+
+                <option value="Private">
+                    Private
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="genderType">
+
+                School Category
+
+            </label>
+
+            <select id="genderType">
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="Mixed">
+                    Mixed
+                </option>
+
+                <option value="Boys">
+                    Boys
+                </option>
+
+                <option value="Girls">
+                    Girls
+                </option>
+
+            </select>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     LOCATION
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h3>
+            2. School Location
+        </h3>
+
+        <p>
+            Enter the school's official location.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label for="county">
+
+                County
+                <span class="required">*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="county"
+                placeholder="e.g. Turkana"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="subCounty">
+
+                Sub-County
+                <span class="required">*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="subCounty"
+                placeholder="e.g. Loima"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="zone">
+
+                Zone
+
+            </label>
+
+            <input
+                type="text"
+                id="zone"
+                placeholder="School zone"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="ward">
+
+                Ward
+
+            </label>
+
+            <input
+                type="text"
+                id="ward"
+                placeholder="Ward"
+            >
+
+        </div>
+
+
+        <div class="form-group full">
+
+            <label for="schoolAddress">
+
+                Physical / Postal Address
+
+            </label>
+
+            <textarea
+                id="schoolAddress"
+                placeholder="Enter school address"
+            ></textarea>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CONTACT INFORMATION
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h3>
+            3. School Contact Information
+        </h3>
+
+        <p>
+            Contact details that can appear on official reports.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label for="schoolPhone">
+
+                School Phone
+
+            </label>
+
+            <input
+                type="tel"
+                id="schoolPhone"
+                placeholder="e.g. 0712345678"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="schoolEmail">
+
+                School Email
+
+            </label>
+
+            <input
+                type="email"
+                id="schoolEmail"
+                placeholder="school@example.com"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="website">
+
+                School Website
+
+            </label>
+
+            <input
+                type="text"
+                id="website"
+                placeholder="Optional"
+            >
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCHOOL ADMINISTRATION
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h3>
+            4. School Administration
+        </h3>
+
+        <p>
+            Information for the school's administrative identity.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label for="headteacherName">
+
+                Headteacher / Principal
+
+            </label>
+
+            <input
+                type="text"
+                id="headteacherName"
+                placeholder="Full name"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="headteacherTitle">
+
+                Administrative Title
+
+            </label>
+
+            <select id="headteacherTitle">
+
+                <option value="Headteacher">
+                    Headteacher
+                </option>
+
+                <option value="Principal">
+                    Principal
+                </option>
+
+                <option value="Director">
+                    Director
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="administratorPhone">
+
+                Administrator Phone
+
+            </label>
+
+            <input
+                type="tel"
+                id="administratorPhone"
+                placeholder="Phone number"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="administratorEmail">
+
+                Administrator Email
+
+            </label>
+
+            <input
+                type="email"
+                id="administratorEmail"
+                placeholder="Email address"
+            >
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCHOOL IDENTITY
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h3>
+            5. School Identity
+        </h3>
+
+        <p>
+            These details can appear on reports, registers and
+            official printed documents.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label for="schoolMotto">
+
+                School Motto
+
+            </label>
+
+            <input
+                type="text"
+                id="schoolMotto"
+                placeholder="Enter school motto"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="schoolVision">
+
+                School Vision
+
+            </label>
+
+            <input
+                type="text"
+                id="schoolVision"
+                placeholder="Optional"
+            >
+
+        </div>
+
+
+        <div class="form-group full">
+
+            <label for="schoolMission">
+
+                School Mission
+
+            </label>
+
+            <textarea
+                id="schoolMission"
+                placeholder="Optional school mission"
+            ></textarea>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCHOOL LOGO
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h3>
+            6. School Logo
+        </h3>
+
+        <p>
+            Upload the official school logo. It will be stored
+            with the central school information.
+        </p>
+
+    </div>
+
+
+    <div class="logo-area">
+
+
+        <div
+            class="logo-preview"
+            id="logoPreview">
+
+            No logo selected
+
+        </div>
+
+
+        <div>
+
+            <div class="form-group">
+
+                <label for="schoolLogo">
+
+                    School Logo
+
+                </label>
+
+                <input
+                    type="file"
+                    id="schoolLogo"
+                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                >
+
+            </div>
+
+
+            <p class="logo-help">
+
+                Recommended: PNG or JPG.
+                A square or rectangular school emblem works best.
+                The image is stored locally with the school
+                information and can later be displayed on
+                reports and printed documents.
+
+            </p>
+
+
+            <button
+                type="button"
+                class="btn btn-light"
+                id="removeLogoButton"
+                style="display:none;">
+
+                Remove Logo
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     BUTTONS
+======================================================= -->
+
+<div class="buttons">
+
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        ✓ REGISTER SCHOOL & CONTINUE
+
+    </button>
+
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="clearForm()">
+
+        Clear Form
+
+    </button>
+
+
+    <button
+        type="button"
+        class="btn btn-danger"
+        onclick="logoutAdministrator()">
+
+        Logout
+
+    </button>
+
+
+</div>
+
+
+</form>
+
+</div>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer class="footer">
+
+    GREEN HONEY BADGER SYSTEM
+
+    <br>
+
+    School Registration & Administration
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+/* =========================================================
+   GREEN HONEY BADGER SYSTEM
+   SCHOOL DETAILS
+========================================================= */
+
+const SCHOOL_DETAILS_KEY = "schoolDetails";
+
+let schoolLogoData = "";
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadExistingSchoolDetails();
+
+        setupLogoUpload();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD EXISTING SCHOOL DETAILS
+========================================================= */
+
+function loadExistingSchoolDetails() {
+
+    const saved =
+        localStorage.getItem(
+            SCHOOL_DETAILS_KEY
+        );
+
+    if (!saved) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const details =
+            JSON.parse(saved);
+
+        fillForm(details);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load school details:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FILL FORM
+========================================================= */
+
+function fillForm(details) {
+
+    setValue(
+        "schoolName",
+        details.schoolName
+    );
+
+    setValue(
+        "schoolCode",
+        details.schoolCode
+    );
+
+    setValue(
+        "knecCode",
+        details.knecCode
+    );
+
+    setValue(
+        "schoolType",
+        details.schoolType
+    );
+
+    setValue(
+        "genderType",
+        details.genderType
+    );
+
+    setValue(
+        "county",
+        details.county
+    );
+
+    setValue(
+        "subCounty",
+        details.subCounty
+    );
+
+    setValue(
+        "zone",
+        details.zone
+    );
+
+    setValue(
+        "ward",
+        details.ward
+    );
+
+    setValue(
+        "schoolAddress",
+        details.schoolAddress
+    );
+
+    setValue(
+        "schoolPhone",
+        details.schoolPhone
+    );
+
+    setValue(
+        "schoolEmail",
+        details.schoolEmail
+    );
+
+    setValue(
+        "website",
+        details.website
+    );
+
+    setValue(
+        "headteacherName",
+        details.headteacherName
+    );
+
+    setValue(
+        "headteacherTitle",
+        details.headteacherTitle ||
+        "Headteacher"
+    );
+
+    setValue(
+        "administratorPhone",
+        details.administratorPhone
+    );
+
+    setValue(
+        "administratorEmail",
+        details.administratorEmail
+    );
+
+    setValue(
+        "schoolMotto",
+        details.schoolMotto
+    );
+
+    setValue(
+        "schoolVision",
+        details.schoolVision
+    );
+
+    setValue(
+        "schoolMission",
+        details.schoolMission
+    );
+
+
+    if (details.logo) {
+
+        schoolLogoData =
+            details.logo;
+
+        showLogo(
+            details.logo
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SET VALUE
+========================================================= */
+
+function setValue(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+
+        element.value =
+            value || "";
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGO UPLOAD
+========================================================= */
+
+function setupLogoUpload() {
+
+    const input =
+        document.getElementById(
+            "schoolLogo"
+        );
+
+    const removeButton =
+        document.getElementById(
+            "removeLogoButton"
+        );
+
+
+    input.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                this.files[0];
+
+            if (!file) {
+
+                return;
+
+            }
+
+
+            if (
+                !file.type.startsWith(
+                    "image/"
+                )
+            ) {
+
+                showMessage(
+                    "Please select a valid image file.",
+                    "error"
+                );
+
+                this.value = "";
+
+                return;
+
+            }
+
+
+            /*
+             * Prevent extremely large images
+             * from filling localStorage.
+             */
+
+            if (
+                file.size >
+                2 * 1024 * 1024
+            ) {
+
+                showMessage(
+                    "Logo is too large. Please choose an image below 2 MB.",
+                    "warning"
+                );
+
+                this.value = "";
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (event) {
+
+                    schoolLogoData =
+                        event.target.result;
+
+                    showLogo(
+                        schoolLogoData
+                    );
+
+                    showMessage(
+                        "School logo selected successfully.",
+                        "success"
+                    );
+
+                };
+
+
+            reader.onerror =
+                function () {
+
+                    showMessage(
+                        "Unable to read the school logo.",
+                        "error"
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+    removeButton.addEventListener(
+        "click",
+        function () {
+
+            schoolLogoData = "";
+
+            input.value = "";
+
+            document.getElementById(
+                "logoPreview"
+            ).innerHTML =
+                "No logo selected";
+
+            removeButton.style.display =
+                "none";
+
+
+            showMessage(
+                "School logo removed.",
+                "info"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SHOW LOGO
+========================================================= */
+
+function showLogo(
+    logo
+) {
+
+    const preview =
+        document.getElementById(
+            "logoPreview"
+        );
+
+    const removeButton =
+        document.getElementById(
+            "removeLogoButton"
+        );
+
+
+    preview.innerHTML =
+        "";
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+    image.src =
+        logo;
+
+    image.alt =
+        "School Logo";
+
+    preview.appendChild(
+        image
+    );
+
+
+    removeButton.style.display =
+        "inline-block";
+
+}
+
+
+/* =========================================================
+   SAVE SCHOOL DETAILS
+========================================================= */
+
+document
+    .getElementById(
+        "schoolDetailsForm"
+    )
+    .addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+            saveSchoolDetails();
+
+        }
+    );
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveSchoolDetails() {
+
+    const schoolName =
+        getValue("schoolName");
+
+    const schoolCode =
+        getValue("schoolCode");
+
+    const schoolType =
+        getValue("schoolType");
+
+    const county =
+        getValue("county");
+
+    const subCounty =
+        getValue("subCounty");
+
+
+    /* REQUIRED CHECK */
+
+    if (
+        !schoolName ||
+        !schoolCode ||
+        !schoolType ||
+        !county ||
+        !subCounty
+    ) {
+
+        showMessage(
+            "Please complete all required school information.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    const existing =
+        getExistingDetails();
+
+
+    const schoolDetails = {
+
+        /*
+         * CORE IDENTITY
+         */
+
+        schoolName:
+            schoolName,
+
+        schoolCode:
+            schoolCode,
+
+        knecCode:
+            getValue("knecCode"),
+
+        schoolType:
+            schoolType,
+
+        genderType:
+            getValue("genderType"),
+
+
+        /*
+         * LOCATION
+         */
+
+        county:
+            county,
+
+        subCounty:
+            subCounty,
+
+        zone:
+            getValue("zone"),
+
+        ward:
+            getValue("ward"),
+
+        schoolAddress:
+            getValue("schoolAddress"),
+
+
+        /*
+         * CONTACT
+         */
+
+        schoolPhone:
+            getValue("schoolPhone"),
+
+        schoolEmail:
+            getValue("schoolEmail"),
+
+        website:
+            getValue("website"),
+
+
+        /*
+         * ADMINISTRATION
+         */
+
+        headteacherName:
+            getValue("headteacherName"),
+
+        headteacherTitle:
+            getValue("headteacherTitle"),
+
+        administratorPhone:
+            getValue("administratorPhone"),
+
+        administratorEmail:
+            getValue("administratorEmail"),
+
+
+        /*
+         * IDENTITY
+         */
+
+        schoolMotto:
+            getValue("schoolMotto"),
+
+        schoolVision:
+            getValue("schoolVision"),
+
+        schoolMission:
+            getValue("schoolMission"),
+
+
+        /*
+         * LOGO
+         */
+
+        logo:
+            schoolLogoData || existing.logo || "",
+
+
+        /*
+         * SYSTEM INFORMATION
+         */
+
+        registered:
+            true,
+
+        registeredAt:
+            existing.registeredAt ||
+            new Date().toISOString(),
+
+        updatedAt:
+            new Date().toISOString(),
+
+        version:
+            1
+
+    };
+
+
+    try {
+
+        localStorage.setItem(
+            SCHOOL_DETAILS_KEY,
+            JSON.stringify(
+                schoolDetails
+            )
+        );
+
+
+        showMessage(
+            "School registered successfully. Opening GREEN HONEY BADGER SYSTEM...",
+            "success"
+        );
+
+
+        /*
+         * Give the administrator a moment
+         * to see the confirmation.
+         */
+
+        setTimeout(
+            function () {
+
+                window.location.href =
+                    "dashboard.html";
+
+            },
+            1200
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to save school details:",
+            error
+        );
+
+
+        showMessage(
+            "School information could not be saved. The logo may be too large.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GET VALUE
+========================================================= */
+
+function getValue(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+
+        return "";
+
+    }
+
+    return element.value.trim();
+
+}
+
+
+/* =========================================================
+   EXISTING DETAILS
+========================================================= */
+
+function getExistingDetails() {
+
+    const saved =
+        localStorage.getItem(
+            SCHOOL_DETAILS_KEY
+        );
+
+    if (!saved) {
+
+        return {};
+
+    }
+
+
+    try {
+
+        return JSON.parse(saved);
+
+    }
+
+    catch (error) {
+
+        return {};
+
+    }
+
+}
+
+
+/* =========================================================
+   CLEAR FORM
+========================================================= */
+
+function clearForm() {
+
+    const confirmed =
+        confirm(
+            "Clear all school information entered in this form?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "schoolDetailsForm"
+        )
+        .reset();
+
+
+    schoolLogoData = "";
+
+
+    document.getElementById(
+        "logoPreview"
+    ).innerHTML =
+        "No logo selected";
+
+
+    document.getElementById(
+        "removeLogoButton"
+    ).style.display =
+        "none";
+
+
+    showMessage(
+        "School registration form cleared.",
+        "info"
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logoutAdministrator() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    if (
+        typeof window.logout ===
+        "function"
+    ) {
+
+        window.logout();
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "gbhSession"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+    message,
+    type = "info"
+) {
+
+    const box =
+        document.getElementById(
+            "messageBox"
+        );
+
+
+    box.textContent =
+        message;
+
+
+    box.className =
+        "message show " +
+        type;
+
+
+    clearTimeout(
+        window.schoolMessageTimer
+    );
+
+
+    window.schoolMessageTimer =
+        setTimeout(
+            function () {
+
+                box.className =
+                    "message";
+
+            },
+            4500
+        );
+
+}
+
+</script>
+
+</body>
+</html>

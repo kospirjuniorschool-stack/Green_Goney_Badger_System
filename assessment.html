@@ -1,0 +1,4071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>GREEN HONEY BADGER SYSTEM - Assessment Report Generator</title>
+
+<style>
+
+/* =========================================================
+   GREEN HONEY BADGER SYSTEM
+   FRESH ASSESSMENT REPORT GENERATOR
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f7f3;
+    color: #173b28;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    background: linear-gradient(135deg, #075b2a, #0d7a3c);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 25px;
+    letter-spacing: 0.5px;
+}
+
+.brand p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.header-buttons button {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+
+    font-weight: bold;
+
+    background: white;
+    color: #075b2a;
+}
+
+.header-buttons button:hover {
+    background: #e7f5ec;
+}
+
+/* =========================================================
+   SCHOOL BAR
+========================================================= */
+
+.school-bar {
+    background: white;
+    border-bottom: 1px solid #dce8df;
+    padding: 12px 20px;
+}
+
+.school-bar-inner {
+    max-width: 1400px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.school-name {
+    font-weight: bold;
+    color: #075b2a;
+}
+
+.school-code {
+    color: #52655a;
+    font-size: 13px;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 18px 50px;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.07);
+}
+
+.section-title {
+    margin: 0 0 18px;
+
+    color: #075b2a;
+
+    font-size: 20px;
+
+    border-bottom: 2px solid #e2eee6;
+
+    padding-bottom: 10px;
+}
+
+.section-description {
+    color: #64756b;
+    font-size: 14px;
+
+    margin-top: -8px;
+    margin-bottom: 18px;
+}
+
+/* =========================================================
+   CONTROL GRID
+========================================================= */
+
+.control-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(180px, 1fr));
+
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.field label {
+    font-weight: bold;
+    font-size: 13px;
+
+    color: #315540;
+}
+
+.field select,
+.field input {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border:
+        1px solid #cbdacf;
+
+    border-radius: 7px;
+
+    background: white;
+
+    font-size: 14px;
+
+    color: #173b28;
+
+    outline: none;
+}
+
+.field select:focus,
+.field input:focus {
+
+    border-color: #0d7a3c;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(13,122,60,0.08);
+}
+
+/* =========================================================
+   REPORT TYPES
+========================================================= */
+
+.report-type-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+.report-type {
+
+    border:
+        2px solid #d5e5da;
+
+    background: #f8fbf9;
+
+    border-radius: 10px;
+
+    padding: 20px 15px;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+.report-type:hover {
+
+    border-color: #0d7a3c;
+
+    background: #eef8f1;
+}
+
+.report-type.active {
+
+    background: #075b2a;
+
+    color: white;
+
+    border-color: #075b2a;
+}
+
+.report-type-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.report-type-title {
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+    margin-bottom: 6px;
+}
+
+.report-type-description {
+
+    font-size: 12px;
+
+    opacity: 0.75;
+
+    line-height: 1.4;
+}
+
+/* =========================================================
+   FILTER SECTION
+========================================================= */
+
+.filter-box {
+
+    margin-top: 22px;
+
+    padding: 18px;
+
+    border-radius: 9px;
+
+    background: #f6faf7;
+
+    border:
+        1px solid #dce9df;
+}
+
+.filter-title {
+
+    margin: 0 0 15px;
+
+    color: #075b2a;
+
+    font-size: 16px;
+}
+
+/* =========================================================
+   CHECKBOXES
+========================================================= */
+
+.checkbox-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 10px;
+}
+
+.checkbox-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px;
+
+    border:
+        1px solid #dce7df;
+
+    border-radius: 7px;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+.checkbox-item:hover {
+
+    background: #f0f8f3;
+}
+
+.checkbox-item input {
+
+    width: 17px;
+    height: 17px;
+
+    accent-color: #075b2a;
+}
+
+.checkbox-item span {
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+.btn {
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 11px 18px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+.btn-primary {
+
+    background: #075b2a;
+
+    color: white;
+}
+
+.btn-primary:hover {
+
+    background: #064b23;
+}
+
+.btn-secondary {
+
+    background: #e9f3ec;
+
+    color: #075b2a;
+}
+
+.btn-secondary:hover {
+
+    background: #dcece1;
+}
+
+.btn-danger {
+
+    background: #b72c2c;
+
+    color: white;
+}
+
+/* =========================================================
+   SELECTION SUMMARY
+========================================================= */
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.summary-card {
+
+    background: #f5faf6;
+
+    border:
+        1px solid #dce9df;
+
+    border-radius: 8px;
+
+    padding: 14px;
+}
+
+.summary-card small {
+
+    display: block;
+
+    color: #66776d;
+
+    font-size: 11px;
+}
+
+.summary-card strong {
+
+    display: block;
+
+    color: #075b2a;
+
+    margin-top: 5px;
+
+    font-size: 15px;
+}
+
+/* =========================================================
+   CANDIDATES
+========================================================= */
+
+.candidate-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 15px;
+}
+
+.candidate-count {
+
+    background: #e9f3ec;
+
+    color: #075b2a;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.table-wrapper {
+
+    overflow-x: auto;
+
+    border:
+        1px solid #dbe6df;
+
+    border-radius: 8px;
+}
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+}
+
+th {
+
+    background: #075b2a;
+
+    color: white;
+
+    padding: 12px 10px;
+
+    text-align: left;
+
+    font-size: 13px;
+}
+
+td {
+
+    padding: 10px;
+
+    border-bottom:
+        1px solid #e5ece7;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+
+    background: #f6faf7;
+}
+
+.select-learner {
+
+    width: 18px;
+
+    height: 18px;
+
+    accent-color: #075b2a;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #77847c;
+
+    background: #f8faf8;
+
+    border-radius: 8px;
+}
+
+.hidden {
+
+    display: none !important;
+}
+
+/* =========================================================
+   GENERATE PANEL
+========================================================= */
+
+.generate-panel {
+
+    background:
+        linear-gradient(
+            135deg,
+            #075b2a,
+            #0d7a3c
+        );
+
+    color: white;
+
+    border-radius: 12px;
+
+    padding: 24px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.generate-panel h3 {
+
+    margin: 0 0 7px;
+}
+
+.generate-panel p {
+
+    margin: 0;
+
+    opacity: 0.9;
+
+    font-size: 14px;
+}
+
+.generate-panel .btn {
+
+    background: white;
+
+    color: #075b2a;
+}
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+.popup {
+
+    position: fixed;
+
+    right: 20px;
+
+    bottom: 20px;
+
+    z-index: 9999;
+
+    min-width: 280px;
+
+    max-width: 400px;
+
+    padding: 15px 18px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    background: #075b2a;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.2);
+
+    display: none;
+}
+
+.popup.show {
+
+    display: block;
+}
+
+.popup.error {
+
+    background: #b72c2c;
+}
+
+.popup.warning {
+
+    background: #c78300;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    text-align: center;
+
+    padding: 20px;
+
+    color: #728078;
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .control-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .report-type-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .summary-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+
+    .header-inner {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .control-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .report-type-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .summary-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+
+        padding:
+            0 10px 40px;
+    }
+
+    .section {
+
+        padding: 15px;
+    }
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    .header-buttons,
+    .actions,
+    .generate-panel,
+    .footer {
+
+        display: none !important;
+    }
+
+    body {
+
+        background: white;
+    }
+
+    .section {
+
+        box-shadow: none;
+
+        border:
+            1px solid #ddd;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <h1>
+                GREEN HONEY BADGER SYSTEM
+            </h1>
+
+            <p>
+                Assessment Report Generator
+            </p>
+
+        </div>
+
+
+        <div class="header-buttons">
+
+            <button
+                type="button"
+                onclick="goExamination()"
+            >
+                Examination
+            </button>
+
+            <button
+                type="button"
+                onclick="goDashboard()"
+            >
+                Dashboard
+            </button>
+
+            <button
+                type="button"
+                onclick="logoutUser()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     SCHOOL DETAILS BAR
+======================================================= -->
+
+<div class="school-bar">
+
+    <div class="school-bar-inner">
+
+        <div>
+
+            <span
+                class="school-name"
+                id="schoolName"
+            >
+                GREEN HONEY BADGER SYSTEM
+            </span>
+
+        </div>
+
+
+        <div
+            class="school-code"
+            id="schoolCode"
+        >
+            School Code: —
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main class="container">
+
+
+<!-- =======================================================
+     REPORT TYPE
+======================================================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Assessment Report Generator
+    </h2>
+
+    <p class="section-description">
+        Select the type of assessment report you want to
+        generate.
+    </p>
+
+
+    <div class="report-type-grid">
+
+
+        <!-- ALL GRADES -->
+
+        <div
+            class="report-type"
+            data-report-type="ALL_GRADES"
+        >
+
+            <div class="report-type-icon">
+                📚
+            </div>
+
+            <div class="report-type-title">
+                ALL GRADES
+            </div>
+
+            <div class="report-type-description">
+                Generate reports for all registered
+                grades with recorded assessment results.
+            </div>
+
+        </div>
+
+
+        <!-- SPECIFIED GRADES -->
+
+        <div
+            class="report-type"
+            data-report-type="SPECIFIED_GRADES"
+        >
+
+            <div class="report-type-icon">
+                🎓
+            </div>
+
+            <div class="report-type-title">
+                SPECIFIED GRADES
+            </div>
+
+            <div class="report-type-description">
+                Select one or more specific grades
+                for report generation.
+            </div>
+
+        </div>
+
+
+        <!-- STREAM -->
+
+        <div
+            class="report-type"
+            data-report-type="STREAM"
+        >
+
+            <div class="report-type-icon">
+                🏫
+            </div>
+
+            <div class="report-type-title">
+                STREAM
+            </div>
+
+            <div class="report-type-description">
+                Generate reports for learners in
+                a selected grade and stream.
+            </div>
+
+        </div>
+
+
+        <!-- INDIVIDUAL -->
+
+        <div
+            class="report-type"
+            data-report-type="INDIVIDUAL"
+        >
+
+            <div class="report-type-icon">
+                👤
+            </div>
+
+            <div class="report-type-title">
+                INDIVIDUAL
+            </div>
+
+            <div class="report-type-description">
+                Generate the report for one
+                selected learner.
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     EXAMINATION PERIOD
+======================================================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Examination Period
+    </h2>
+
+    <p class="section-description">
+        Select the exact examination whose recorded results
+        should be used in the reports.
+    </p>
+
+
+    <div class="control-grid">
+
+
+        <!-- YEAR -->
+
+        <div class="field">
+
+            <label for="academicYear">
+                Academic Year
+            </label>
+
+            <select id="academicYear">
+
+                <option value="2026">
+                    2026
+                </option>
+
+                <option value="2027">
+                    2027
+                </option>
+
+                <option value="2028">
+                    2028
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- TERM -->
+
+        <div class="field">
+
+            <label for="term">
+                Term
+            </label>
+
+            <select id="term">
+
+                <option value="">
+                    Select Term
+                </option>
+
+                <option value="TERM 1">
+                    TERM 1
+                </option>
+
+                <option value="TERM 2">
+                    TERM 2
+                </option>
+
+                <option value="TERM 3">
+                    TERM 3
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- EXAM -->
+
+        <div class="field">
+
+            <label for="exam">
+                Examination
+            </label>
+
+            <select id="exam">
+
+                <option value="">
+                    Select Examination
+                </option>
+
+                <option value="CAT 1">
+                    CAT 1
+                </option>
+
+                <option value="CAT 2">
+                    CAT 2
+                </option>
+
+                <option value="MID TERM">
+                    MID TERM
+                </option>
+
+                <option value="END TERM">
+                    END TERM
+                </option>
+
+                <option value="ANNUAL">
+                    ANNUAL
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- LEVEL -->
+
+        <div class="field">
+
+            <label for="schoolLevel">
+                Level
+            </label>
+
+            <select id="schoolLevel">
+
+                <option value="">
+                    All Levels
+                </option>
+
+                <option value="PREPARATORY SCHOOL">
+                    PREPARATORY SCHOOL
+                </option>
+
+                <option value="LOWER PRIMARY SCHOOL">
+                    LOWER PRIMARY SCHOOL
+                </option>
+
+                <option value="UPPER PRIMARY SCHOOL">
+                    UPPER PRIMARY SCHOOL
+                </option>
+
+                <option value="JUNIOR SCHOOL">
+                    JUNIOR SCHOOL
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- GRADE -->
+
+        <div class="field">
+
+            <label for="grade">
+                Grade / Class
+            </label>
+
+            <select
+                id="grade"
+                disabled
+            >
+
+                <option value="">
+                    All Grades
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STREAM -->
+
+        <div class="field">
+
+            <label for="stream">
+                Stream
+            </label>
+
+            <select
+                id="stream"
+                disabled
+            >
+
+                <option value="">
+                    All Streams
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SPECIFIED GRADES
+======================================================= -->
+
+<section
+    class="section hidden"
+    id="specifiedGradesSection"
+>
+
+    <h2 class="section-title">
+        Select Grades
+    </h2>
+
+    <p class="section-description">
+        Select one or more grades to include in the
+        assessment report generation.
+    </p>
+
+
+    <div
+        class="checkbox-grid"
+        id="gradeCheckboxes"
+    >
+
+        <div class="empty">
+            Select a level first to display registered grades.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     STREAM SELECTION
+======================================================= -->
+
+<section
+    class="section hidden"
+    id="streamSection"
+>
+
+    <h2 class="section-title">
+        Stream Selection
+    </h2>
+
+    <p class="section-description">
+        Select the grade and stream whose learners should
+        receive reports.
+    </p>
+
+
+    <div class="control-grid">
+
+        <div class="field">
+
+            <label for="streamGrade">
+                Grade
+            </label>
+
+            <select id="streamGrade">
+
+                <option value="">
+                    Select Grade
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="streamName">
+                Stream
+            </label>
+
+            <select
+                id="streamName"
+                disabled
+            >
+
+                <option value="">
+                    Select Grade First
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     INDIVIDUAL LEARNER
+======================================================= -->
+
+<section
+    class="section hidden"
+    id="individualSection"
+>
+
+    <h2 class="section-title">
+        Individual Learner
+    </h2>
+
+    <p class="section-description">
+        Select the learner whose assessment report should
+        be generated.
+    </p>
+
+
+    <div class="control-grid">
+
+        <div class="field">
+
+            <label for="individualGrade">
+                Grade
+            </label>
+
+            <select id="individualGrade">
+
+                <option value="">
+                    Select Grade
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="individualStream">
+                Stream
+            </label>
+
+            <select
+                id="individualStream"
+                disabled
+            >
+
+                <option value="">
+                    Select Grade First
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div
+            class="field"
+            style="grid-column: span 2;"
+        >
+
+            <label for="individualLearner">
+                Learner
+            </label>
+
+            <select
+                id="individualLearner"
+                disabled
+            >
+
+                <option value="">
+                    Select Grade / Stream First
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CANDIDATES
+======================================================= -->
+
+<section class="section">
+
+    <div class="candidate-header">
+
+        <div>
+
+            <h2 class="section-title"
+                style="margin-bottom:5px;"
+            >
+                Report Candidates
+            </h2>
+
+            <div
+                class="section-description"
+                style="margin:0;"
+            >
+                These are learners matching the selected
+                report criteria.
+            </div>
+
+        </div>
+
+
+        <div
+            class="candidate-count"
+            id="candidateCount"
+        >
+            0 learners
+        </div>
+
+    </div>
+
+
+    <div
+        id="candidateContainer"
+    >
+
+        <div class="empty">
+            Select a report type and examination period.
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            id="selectAllButton"
+        >
+            SELECT ALL
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            id="clearAllButton"
+        >
+            CLEAR ALL
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="previewButton"
+        >
+            PREVIEW SELECTION
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SUMMARY
+======================================================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Report Summary
+    </h2>
+
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <small>
+                REPORT TYPE
+            </small>
+
+            <strong id="summaryType">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                ACADEMIC YEAR
+            </small>
+
+            <strong id="summaryYear">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                TERM
+            </small>
+
+            <strong id="summaryTerm">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                EXAMINATION
+            </small>
+
+            <strong id="summaryExam">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                LEVEL
+            </small>
+
+            <strong id="summaryLevel">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                GRADE
+            </small>
+
+            <strong id="summaryGrade">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                STREAM
+            </small>
+
+            <strong id="summaryStream">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                REPORTS
+            </small>
+
+            <strong id="summaryCount">
+                0
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     GENERATE
+======================================================= -->
+
+<section class="section">
+
+    <div class="generate-panel">
+
+        <div>
+
+            <h3>
+                Ready to Generate Reports?
+            </h3>
+
+            <p>
+                The selected learners will be sent to the
+                fresh learner report page.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="btn"
+            id="generateButton"
+        >
+            GENERATE REPORT
+        </button>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer class="footer">
+
+    GREEN HONEY BADGER SYSTEM
+    — Assessment Report Generator
+
+</footer>
+
+
+<!-- =======================================================
+     POPUP
+======================================================= -->
+
+<div
+    id="popup"
+    class="popup"
+></div>
+
+
+<script>
+
+/* =========================================================
+   GREEN HONEY BADGER SYSTEM
+   ASSESSMENT REPORT GENERATOR
+========================================================= */
+
+"use strict";
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STUDENTS_KEY =
+    "students";
+
+const EXAM_RESULTS_KEY =
+    "examResults";
+
+const SCHOOL_DETAILS_KEY =
+    "schoolDetails";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let selectedReportType = "";
+
+let candidateLearners = [];
+
+let selectedLearners = [];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function normalize(value) {
+
+    return String(value || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toUpperCase();
+
+}
+
+
+function getStudents() {
+
+    try {
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    STUDENTS_KEY
+                ) || "[]"
+            );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function getExamResults() {
+
+    try {
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    EXAM_RESULTS_KEY
+                ) || "[]"
+            );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function getStudentLevel(student) {
+
+    return student.schoolLevel ||
+           student.level ||
+           "";
+
+}
+
+
+function getStudentGrade(student) {
+
+    return student.grade ||
+           student.class ||
+           "";
+
+}
+
+
+function getStudentStream(student) {
+
+    return student.stream ||
+           "ALL STREAMS";
+
+}
+
+
+function getStudentName(student) {
+
+    return student.name ||
+           student.studentName ||
+           student.fullName ||
+           "Unnamed Learner";
+
+}
+
+
+function getAdmission(student) {
+
+    return student.admissionNumber ||
+           student.admissionNo ||
+           student.admission ||
+           student.admNo ||
+           "—";
+
+}
+
+
+function getStudentId(student) {
+
+    return String(
+        student.id ||
+        student.studentId ||
+        getAdmission(student) ||
+        getStudentName(student)
+    );
+
+}
+
+
+function extractGradeNumber(value) {
+
+    const text =
+        normalize(value);
+
+    const match =
+        text.match(
+            /(?:GRADE|CLASS|PP)\s*(\d+)/
+        );
+
+    return match
+        ? Number(match[1])
+        : 999;
+
+}
+
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+function showPopup(
+    message,
+    type = "success"
+) {
+
+    const popup =
+        document.getElementById(
+            "popup"
+        );
+
+    popup.textContent =
+        message;
+
+    popup.className =
+        "popup show " +
+        (
+            type === "error"
+                ? "error"
+                : type === "warning"
+                    ? "warning"
+                    : ""
+        );
+
+
+    clearTimeout(
+        window.gbhAssessmentPopup
+    );
+
+
+    window.gbhAssessmentPopup =
+        setTimeout(
+            () => {
+
+                popup.classList.remove(
+                    "show"
+                );
+
+            },
+            3500
+        );
+
+}
+
+
+/* =========================================================
+   SCHOOL DETAILS
+========================================================= */
+
+function loadSchoolDetails() {
+
+    try {
+
+        const details =
+            JSON.parse(
+                localStorage.getItem(
+                    SCHOOL_DETAILS_KEY
+                ) || "{}"
+            );
+
+
+        document.getElementById(
+            "schoolName"
+        ).textContent =
+            details.schoolName ||
+            "GREEN HONEY BADGER SYSTEM";
+
+
+        document.getElementById(
+            "schoolCode"
+        ).textContent =
+            "School Code: " +
+            (
+                details.schoolCode ||
+                "—"
+            );
+
+    } catch (error) {
+
+        console.warn(
+            "School details could not be loaded.",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GET REGISTERED GRADES
+========================================================= */
+
+function getRegisteredGrades(
+    level = ""
+) {
+
+    const students =
+        getStudents();
+
+    const gradeMap =
+        new Map();
+
+
+    students.forEach(student => {
+
+        if (
+            level &&
+            normalize(
+                getStudentLevel(student)
+            ) !== normalize(level)
+        ) {
+
+            return;
+
+        }
+
+
+        const grade =
+            String(
+                getStudentGrade(student)
+            ).trim();
+
+
+        if (!grade) {
+            return;
+        }
+
+
+        const key =
+            normalize(grade);
+
+
+        if (!gradeMap.has(key)) {
+
+            gradeMap.set(
+                key,
+                grade
+            );
+
+        }
+
+    });
+
+
+    return Array.from(
+        gradeMap.values()
+    ).sort(
+        (a, b) => {
+
+            const aNumber =
+                extractGradeNumber(a);
+
+            const bNumber =
+                extractGradeNumber(b);
+
+
+            if (
+                aNumber !==
+                bNumber
+            ) {
+
+                return (
+                    aNumber -
+                    bNumber
+                );
+
+            }
+
+
+            return a.localeCompare(b);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GET REGISTERED STREAMS
+========================================================= */
+
+function getRegisteredStreams(
+    grade,
+    level = ""
+) {
+
+    const students =
+        getStudents();
+
+    const streamMap =
+        new Map();
+
+
+    students.forEach(student => {
+
+        if (
+            level &&
+            normalize(
+                getStudentLevel(student)
+            ) !== normalize(level)
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            normalize(
+                getStudentGrade(student)
+            ) !== normalize(grade)
+        ) {
+
+            return;
+
+        }
+
+
+        const stream =
+            String(
+                getStudentStream(student)
+            ).trim();
+
+
+        if (!stream) {
+            return;
+        }
+
+
+        const key =
+            normalize(stream);
+
+
+        if (!streamMap.has(key)) {
+
+            streamMap.set(
+                key,
+                stream
+            );
+
+        }
+
+    });
+
+
+    return Array.from(
+        streamMap.values()
+    ).sort(
+        (a, b) =>
+            a.localeCompare(b)
+    );
+
+}
+
+
+/* =========================================================
+   POPULATE GRADE SELECT
+========================================================= */
+
+function populateGradeSelect(
+    selectId,
+    level = ""
+) {
+
+    const select =
+        document.getElementById(
+            selectId
+        );
+
+
+    if (!select) {
+        return;
+    }
+
+
+    select.innerHTML =
+        '<option value="">Select Grade</option>';
+
+
+    const grades =
+        getRegisteredGrades(
+            level
+        );
+
+
+    grades.forEach(grade => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            grade;
+
+        option.textContent =
+            grade;
+
+        select.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   POPULATE GRADE CHECKBOXES
+========================================================= */
+
+function populateGradeCheckboxes() {
+
+    const level =
+        document.getElementById(
+            "schoolLevel"
+        ).value;
+
+
+    const container =
+        document.getElementById(
+            "gradeCheckboxes"
+        );
+
+
+    container.innerHTML = "";
+
+
+    const grades =
+        getRegisteredGrades(
+            level
+        );
+
+
+    if (!grades.length) {
+
+        container.innerHTML =
+            '<div class="empty">' +
+            'No registered grades were found for this level.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    grades.forEach(
+        (grade, index) => {
+
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+            label.className =
+                "checkbox-item";
+
+
+            const checkbox =
+                document.createElement(
+                    "input"
+                );
+
+            checkbox.type =
+                "checkbox";
+
+            checkbox.className =
+                "grade-checkbox";
+
+            checkbox.value =
+                grade;
+
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+            span.textContent =
+                grade;
+
+
+            label.appendChild(
+                checkbox
+            );
+
+            label.appendChild(
+                span
+            );
+
+
+            container.appendChild(
+                label
+            );
+
+
+            checkbox.addEventListener(
+                "change",
+                refreshCandidates
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   POPULATE STREAM SELECT
+========================================================= */
+
+function populateStreamSelect(
+    gradeSelectId,
+    streamSelectId
+) {
+
+    const grade =
+        document.getElementById(
+            gradeSelectId
+        ).value;
+
+
+    const level =
+        document.getElementById(
+            "schoolLevel"
+        ).value;
+
+
+    const select =
+        document.getElementById(
+            streamSelectId
+        );
+
+
+    select.innerHTML =
+        '<option value="">Select Stream</option>';
+
+
+    select.disabled =
+        true;
+
+
+    if (!grade) {
+        return;
+    }
+
+
+    const streams =
+        getRegisteredStreams(
+            grade,
+            level
+        );
+
+
+    /*
+       Whole grade option.
+    */
+
+    const all =
+        document.createElement(
+            "option"
+        );
+
+    all.value =
+        "ALL STREAMS";
+
+    all.textContent =
+        "ALL STREAMS";
+
+    select.appendChild(
+        all
+    );
+
+
+    streams.forEach(stream => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            stream;
+
+        option.textContent =
+            stream;
+
+        select.appendChild(
+            option
+        );
+
+    });
+
+
+    select.disabled =
+        false;
+
+}
+
+
+/* =========================================================
+   GET CURRENT EXAMINATION CONTEXT
+========================================================= */
+
+function getContext() {
+
+    return {
+
+        academicYear:
+            document.getElementById(
+                "academicYear"
+            ).value,
+
+        term:
+            document.getElementById(
+                "term"
+            ).value,
+
+        examination:
+            document.getElementById(
+                "exam"
+            ).value,
+
+        schoolLevel:
+            document.getElementById(
+                "schoolLevel"
+            ).value
+
+    };
+
+}
+
+
+/* =========================================================
+   HAS EXAM RESULTS
+========================================================= */
+
+function learnerHasResults(
+    student
+) {
+
+    const context =
+        getContext();
+
+    const studentId =
+        getStudentId(student);
+
+
+    const results =
+        getExamResults();
+
+
+    return results.some(result => {
+
+        return (
+
+            String(
+                result.studentId
+            ) ===
+            String(studentId)
+
+            &&
+
+            normalize(
+                result.academicYear
+            ) ===
+            normalize(
+                context.academicYear
+            )
+
+            &&
+
+            normalize(
+                result.term
+            ) ===
+            normalize(
+                context.term
+            )
+
+            &&
+
+            normalize(
+                result.examination
+            ) ===
+            normalize(
+                context.examination
+            )
+
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   MATCH LEARNERS
+========================================================= */
+
+function getCandidates() {
+
+    const context =
+        getContext();
+
+    const students =
+        getStudents();
+
+
+    /*
+       Report type: ALL GRADES
+    */
+
+    if (
+        selectedReportType ===
+        "ALL_GRADES"
+    ) {
+
+        return students.filter(
+            student => {
+
+                if (
+                    context.schoolLevel &&
+                    normalize(
+                        getStudentLevel(student)
+                    ) !==
+                    normalize(
+                        context.schoolLevel
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+
+                return learnerHasResults(
+                    student
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       Report type:
+       SPECIFIED GRADES
+    */
+
+    if (
+        selectedReportType ===
+        "SPECIFIED_GRADES"
+    ) {
+
+        const selectedGrades =
+            Array.from(
+                document.querySelectorAll(
+                    ".grade-checkbox:checked"
+                )
+            ).map(
+                checkbox =>
+                    checkbox.value
+            );
+
+
+        if (!selectedGrades.length) {
+            return [];
+        }
+
+
+        return students.filter(
+            student => {
+
+                if (
+                    context.schoolLevel &&
+                    normalize(
+                        getStudentLevel(student)
+                    ) !==
+                    normalize(
+                        context.schoolLevel
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+
+                const grade =
+                    getStudentGrade(
+                        student
+                    );
+
+
+                const gradeMatch =
+                    selectedGrades.some(
+                        selected =>
+                            normalize(
+                                selected
+                            ) ===
+                            normalize(
+                                grade
+                            )
+                    );
+
+
+                return (
+                    gradeMatch &&
+                    learnerHasResults(
+                        student
+                    )
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       Report type:
+       STREAM
+    */
+
+    if (
+        selectedReportType ===
+        "STREAM"
+    ) {
+
+        const grade =
+            document.getElementById(
+                "streamGrade"
+            ).value;
+
+
+        const stream =
+            document.getElementById(
+                "streamName"
+            ).value;
+
+
+        if (!grade || !stream) {
+            return [];
+        }
+
+
+        return students.filter(
+            student => {
+
+                if (
+                    context.schoolLevel &&
+                    normalize(
+                        getStudentLevel(student)
+                    ) !==
+                    normalize(
+                        context.schoolLevel
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    normalize(
+                        getStudentGrade(student)
+                    ) !==
+                    normalize(grade)
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    normalize(stream) !==
+                    "ALL STREAMS"
+                ) {
+
+                    if (
+                        normalize(
+                            getStudentStream(student)
+                        ) !==
+                        normalize(stream)
+                    ) {
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return learnerHasResults(
+                    student
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       Report type:
+       INDIVIDUAL
+    */
+
+    if (
+        selectedReportType ===
+        "INDIVIDUAL"
+    ) {
+
+        const learnerId =
+            document.getElementById(
+                "individualLearner"
+            ).value;
+
+
+        if (!learnerId) {
+            return [];
+        }
+
+
+        return students.filter(
+            student => {
+
+                return (
+                    getStudentId(
+                        student
+                    ) ===
+                    String(learnerId)
+
+                    &&
+
+                    learnerHasResults(
+                        student
+                    )
+                );
+
+            }
+        );
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   RENDER CANDIDATES
+========================================================= */
+
+function renderCandidates() {
+
+    const container =
+        document.getElementById(
+            "candidateContainer"
+        );
+
+
+    candidateLearners =
+        getCandidates();
+
+
+    /*
+       Preserve selected learners
+       only if they still exist.
+    */
+
+    const candidateIds =
+        new Set(
+            candidateLearners.map(
+                student =>
+                    getStudentId(student)
+            )
+        );
+
+
+    selectedLearners =
+        selectedLearners.filter(
+            id =>
+                candidateIds.has(
+                    id
+                )
+        );
+
+
+    document.getElementById(
+        "candidateCount"
+    ).textContent =
+        candidateLearners.length +
+        (
+            candidateLearners.length === 1
+                ? " learner"
+                : " learners"
+        );
+
+
+    if (!candidateLearners.length) {
+
+        container.innerHTML =
+            '<div class="empty">' +
+            'No learners with recorded results match the selected criteria.' +
+            '</div>';
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Select
+                        </th>
+
+                        <th>
+                            No.
+                        </th>
+
+                        <th>
+                            Admission No.
+                        </th>
+
+                        <th>
+                            Learner
+                        </th>
+
+                        <th>
+                            Gender
+                        </th>
+
+                        <th>
+                            Level
+                        </th>
+
+                        <th>
+                            Grade
+                        </th>
+
+                        <th>
+                            Stream
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+    `;
+
+
+    candidateLearners.forEach(
+        (student, index) => {
+
+            const id =
+                getStudentId(student);
+
+
+            const checked =
+                selectedLearners.includes(
+                    id
+                )
+                    ? "checked"
+                    : "";
+
+
+            html += `
+
+                <tr>
+
+                    <td>
+
+                        <input
+                            type="checkbox"
+                            class="select-learner"
+                            data-student-id="${escapeHtml(id)}"
+                            ${checked}
+                        >
+
+                    </td>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            getAdmission(student)
+                        )}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            ${escapeHtml(
+                                getStudentName(student)
+                            )}
+                        </strong>
+
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            student.gender ||
+                            "—"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            getStudentLevel(student)
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            getStudentGrade(student)
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            getStudentStream(student)
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+
+    container
+        .querySelectorAll(
+            ".select-learner"
+        )
+        .forEach(
+            checkbox => {
+
+                checkbox.addEventListener(
+                    "change",
+                    () => {
+
+                        const id =
+                            checkbox.dataset.studentId;
+
+
+                        if (
+                            checkbox.checked
+                        ) {
+
+                            if (
+                                !selectedLearners.includes(
+                                    id
+                                )
+                            ) {
+
+                                selectedLearners.push(
+                                    id
+                                );
+
+                            }
+
+                        } else {
+
+                            selectedLearners =
+                                selectedLearners.filter(
+                                    item =>
+                                        item !== id
+                                );
+
+                        }
+
+
+                        updateSummary();
+
+                    }
+                );
+
+            }
+        );
+
+
+    updateSummary();
+
+}
+
+
+/* =========================================================
+   REFRESH CANDIDATES
+========================================================= */
+
+function refreshCandidates() {
+
+    renderCandidates();
+
+}
+
+
+/* =========================================================
+   REPORT TYPE SELECTION
+========================================================= */
+
+function selectReportType(
+    type
+) {
+
+    selectedReportType =
+        type;
+
+
+    document
+        .querySelectorAll(
+            ".report-type"
+        )
+        .forEach(card => {
+
+            card.classList.toggle(
+                "active",
+                card.dataset.reportType ===
+                type
+            );
+
+        });
+
+
+    /*
+       Hide all special filters.
+    */
+
+    document
+        .getElementById(
+            "specifiedGradesSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    document
+        .getElementById(
+            "streamSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    document
+        .getElementById(
+            "individualSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    /*
+       Show required filter.
+    */
+
+    if (
+        type ===
+        "SPECIFIED_GRADES"
+    ) {
+
+        document
+            .getElementById(
+                "specifiedGradesSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+        populateGradeCheckboxes();
+
+    }
+
+
+    if (
+        type ===
+        "STREAM"
+    ) {
+
+        document
+            .getElementById(
+                "streamSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+        populateGradeSelect(
+            "streamGrade",
+            document.getElementById(
+                "schoolLevel"
+            ).value
+        );
+
+    }
+
+
+    if (
+        type ===
+        "INDIVIDUAL"
+    ) {
+
+        document
+            .getElementById(
+                "individualSection"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+        populateGradeSelect(
+            "individualGrade",
+            document.getElementById(
+                "schoolLevel"
+            ).value
+        );
+
+    }
+
+
+    selectedLearners = [];
+
+
+    renderCandidates();
+
+}
+
+
+/* =========================================================
+   SELECT ALL
+========================================================= */
+
+function selectAllLearners() {
+
+    selectedLearners =
+        candidateLearners.map(
+            student =>
+                getStudentId(student)
+        );
+
+
+    document
+        .querySelectorAll(
+            ".select-learner"
+        )
+        .forEach(
+            checkbox =>
+                checkbox.checked = true
+        );
+
+
+    updateSummary();
+
+}
+
+
+/* =========================================================
+   CLEAR ALL
+========================================================= */
+
+function clearAllLearners() {
+
+    selectedLearners = [];
+
+
+    document
+        .querySelectorAll(
+            ".select-learner"
+        )
+        .forEach(
+            checkbox =>
+                checkbox.checked = false
+        );
+
+
+    updateSummary();
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function updateSummary() {
+
+    const context =
+        getContext();
+
+
+    document.getElementById(
+        "summaryType"
+    ).textContent =
+        formatReportType(
+            selectedReportType
+        );
+
+
+    document.getElementById(
+        "summaryYear"
+    ).textContent =
+        context.academicYear ||
+        "—";
+
+
+    document.getElementById(
+        "summaryTerm"
+    ).textContent =
+        context.term ||
+        "—";
+
+
+    document.getElementById(
+        "summaryExam"
+    ).textContent =
+        context.examination ||
+        "—";
+
+
+    document.getElementById(
+        "summaryLevel"
+    ).textContent =
+        context.schoolLevel ||
+        "ALL LEVELS";
+
+
+    let grade =
+        "—";
+
+    let stream =
+        "—";
+
+
+    if (
+        selectedReportType ===
+        "STREAM"
+    ) {
+
+        grade =
+            document.getElementById(
+                "streamGrade"
+            ).value ||
+            "—";
+
+        stream =
+            document.getElementById(
+                "streamName"
+            ).value ||
+            "—";
+
+    }
+
+
+    if (
+        selectedReportType ===
+        "INDIVIDUAL"
+    ) {
+
+        grade =
+            document.getElementById(
+                "individualGrade"
+            ).value ||
+            "—";
+
+        stream =
+            document.getElementById(
+                "individualStream"
+            ).value ||
+            "—";
+
+    }
+
+
+    if (
+        selectedReportType ===
+        "SPECIFIED_GRADES"
+    ) {
+
+        const grades =
+            Array.from(
+                document.querySelectorAll(
+                    ".grade-checkbox:checked"
+                )
+            ).map(
+                checkbox =>
+                    checkbox.value
+            );
+
+
+        grade =
+            grades.length
+                ? grades.join(", ")
+                : "—";
+
+    }
+
+
+    document.getElementById(
+        "summaryGrade"
+    ).textContent =
+        grade;
+
+
+    document.getElementById(
+        "summaryStream"
+    ).textContent =
+        stream;
+
+
+    document.getElementById(
+        "summaryCount"
+    ).textContent =
+        selectedLearners.length;
+
+}
+
+
+/* =========================================================
+   FORMAT REPORT TYPE
+========================================================= */
+
+function formatReportType(
+    type
+) {
+
+    const labels = {
+
+        ALL_GRADES:
+            "ALL GRADES",
+
+        SPECIFIED_GRADES:
+            "SPECIFIED GRADES",
+
+        STREAM:
+            "STREAM",
+
+        INDIVIDUAL:
+            "INDIVIDUAL"
+
+    };
+
+
+    return labels[type] || "—";
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+function previewSelection() {
+
+    if (!selectedReportType) {
+
+        showPopup(
+            "Please select a report type first.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!selectedLearners.length) {
+
+        showPopup(
+            "Please select at least one learner.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    showPopup(
+        selectedLearners.length +
+        " report(s) selected."
+    );
+
+
+    document
+        .querySelector(
+            ".generate-panel"
+        )
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+}
+
+
+/* =========================================================
+   GENERATE REPORT
+========================================================= */
+
+function generateReports() {
+
+    if (!selectedReportType) {
+
+        showPopup(
+            "Please select a report type.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!selectedLearners.length) {
+
+        showPopup(
+            "Please select at least one learner.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const context =
+        getContext();
+
+
+    if (
+        !context.term ||
+        !context.examination
+    ) {
+
+        showPopup(
+            "Please select the Term and Examination.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Store the report request.
+
+       report.html will read this object
+       and generate the final learner report.
+    */
+
+    const reportRequest = {
+
+        reportType:
+            selectedReportType,
+
+        academicYear:
+            context.academicYear,
+
+        term:
+            context.term,
+
+        examination:
+            context.examination,
+
+        schoolLevel:
+            context.schoolLevel,
+
+        studentIds:
+            selectedLearners,
+
+        generatedAt:
+            new Date()
+                .toISOString(),
+
+        openingDate:
+            new Date()
+                .toISOString()
+                .slice(0, 10),
+
+        closingDate:
+            new Date()
+                .toISOString()
+                .slice(0, 10)
+
+    };
+
+
+    sessionStorage.setItem(
+        "gbhAssessmentReportRequest",
+        JSON.stringify(
+            reportRequest
+        )
+    );
+
+
+    /*
+       Also keep a copy in localStorage
+       so the request survives page reloads.
+    */
+
+    localStorage.setItem(
+        "gbhAssessmentReportRequest",
+        JSON.stringify(
+            reportRequest
+        )
+    );
+
+
+    /*
+       Fresh final report page.
+    */
+
+    window.location.href =
+        "report.html";
+
+}
+
+
+/* =========================================================
+   SCHOOL LEVEL CHANGE
+========================================================= */
+
+function handleLevelChange() {
+
+    populateGradeCheckboxes();
+
+
+    populateGradeSelect(
+        "streamGrade",
+        document.getElementById(
+            "schoolLevel"
+        ).value
+    );
+
+
+    populateGradeSelect(
+        "individualGrade",
+        document.getElementById(
+            "schoolLevel"
+        ).value
+    );
+
+
+    /*
+       Clear stream selections.
+    */
+
+    document.getElementById(
+        "streamName"
+    ).innerHTML =
+        '<option value="">Select Grade First</option>';
+
+    document.getElementById(
+        "streamName"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "individualStream"
+    ).innerHTML =
+        '<option value="">Select Grade First</option>';
+
+    document.getElementById(
+        "individualStream"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "individualLearner"
+    ).innerHTML =
+        '<option value="">Select Grade / Stream First</option>';
+
+    document.getElementById(
+        "individualLearner"
+    ).disabled =
+        true;
+
+
+    selectedLearners = [];
+
+
+    refreshCandidates();
+
+}
+
+
+/* =========================================================
+   STREAM GRADE CHANGE
+========================================================= */
+
+function handleStreamGradeChange() {
+
+    populateStreamSelect(
+        "streamGrade",
+        "streamName"
+    );
+
+    refreshCandidates();
+
+}
+
+
+/* =========================================================
+   STREAM CHANGE
+========================================================= */
+
+function handleStreamChange() {
+
+    refreshCandidates();
+
+}
+
+
+/* =========================================================
+   INDIVIDUAL GRADE CHANGE
+========================================================= */
+
+function handleIndividualGradeChange() {
+
+    populateStreamSelect(
+        "individualGrade",
+        "individualStream"
+    );
+
+
+    document.getElementById(
+        "individualLearner"
+    ).innerHTML =
+        '<option value="">Select Stream First</option>';
+
+    document.getElementById(
+        "individualLearner"
+    ).disabled =
+        true;
+
+
+    refreshCandidates();
+
+}
+
+
+/* =========================================================
+   INDIVIDUAL STREAM CHANGE
+========================================================= */
+
+function handleIndividualStreamChange() {
+
+    const grade =
+        document.getElementById(
+            "individualGrade"
+        ).value;
+
+
+    const stream =
+        document.getElementById(
+            "individualStream"
+        ).value;
+
+
+    const level =
+        document.getElementById(
+            "schoolLevel"
+        ).value;
+
+
+    const learnerSelect =
+        document.getElementById(
+            "individualLearner"
+        );
+
+
+    learnerSelect.innerHTML =
+        '<option value="">Select Learner</option>';
+
+
+    learnerSelect.disabled =
+        true;
+
+
+    if (!grade || !stream) {
+
+        refreshCandidates();
+
+        return;
+
+    }
+
+
+    const students =
+        getStudents();
+
+
+    const learners =
+        students.filter(
+            student => {
+
+                if (
+                    level &&
+                    normalize(
+                        getStudentLevel(student)
+                    ) !==
+                    normalize(level)
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    normalize(
+                        getStudentGrade(student)
+                    ) !==
+                    normalize(grade)
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    normalize(stream) !==
+                    "ALL STREAMS"
+                ) {
+
+                    if (
+                        normalize(
+                            getStudentStream(student)
+                        ) !==
+                        normalize(stream)
+                    ) {
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return learnerHasResults(
+                    student
+                );
+
+            }
+        );
+
+
+    learners
+        .sort(
+            (a, b) =>
+                getStudentName(a)
+                    .localeCompare(
+                        getStudentName(b)
+                    )
+        )
+        .forEach(student => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                getStudentId(student);
+
+            option.textContent =
+                getStudentName(student) +
+                " — " +
+                getAdmission(student);
+
+            learnerSelect.appendChild(
+                option
+            );
+
+        });
+
+
+    learnerSelect.disabled =
+        learners.length === 0;
+
+
+    if (!learners.length) {
+
+        learnerSelect.innerHTML =
+            '<option value="">No recorded learners found</option>';
+
+    }
+
+
+    refreshCandidates();
+
+}
+
+
+/* =========================================================
+   INDIVIDUAL LEARNER CHANGE
+========================================================= */
+
+function handleIndividualLearnerChange() {
+
+    const learnerId =
+        document.getElementById(
+            "individualLearner"
+        ).value;
+
+
+    if (!learnerId) {
+
+        refreshCandidates();
+
+        return;
+
+    }
+
+
+    selectedLearners =
+        [String(learnerId)];
+
+
+    renderCandidates();
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goExamination() {
+
+    window.location.href =
+        "examination.html";
+
+}
+
+
+function goDashboard() {
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logoutUser() {
+
+    if (
+        typeof window.logout ===
+        "function"
+    ) {
+
+        window.logout();
+
+        return;
+
+    }
+
+
+    if (
+        typeof window.logoutGBHUser ===
+        "function"
+    ) {
+
+        window.logoutGBHUser();
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "gbhSession"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadSchoolDetails();
+
+
+        /*
+           Default year.
+        */
+
+        document.getElementById(
+            "academicYear"
+        ).value =
+            "2026";
+
+
+        /*
+           Report type cards.
+        */
+
+        document
+            .querySelectorAll(
+                ".report-type"
+            )
+            .forEach(card => {
+
+                card.addEventListener(
+                    "click",
+                    () => {
+
+                        selectReportType(
+                            card.dataset.reportType
+                        );
+
+                    }
+                );
+
+            });
+
+
+        /*
+           Level.
+        */
+
+        document.getElementById(
+            "schoolLevel"
+        ).addEventListener(
+            "change",
+            handleLevelChange
+        );
+
+
+        /*
+           Stream report.
+        */
+
+        document.getElementById(
+            "streamGrade"
+        ).addEventListener(
+            "change",
+            handleStreamGradeChange
+        );
+
+
+        document.getElementById(
+            "streamName"
+        ).addEventListener(
+            "change",
+            handleStreamChange
+        );
+
+
+        /*
+           Individual report.
+        */
+
+        document.getElementById(
+            "individualGrade"
+        ).addEventListener(
+            "change",
+            handleIndividualGradeChange
+        );
+
+
+        document.getElementById(
+            "individualStream"
+        ).addEventListener(
+            "change",
+            handleIndividualStreamChange
+        );
+
+
+        document.getElementById(
+            "individualLearner"
+        ).addEventListener(
+            "change",
+            handleIndividualLearnerChange
+        );
+
+
+        /*
+           Examination controls.
+        */
+
+        [
+            "academicYear",
+            "term",
+            "exam"
+        ].forEach(id => {
+
+            document.getElementById(
+                id
+            ).addEventListener(
+                "change",
+                () => {
+
+                    selectedLearners =
+                        [];
+
+                    refreshCandidates();
+
+                }
+            );
+
+        });
+
+
+        /*
+           Buttons.
+        */
+
+        document.getElementById(
+            "selectAllButton"
+        ).addEventListener(
+            "click",
+            selectAllLearners
+        );
+
+
+        document.getElementById(
+            "clearAllButton"
+        ).addEventListener(
+            "click",
+            clearAllLearners
+        );
+
+
+        document.getElementById(
+            "previewButton"
+        ).addEventListener(
+            "click",
+            previewSelection
+        );
+
+
+        document.getElementById(
+            "generateButton"
+        ).addEventListener(
+            "click",
+            generateReports
+        );
+
+
+        updateSummary();
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

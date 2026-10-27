@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GREEN HONEY BADGER SYSTEM - Learner Performance Report</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#1f2933;background:#eef4f1}
+body{padding:12px}
+button,select{font:inherit}
+button{border:0;border-radius:7px;padding:10px 13px;cursor:pointer;font-weight:700;color:white}
+button:hover{filter:brightness(.93)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,select:focus-visible{outline:3px solid #f5bd4f;outline-offset:2px}
+.btn-green{background:#087f4e}.btn-blue{background:#1769aa}.btn-dark{background:#263238}.btn-red{background:#b42318}.btn-light{background:#e7efeb;color:#17372a}
+.control-bar,.filter-panel{max-width:1200px;margin:0 auto 12px;background:#fff;border-radius:12px;padding:14px;box-shadow:0 4px 15px #00000012}
+.control-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.control-left,.control-right{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.control-title{font-weight:800;color:#075e3c}
+.filter-heading{font-size:16px;color:#075e3c;font-weight:800;margin:0 0 12px}
+.filter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.filter-field{min-width:0}
+.filter-field label{display:block;font-size:11px;font-weight:800;color:#47564e;margin-bottom:5px}
+.filter-field select{width:100%;min-width:0;padding:10px;border:1px solid #c8d5ce;border-radius:7px;background:#fff;color:#24352c}
+.filter-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px;align-items:center}
+.filter-status{font-size:12px;font-weight:700;color:#075e3c}
+.report-wrapper{max-width:1200px;margin:auto}
+.report-page{background:#fff;width:100%;padding:24px;box-shadow:0 4px 20px #00000012;border-top:5px solid #087f4e}
+.school-header{text-align:center;border-bottom:3px solid #087f4e;padding-bottom:12px;margin-bottom:14px}
+.school-logo{width:70px;height:70px;object-fit:contain;margin-bottom:5px}
+.school-name{margin:0;font-size:25px;color:#075e3c;text-transform:uppercase}
+.school-code{margin:5px 0;font-weight:700}.school-details-line{margin:3px 0;font-size:12px}
+.report-title{margin-top:12px;font-size:19px;font-weight:800}
+.meta-grid,.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.meta-box,.summary-card{border:1px solid #cfd8d3;padding:8px;background:#f3f8f5}
+.meta-label,.summary-label{display:block;font-size:10px;color:#5b6870;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.meta-value{font-weight:800;font-size:12px;overflow-wrap:anywhere}
+.learner-info{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #bfcac4;margin-bottom:12px}
+.info-cell{padding:8px;border-right:1px solid #d7dfdb;border-bottom:1px solid #d7dfdb;min-width:0}
+.info-cell:nth-child(4n){border-right:0}
+.info-label{display:block;font-size:9px;font-weight:700;color:#65736c;text-transform:uppercase}
+.info-value{display:block;margin-top:3px;font-weight:800;font-size:11px;overflow-wrap:anywhere}
+.results-title{margin:12px 0 7px;color:#075e3c;font-size:15px}
+.results-table-wrapper{width:100%;overflow-x:auto}
+.results-table{width:100%;border-collapse:collapse}
+.results-table th,.results-table td{border:1px solid #aebbb5;padding:6px;text-align:center;font-size:11pt}
+.results-table th{background:#075e3c;color:white;font-weight:800}
+.results-table td:nth-child(2),.results-table th:nth-child(2){text-align:left}
+.performance-level{font-weight:800}.level-EE1,.level-EE2{color:#087f4e}.level-ME1,.level-ME2{color:#1769aa}.level-AE1,.level-AE2{color:#a15c00}.level-BE{color:#b42318}
+.summary-grid{margin-top:12px;margin-bottom:0}
+.summary-card{text-align:center;border-radius:5px}
+.summary-value{display:block;margin-top:4px;font-size:18px;font-weight:900;color:#075e3c}
+.development-section,.graph-section{margin-top:14px}
+.section-heading,.comment-heading{background:#075e3c;color:#fff;padding:7px 10px;font-weight:800;font-size:12px}
+.development-content{border:1px solid #c6d0cb;padding:10px;min-height:42px;font-size:11pt;line-height:1.4}
+.graph-container{border:1px solid #c6d0cb;padding:8px;background:#fff;height:230px}
+#performanceGraph{width:100%;height:210px;display:block}
+.comments-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.comment-box{border:1px solid #c6d0cb;min-height:85px;overflow:hidden}
+.comment-body{padding:10px;line-height:1.4;font-size:11pt}
+.signatures{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:20px}
+.signature-line{border-bottom:1px solid #333;height:24px;margin-bottom:5px}
+.signature-label{font-weight:700;font-size:11px}
+.date-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.date-box{border:1px solid #c6d0cb;padding:8px;font-size:11px}
+.report-footer{text-align:center;margin-top:18px;padding-top:8px;border-top:2px solid #087f4e;font-size:10px;color:#66736c}
+.empty-state{text-align:center;padding:35px 18px;background:#fff;border-radius:12px;box-shadow:0 4px 20px #00000012}
+.empty-state h2{color:#b42318}
+.hidden{display:none!important}
+#learnerCounter{font-weight:700;color:#075e3c;min-width:65px;text-align:center}
+@media(max-width:800px){
+ .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .meta-grid,.learner-info,.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .info-cell:nth-child(4n){border-right:1px solid #d7dfdb}
+ .info-cell:nth-child(2n){border-right:0}
+ .comments-grid,.signatures{grid-template-columns:1fr}
+ .report-page{padding:14px}
+ .results-table{min-width:600px}
+}
+@media(max-width:480px){
+ body{padding:5px}
+ .filter-grid,.meta-grid,.learner-info,.summary-grid,.date-grid{grid-template-columns:1fr}
+ .info-cell{border-right:0!important}
+ .school-name{font-size:20px}
+ .control-left,.control-right{width:100%}
+ .control-right button{flex:1}
+ .report-page{padding:9px}
+}
+@page{size:A4 portrait;margin:5mm}
+@media print{
+ html,body{width:100%;margin:0!important;padding:0!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ .control-bar,.filter-panel,.no-print,.empty-state{display:none!important}
+ .report-wrapper{width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+ .report-page{width:100%!important;margin:0!important;padding:1mm!important;box-shadow:none!important;border:0!important}
+ .school-header{padding:0 0 2mm!important;margin:0 0 2mm!important;border-bottom:2px solid #087f4e!important}
+ .school-logo{width:12mm!important;height:12mm!important;margin:0 0 1mm!important}
+ .school-name{font-size:17pt!important;line-height:1.05!important;margin:0!important}
+ .school-code{font-size:8pt!important;margin:1mm 0!important}
+ .school-details-line{font-size:7.5pt!important;margin:.5mm 0!important}
+ .report-title{font-size:11pt!important;margin:2mm 0 0!important}
+ .meta-grid,.summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:1mm!important;margin:0 0 2mm!important}
+ .meta-box,.summary-card{padding:1.3mm!important}
+ .meta-label,.summary-label{font-size:6.5pt!important;margin-bottom:.5mm!important}
+ .meta-value{font-size:8pt!important}
+ .learner-info{grid-template-columns:repeat(4,minmax(0,1fr))!important;margin:0 0 2mm!important}
+ .info-cell{padding:1.3mm!important}
+ .info-label{font-size:6.5pt!important}
+ .info-value{font-size:8pt!important;margin-top:.5mm!important}
+ .results-title{font-size:9.5pt!important;margin:1.5mm 0 1mm!important}
+ .results-table{width:100%!important;min-width:0!important;table-layout:auto!important}
+ .results-table th,.results-table td{font-size:8pt!important;padding:1.3mm!important}
+ .summary-value{font-size:12pt!important;margin-top:.5mm!important}
+ .development-section,.graph-section{margin-top:2mm!important}
+ .section-heading,.comment-heading{font-size:8pt!important;padding:1.3mm 2mm!important}
+ .development-content,.comment-body{padding:1.5mm 2mm!important;font-size:8pt!important;line-height:1.2!important}
+ .graph-container{height:22mm!important;padding:1mm!important}
+ #performanceGraph{height:19mm!important}
+ .comments-grid{grid-template-columns:1fr 1fr!important;gap:2mm!important;margin-top:2mm!important}
+ .comment-box{min-height:0!important}
+ .date-grid{grid-template-columns:1fr 1fr!important;gap:2mm!important;margin-top:2mm!important}
+ .date-box{padding:1.5mm!important;font-size:7.5pt!important}
+ .signatures{grid-template-columns:1fr 1fr!important;gap:8mm!important;margin-top:3mm!important}
+ .signature-line{height:5mm!important}
+ .signature-label{font-size:7.5pt!important}
+ .report-footer{margin-top:2mm!important;padding-top:1mm!important;font-size:7pt!important}
+ .development-section,.graph-section,.comments-grid,.date-grid,.signatures,.summary-grid,.learner-info,.results-table{break-inside:avoid!important;page-break-inside:avoid!important}
+ .print-report-page{break-after:page!important;page-break-after:always!important}
+ .print-report-page:last-child{break-after:auto!important;page-break-after:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="control-bar no-print">
+ <div class="control-left">
+  <span class="control-title">GREEN HONEY BADGER SYSTEM</span>
+  <span>Learner Performance Report</span>
+ </div>
+ <div class="control-right">
+  <button class="btn-green" type="button" id="printCurrentBtn">🖨 Print Report</button>
+  <button class="btn-blue" type="button" id="printAllBtn">📚 Print All Selected</button>
+  <button class="btn-light" type="button" id="previousBtn">← Previous</button>
+  <span id="learnerCounter">0 / 0</span>
+  <button class="btn-light" type="button" id="nextBtn">Next →</button>
+  <button class="btn-blue" type="button" id="assessmentBtn">📊 Assessment</button>
+  <button class="btn-dark" type="button" id="examinationBtn">📝 Examination</button>
+  <button class="btn-red" type="button" id="logoutBtn">Logout</button>
+ </div>
+</div>
+
+<!-- REPORT SELECTION PANEL -->
+<div class="filter-panel no-print">
+ <h2 class="filter-heading">LEARNERS REPORT — SELECT REPORT CRITERIA</h2>
+ <div class="filter-grid">
+  <div class="filter-field">
+   <label for="filterYear">Academic Year</label>
+   <select id="filterYear"><option value="">All available years</option></select>
+  </div>
+  <div class="filter-field">
+   <label for="filterTerm">Term</label>
+   <select id="filterTerm">
+    <option value="">All terms</option>
+    <option value="TERM 1">TERM 1</option>
+    <option value="TERM 2">TERM 2</option>
+    <option value="TERM 3">TERM 3</option>
+   </select>
+  </div>
+  <div class="filter-field">
+   <label for="filterExam">Examination / Assessment</label>
+   <select id="filterExam">
+    <option value="">All examinations</option>
+    <option value="CAT1">CAT1</option>
+    <option value="CAT2">CAT2</option>
+    <option value="MID TERM">MID TERM</option>
+    <option value="END TERM">END TERM</option>
+    <option value="ANNUAL">ANNUAL</option>
+   </select>
+  </div>
+  <div class="filter-field">
+   <label for="filterLevel">School Level</label>
+   <select id="filterLevel"><option value="">All levels</option></select>
+  </div>
+  <div class="filter-field">
+   <label for="filterGrade">Grade / Class</label>
+   <select id="filterGrade"><option value="">All grades</option></select>
+  </div>
+  <div class="filter-field">
+   <label for="filterStream">Stream</label>
+   <select id="filterStream"><option value="">All streams</option></select>
+  </div>
+  <div class="filter-field">
+   <label for="filterLearner">Individual Learner</label>
+   <select id="filterLearner"><option value="">All matching learners</option></select>
+  </div>
+ </div>
+ <div class="filter-actions">
+  <button class="btn-green" type="button" id="generateBtn">⚡ Generate Report</button>
+  <button class="btn-blue" type="button" id="printFilteredBtn">🖨 Print Selected Reports</button>
+  <button class="btn-light" type="button" id="clearFiltersBtn">Clear Filters</button>
+  <span class="filter-status" id="filterStatus" aria-live="polite">Load records to begin.</span>
+ </div>
+</div>
+
+<div class="report-wrapper">
+ <div id="emptyState" class="empty-state hidden">
+  <h2 id="emptyTitle">No Report Selected</h2>
+  <p id="emptyMessage">Choose your criteria above and generate a report.</p>
+  <button class="btn-green" type="button" id="emptyGenerateBtn">Generate Report</button>
+  <button class="btn-light" type="button" id="reloadBtn">Reload Records</button>
+ </div>
+
+ <div id="reportPage" class="report-page hidden">
+  <div class="school-header">
+   <img id="schoolLogo" class="school-logo hidden" alt="School logo">
+   <h1 id="schoolName" class="school-name">GREEN HONEY BADGER SYSTEM</h1>
+   <div id="schoolCode" class="school-code">School Code: —</div>
+   <div id="schoolDetailsLine" class="school-details-line">—</div>
+   <div id="schoolContactLine" class="school-details-line">—</div>
+   <div class="report-title">LEARNER PERFORMANCE REPORT</div>
+  </div>
+
+  <div class="meta-grid">
+   <div class="meta-box"><span class="meta-label">Academic Year</span><span id="academicYear" class="meta-value">—</span></div>
+   <div class="meta-box"><span class="meta-label">Term</span><span id="term" class="meta-value">—</span></div>
+   <div class="meta-box"><span class="meta-label">Examination / Assessment</span><span id="examination" class="meta-value">—</span></div>
+   <div class="meta-box"><span class="meta-label">School Level</span><span id="schoolLevel" class="meta-value">—</span></div>
+  </div>
+
+  <div class="learner-info">
+   <div class="info-cell"><span class="info-label">Learner Name</span><span id="learnerName" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Admission Number</span><span id="admissionNumber" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Grade / Class</span><span id="learnerGrade" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Stream</span><span id="learnerStream" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Gender</span><span id="learnerGender" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Class Teacher</span><span id="classTeacher" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Teacher Initials</span><span id="classTeacherInitials" class="info-value">—</span></div>
+   <div class="info-cell"><span class="info-label">Report Type</span><span id="reportType" class="info-value">—</span></div>
+  </div>
+
+  <h2 class="results-title">LEARNING AREA PERFORMANCE</h2>
+  <div class="results-table-wrapper">
+   <table class="results-table">
+    <thead><tr><th>#</th><th>Learning Area</th><th>Score</th><th>Performance Level</th><th>Teacher Initials</th></tr></thead>
+    <tbody id="resultsBody"></tbody>
+   </table>
+  </div>
+
+  <div class="summary-grid">
+   <div class="summary-card"><span class="summary-label">Learning Areas</span><span id="totalSubjects" class="summary-value">0</span></div>
+   <div class="summary-card"><span class="summary-label">Total Marks</span><span id="totalMark" class="summary-value">0</span></div>
+   <div class="summary-card"><span class="summary-label">Overall Mark</span><span id="overallMark" class="summary-value">0%</span></div>
+   <div class="summary-card"><span class="summary-label">Overall Position</span><span id="overallPosition" class="summary-value">—</span></div>
+  </div>
+
+  <div class="development-section"><div class="section-heading">DEVELOPMENT / PROGRESS</div><div id="developmentText" class="development-content">—</div></div>
+  <div class="graph-section"><div class="section-heading">PERFORMANCE GRAPH</div><div class="graph-container"><canvas id="performanceGraph" aria-label="Blue line graph showing percentage by learning area"></canvas></div></div>
+
+  <div class="comments-grid">
+   <div class="comment-box"><div class="comment-heading">TEACHER'S REMARKS</div><div id="teacherComment" class="comment-body">—</div></div>
+   <div class="comment-box"><div class="comment-heading">PRINCIPAL / HOI REMARKS</div><div id="headteacherComment" class="comment-body">—</div></div>
+  </div>
+
+  <div class="date-grid">
+   <div class="date-box"><strong>Opening Date:</strong> <span id="openingDate">—</span></div>
+   <div class="date-box"><strong>Closing Date:</strong> <span id="closingDate">—</span></div>
+  </div>
+
+  <div class="signatures">
+   <div><div class="signature-line"></div><div class="signature-label">Class Teacher / Teacher's Signature</div><div id="signatureTeacher">—</div></div>
+   <div><div class="signature-line"></div><div class="signature-label">Principal / Head of Institution</div><div id="signatureHeadteacher">—</div></div>
+  </div>
+
+  <div class="report-footer">GREEN HONEY BADGER SYSTEM — Learner Performance Report<br>Generated from the school's locally stored examination records.</div>
+ </div>
+</div>
+
+<script>
+"use strict";
+
+const STORAGE={
+ students:"students",teachers:"teachers",results:"examResults",
+ school:"schoolDetails",request:"gbhAssessmentReportRequest",
+ session:"gbhSession"
+};
+
+let students=[],teachers=[],examResults=[],schoolDetails={},reportRequest={};
+let allSelectedStudents=[],currentIndex=0,currentStudent=null,currentResults=[];
+let generated=false;
+
+const $=id=>document.getElementById(id);
+
+function readJSON(store,key,fallback=null){
+ try{
+  const raw=store.getItem(key);
+  return raw===null?fallback:JSON.parse(raw);
+ }catch(e){console.warn("GBH report: could not read",key,e);return fallback}
+}
+function normalize(v){
+ return String(v??"").trim().toLowerCase().replace(/[_-]+/g," ").replace(/\s+/g," ");
+}
+function val(o,keys,fallback=""){
+ for(const k of keys){
+  if(o&&o[k]!==undefined&&o[k]!==null&&o[k]!=="")return o[k];
+ }
+ return fallback;
+}
+function text(id,v,fallback="—"){
+ const el=$(id);
+ if(el)el.textContent=v===undefined||v===null||String(v).trim()===""?fallback:String(v);
+}
+function arrayify(v){
+ if(Array.isArray(v))return v;
+ if(typeof v==="string")return v.split(/[,;|]/).map(x=>x.trim()).filter(Boolean);
+ return v&&typeof v==="object"?Object.values(v):[];
+}
+function keyId(v){return normalize(v).replace(/[^a-z0-9]/g,"")}
+function studentName(s){return val(s,["studentName","learnerName","fullName","name"],"Unnamed Learner")}
+function admission(s){return val(s,["admissionNumber","admissionNo","admission","admNo","admission_number"],"—")}
+function studentId(s){return String(val(s,["studentId","studentID","id","learnerId","learnerID","admissionNumber","admissionNo","admission"],admission(s)))}
+function gradeOf(s){return val(s,["grade","class","currentGrade","className"],"")}
+function streamOf(s){return val(s,["stream","classStream"],"")}
+function levelOf(s){return val(s,["schoolLevel","level","stage"],"")}
+function areaOf(r){return val(r,["learningArea","learning_area","subject","subjectName","area","subjectTitle","learningAreaName"],"")}
+function yearOf(r){return val(r,["academicYear","year","schoolYear"],"")}
+function termOf(r){return val(r,["term","termName"],"")}
+function examOf(r){return val(r,["examination","exam","assessment","examType","assessmentType"],"")}
+function scoreOf(r){
+ const n=Number(val(r,["score","marks","mark","scoreObtained","marksObtained","rawScore","obtainedMarks","marksScored","result"],0));
+ return Number.isFinite(n)?n:0;
+}
+function maxOf(r){
+ const n=Number(val(r,["maximumMark","maxMark","outOf","maximum","max","outOfMarks","totalMarks"],100));
+ return Number.isFinite(n)&&n>0?n:100;
+}
+function studentAliases(s){
+ return [studentId(s),admission(s),studentName(s),s.studentID,s.learnerId,s.learnerID].filter(Boolean).map(keyId);
+}
+function findStudentForRecord(r){
+ const ids=["studentId","studentID","learnerId","learnerID","admissionNumber","admissionNo","studentAdmission","admission","admNo","studentName","learnerName","name"];
+ for(const k of ids){
+  if(r&&r[k]!==undefined&&r[k]!==null&&r[k]!==""){
+   const needle=keyId(r[k]);
+   const found=students.find(s=>studentAliases(s).includes(needle));
+   if(found)return found;
+  }
+ }
+ return null;
+}
+
+/* Supports GBH records stored as flat marks or nested year/term/exam structures. */
+function flattenResults(source){
+ const out=[],seen=new Set();
+ const areaKeys=["learningArea","learning_area","subject","subjectName","area","subjectTitle","learningAreaName"];
+ const scoreKeys=["score","marks","mark","scoreObtained","marksObtained","rawScore","obtainedMarks","marksScored","result"];
+ function walk(node,ctx={},depth=0){
+  if(node==null||depth>12)return;
+  if(Array.isArray(node)){node.forEach(x=>walk(x,ctx,depth+1));return}
+  if(typeof node!=="object")return;
+
+  const m={...ctx,...node};
+  const area=val(node,areaKeys,ctx.learningArea||ctx.subject||"");
+  const sk=scoreKeys.find(k=>node[k]!==undefined&&node[k]!==null&&node[k]!==""&&typeof node[k]!=="object");
+  const identity=val(m,["studentId","studentID","learnerId","learnerID","admissionNumber","admissionNo","studentAdmission","admission","admNo","studentName","learnerName"],"");
+
+  if(area&&sk&&identity!==""){
+   const rec={...m,learningArea:area,score:node[sk]};
+   const sig=[
+    keyId(identity),normalize(yearOf(rec)),normalize(termOf(rec)),
+    normalize(examOf(rec)),normalize(area),
+    normalize(val(rec,["grade","class","className"],"")),
+    normalize(val(rec,["stream"],""))
+   ].join("|");
+   if(!seen.has(sig)){seen.add(sig);out.push(rec)}
+  }
+
+  const explicit=["learningAreas","subjects","results","marks","assessments","records","learners","students","grades","streams","examinations","terms","data","scores","studentResults","examResults"];
+  const done=new Set();
+
+  explicit.forEach(k=>{
+   if(node[k]&&typeof node[k]==="object"){
+    done.add(k);
+    walk(node[k],ctx,depth+1);
+   }
+  });
+
+  Object.keys(node).forEach(k=>{
+   if(done.has(k)||["__proto__","constructor","prototype"].includes(k))return;
+   const child=node[k];
+   if(!child||typeof child!=="object")return;
+   const c={...ctx},nk=normalize(k);
+   if(/^20\d{2}$/.test(k))c.academicYear=c.academicYear||k;
+   else if(/^term ?[123]$/.test(nk))c.term=c.term||k;
+   else if(["cat1","cat2","mid term","end term","annual","midterm","endterm"].includes(nk))c.examination=c.examination||k;
+   else if(/^(grade ?[1-9]|pp1|pp2|play group)$/.test(nk))c.grade=c.grade||k;
+   else if(!c.learningArea&&!c.subject&&depth>0&&!/^\d+$/.test(k)&&!identity&&areaKeys.every(a=>!node[a]))c.learningArea=k;
+   walk(child,c,depth+1);
+  });
+ }
+
+ walk(source);
+
+ /* Also supports learner records with a subject-to-score map. */
+ function scanMaps(node,depth=0,ctx={}){
+  if(!node||typeof node!=="object"||depth>8)return;
+  if(Array.isArray(node)){node.forEach(x=>scanMaps(x,depth+1,ctx));return}
+  const learner=findStudentForRecord(node);
+  const year=val(node,["academicYear","year","schoolYear"],ctx.academicYear||"");
+  const term=val(node,["term","termName"],ctx.term||"");
+  const exam=val(node,["examination","exam","assessment","examType","assessmentType"],ctx.examination||"");
+  const map=val(node,["learningAreas","subjects","scores","marksBySubject"],null);
+
+  if(learner&&map&&typeof map==="object"){
+   Object.entries(map).forEach(([area,v])=>{
+    let score,max=100,level="";
+    if(v&&typeof v==="object"){
+     score=val(v,scoreKeys.concat(["value"]),null);
+     max=Number(val(v,["maximumMark","maxMark","outOf","max","totalMarks"],100));
+     level=val(v,["performanceLevel","level"],"");
+    }else score=v;
+
+    if(score!==null&&score!==undefined&&score!==""&&Number.isFinite(Number(score))){
+     const rec={
+      studentId:studentId(learner),studentName:studentName(learner),
+      admissionNumber:admission(learner),learningArea:area,score:Number(score),
+      maximumMark:Number.isFinite(max)&&max>0?max:100,
+      academicYear:year,term,examination:exam,grade:gradeOf(learner),
+      stream:streamOf(learner),performanceLevel:level
+     };
+     const sig=[keyId(studentId(learner)),normalize(year),normalize(term),normalize(exam),normalize(area)].join("|");
+     if(!seen.has(sig)){seen.add(sig);out.push(rec)}
+    }
+   });
+  }
+
+  Object.entries(node).forEach(([k,v])=>{
+   if(v&&typeof v==="object"){
+    const c={...ctx};
+    if(/^20\d{2}$/.test(k))c.academicYear=k;
+    else if(/^term ?[123]$/i.test(k))c.term=k;
+    else if(["cat1","cat2","mid term","end term","annual"].includes(normalize(k)))c.examination=k;
+    scanMaps(v,depth+1,c);
+   }
+  });
+ }
+ scanMaps(source);
+ return out;
+}
+
+function recordMatchesStudent(r,s){
+ const direct=val(r,["studentId","studentID","learnerId","learnerID","admissionNumber","admissionNo","studentAdmission","admission","admNo","studentName","learnerName"],"");
+ if(direct)return studentAliases(s).includes(keyId(direct));
+ const linked=findStudentForRecord(r);
+ return linked?keyId(studentId(linked))===keyId(studentId(s)):false;
+}
+
+function loadData(){
+ students=arrayify(readJSON(localStorage,STORAGE.students,[])).filter(x=>x&&typeof x==="object");
+ teachers=arrayify(readJSON(localStorage,STORAGE.teachers,[])).filter(x=>x&&typeof x==="object");
+ schoolDetails=readJSON(localStorage,STORAGE.school,{})||{};
+
+ let rq=readJSON(sessionStorage,STORAGE.request,null)||readJSON(localStorage,STORAGE.request,null);
+ if(!rq){
+  rq=readJSON(sessionStorage,"assessmentReportRequest",null)||
+     readJSON(localStorage,"assessmentReportRequest",null)||
+     readJSON(sessionStorage,"gbhReportRequest",null)||
+     readJSON(localStorage,"gbhReportRequest",null);
+ }
+ reportRequest=rq&&typeof rq==="object"?rq:{};
+ examResults=flattenResults(readJSON(localStorage,STORAGE.results,[]));
+}
+
+function teacherFullName(t){return val(t,["teacherName","fullName","name","staffName"],"")}
+function initials(t){
+ if(!t)return"—";
+ const explicit=val(t,["initials","teacherInitials","staffInitials"],"");
+ return explicit?String(explicit).toUpperCase():
+  teacherFullName(t).split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,4).toUpperCase()||"—";
+}
+function teacherAreas(t){
+ return arrayify(val(t,["learningAreas","subjects","teachingSubjects","subject","learningArea"],[]))
+  .map(x=>typeof x==="object"?val(x,["name","learningArea","subject","subjectName"],""):x).filter(Boolean);
+}
+function findTeacher(s,area="",classOnly=false){
+ const candidates=[];
+ teachers.forEach(t=>{
+  const assignments=arrayify(t.assignments||t.classes||t.teachingAssignments);
+  const objects=[t,...assignments.filter(x=>x&&typeof x==="object")];
+
+  objects.forEach(a=>{
+   const isCT=[a.classTeacher,a.isClassTeacher,a.classTeacherStatus,t.classTeacher,t.isClassTeacher,t.classTeacherStatus]
+    .some(x=>x===true||["yes","true","y"].includes(normalize(x)));
+   const ag=normalize(val(a,["grade","assignedGrade","class","className"],val(t,["grade","assignedGrade","class","className"],"")));
+   const al=normalize(val(a,["schoolLevel","level","assignedLevel"],val(t,["schoolLevel","level","assignedLevel"],"")));
+   const ast=normalize(val(a,["stream","assignedStream"],val(t,["stream","assignedStream"],"")));
+
+   if(ag&&normalize(gradeOf(s))&&ag!==normalize(gradeOf(s)))return;
+   if(al&&normalize(levelOf(s))&&al!==normalize(levelOf(s)))return;
+   if(ast&&!["all","all streams"].includes(ast)&&normalize(streamOf(s))&&ast!==normalize(streamOf(s)))return;
+
+   const subjects=teacherAreas(a).concat(teacherAreas(t));
+   const match=area&&subjects.some(x=>normalize(x)===normalize(area));
+   if(classOnly&&!isCT)return;
+   if(area&&!classOnly&&!match)return;
+
+   candidates.push({t,score:(ag?4:0)+(al?2:0)+(ast?1:0)+(match?5:0)+(isCT?1:0)});
+  });
+ });
+ candidates.sort((a,b)=>b.score-a.score);
+ return candidates[0]?.t||null;
+}
+
+function levelFor(r){
+ const raw=val(r,["performanceLevel","cbcLevel","level"],"");
+ if(/^(EE1|EE2|ME1|ME2|AE1|AE2|BE)$/i.test(String(raw)))return String(raw).toUpperCase();
+ const p=scoreOf(r)/maxOf(r)*100;
+ return p>=80?"EE1":p>=75?"EE2":p>=65?"ME1":p>=55?"ME2":p>=45?"AE1":p>=35?"AE2":"BE";
+}
+function fmtDate(v){
+ if(!v)return"—";
+ const d=new Date(v);
+ return Number.isNaN(d.getTime())?String(v):d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+}
+function reportType(v){
+ return({ALL_GRADES:"ALL GRADES",SPECIFIED_GRADES:"SPECIFIED GRADES",STREAM:"STREAM",INDIVIDUAL:"INDIVIDUAL"})[v]||String(v||"INDIVIDUAL").toUpperCase();
+}
+function renderSchool(){
+ text("schoolName",val(schoolDetails,["schoolName","name"],"GREEN HONEY BADGER SYSTEM"));
+ text("schoolCode","School Code: "+val(schoolDetails,["schoolCode","code"],"—"));
+ text("schoolDetailsLine",["county","subCounty","zone","ward","location"].map(k=>schoolDetails[k]).filter(Boolean).join(" • "));
+ text("schoolContactLine",["schoolAddress","address","schoolPhone","phone","schoolEmail","email"].map(k=>schoolDetails[k]).filter(Boolean).join(" • "));
+ const logo=$("schoolLogo"),src=val(schoolDetails,["logo","schoolLogo","logoDataUrl","logoURL"],"");
+ if(src&&/^(data:image\/|https?:\/\/)/i.test(src)){logo.src=src;logo.classList.remove("hidden")}
+ else{logo.removeAttribute("src");logo.classList.add("hidden")}
+}
+
+function populateSelect(id,values,firstLabel){
+ const el=$(id),old=el.value;
+ el.replaceChildren();
+ const first=document.createElement("option");
+ first.value="";first.textContent=firstLabel;el.appendChild(first);
+ [...new Set(values.filter(v=>v!==undefined&&v!==null&&String(v).trim()!=="").map(String))]
+  .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:"base"}))
+  .forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;el.appendChild(o)});
+ if([...el.options].some(o=>o.value===old))el.value=old;
+}
+function populateFilters(){
+ populateSelect("filterYear",examResults.map(yearOf).concat(["2026","2027","2028"]),"All available years");
+ populateSelect("filterLevel",students.map(levelOf),"All levels");
+ populateSelect("filterGrade",students.map(gradeOf),"All grades");
+ populateSelect("filterStream",students.map(streamOf),"All streams");
+ populateSelect("filterLearner",students.map(s=>studentId(s)),"All matching learners");
+
+ const learner=$("filterLearner");
+ [...learner.options].forEach(o=>{
+  if(!o.value)return;
+  const s=students.find(x=>studentId(x)===o.value);
+  if(s)o.textContent=studentName(s)+" — "+admission(s);
+ });
+
+ const rq=reportRequest;
+ const setFrom=(id,keys)=>{
+  const v=val(rq,keys,"");
+  if(!v)return;
+  const el=$(id),wanted=String(v);
+  const option=[...el.options].find(o=>normalize(o.value)===normalize(wanted)||normalize(o.textContent)===normalize(wanted));
+  if(option)el.value=option.value;
+ };
+ setFrom("filterYear",["academicYear","year","selectedYear"]);
+ setFrom("filterTerm",["term","selectedTerm"]);
+ setFrom("filterExam",["examination","exam","assessment","examType","selectedExam"]);
+ setFrom("filterLevel",["schoolLevel","level","selectedLevel"]);
+ setFrom("filterGrade",["grade","selectedGrade","class"]);
+ setFrom("filterStream",["stream","selectedStream"]);
+
+ const ids=arrayify(val(rq,["studentIds","selectedStudentIds","learnerIds","selectedLearners"],[]));
+ if(ids.length){
+  const needle=keyId(typeof ids[0]==="object"?studentId(ids[0]):ids[0]);
+  const match=[...learner.options].find(o=>keyId(o.value)===needle||keyId(o.textContent)===needle);
+  if(match)learner.value=match.value;
+ }
+}
+
+function activeFilters(){
+ return{
+  year:$("filterYear").value,
+  term:$("filterTerm").value,
+  exam:$("filterExam").value,
+  level:$("filterLevel").value,
+  grade:$("filterGrade").value,
+  stream:$("filterStream").value,
+  learner:$("filterLearner").value
+ };
+}
+
+function syncRequestFromFilters(){
+ const f=activeFilters();
+ reportRequest={
+  ...reportRequest,
+  academicYear:f.year,
+  term:f.term,
+  examination:f.exam,
+  schoolLevel:f.level,
+  grade:f.grade,
+  stream:f.stream,
+  reportType:f.learner?"INDIVIDUAL":f.stream?"STREAM":f.grade?"SPECIFIED_GRADES":"ALL_GRADES"
+ };
+ if(f.learner){
+  reportRequest.studentIds=[f.learner];
+ }else{
+  delete reportRequest.studentIds;
+  delete reportRequest.selectedStudentIds;
+  delete reportRequest.learnerIds;
+  delete reportRequest.selectedLearners;
+ }
+ try{sessionStorage.setItem(STORAGE.request,JSON.stringify(reportRequest))}catch(e){}
+}
+
+function recordMatchesFilters(r,f){
+ if(f.year&&normalize(yearOf(r))!==normalize(f.year))return false;
+ if(f.term&&normalize(termOf(r))!==normalize(f.term))return false;
+ if(f.exam&&normalize(examOf(r))!==normalize(f.exam))return false;
+ return true;
+}
+function filterResults(s){
+ const f=activeFilters();
+ return examResults.filter(r=>recordMatchesStudent(r,s)&&areaOf(r))
+  .filter(r=>recordMatchesFilters(r,f))
+  .filter(r=>{
+   const rg=normalize(val(r,["grade","class","className"],""));
+   return !rg||!normalize(gradeOf(s))||rg===normalize(gradeOf(s));
+  });
+}
+function totalFor(s){
+ const rr=filterResults(s);
+ return rr.reduce((a,r)=>({score:a.score+scoreOf(r),max:a.max+maxOf(r)}),{score:0,max:0});
+}
+function percentage(s){
+ const t=totalFor(s);
+ return t.max?t.score/t.max*100:0;
+}
+
+function getFilteredLearners(){
+ const f=activeFilters();
+ return students.filter(s=>{
+  if(f.level&&normalize(levelOf(s))!==normalize(f.level))return false;
+  if(f.grade&&normalize(gradeOf(s))!==normalize(f.grade))return false;
+  if(f.stream&&normalize(streamOf(s))!==normalize(f.stream))return false;
+  if(f.learner&&studentId(s)!==f.learner)return false;
+  return true;
+ }).sort((a,b)=>String(admission(a)).localeCompare(String(admission(b)),undefined,{numeric:true,sensitivity:"base"}));
+}
+
+function renderMeta(){
+ const f=activeFilters();
+ text("academicYear",f.year||"All available years");
+ text("term",f.term||"All terms");
+ text("examination",f.exam||"All examinations");
+ text("schoolLevel",levelOf(currentStudent));
+ text("reportType",f.learner?"INDIVIDUAL":f.stream?"STREAM":f.grade?"SPECIFIED GRADES":"ALL GRADES");
+}
+
+function renderResults(){
+ const body=$("resultsBody");body.replaceChildren();
+ currentResults.sort((a,b)=>areaOf(a).localeCompare(areaOf(b)));
+ if(!currentResults.length){
+  const tr=document.createElement("tr"),td=document.createElement("td");
+  td.colSpan=5;
+  td.textContent="No marks matched the selected year, term and examination. Confirm that marks have been saved in Examination.";
+  tr.appendChild(td);body.appendChild(tr);return;
+ }
+ currentResults.forEach((r,i)=>{
+  const teacher=findTeacher(currentStudent,areaOf(r),false)||findTeacher(currentStudent,"",true);
+  const values=[i+1,areaOf(r),`${scoreOf(r)} / ${maxOf(r)}`,levelFor(r),initials(teacher)];
+  const tr=document.createElement("tr");
+  values.forEach((v,j)=>{
+   const td=document.createElement("td");td.textContent=String(v);
+   if(j===3)td.className="performance-level level-"+v;
+   tr.appendChild(td);
+  });
+  body.appendChild(tr);
+ });
+}
+
+function renderSummary(){
+ const t=currentResults.reduce((a,r)=>({score:a.score+scoreOf(r),max:a.max+maxOf(r)}),{score:0,max:0});
+ text("totalSubjects",currentResults.length);
+ text("totalMark",`${Number(t.score.toFixed(2))} / ${Number(t.max.toFixed(2))}`);
+ text("overallMark",t.max?`${(t.score/t.max*100).toFixed(1)}%`:"—");
+
+ const peers=allSelectedStudents.filter(s=>normalize(gradeOf(s))===normalize(gradeOf(currentStudent)));
+ const scored=peers.map(s=>({s,p:percentage(s),max:totalFor(s).max})).filter(x=>x.max>0).sort((a,b)=>b.p-a.p);
+ const pos=scored.findIndex(x=>keyId(studentId(x.s))===keyId(studentId(currentStudent)));
+ text("overallPosition",pos<0?"—":`${pos+1} / ${scored.length}`);
+}
+
+function previousPercentage(s){
+ const groups=new Map();
+ examResults.filter(r=>recordMatchesStudent(r,s)&&areaOf(r)).forEach(r=>{
+  const k=[yearOf(r),termOf(r),examOf(r)].map(normalize).join("|");
+  if(!groups.has(k))groups.set(k,[]);
+  groups.get(k).push(r);
+ });
+ const f=activeFilters(),current=[f.year,f.term,f.exam].map(normalize).join("|");
+ const prev=[...groups.entries()].filter(([k])=>k!==current).sort((a,b)=>String(b[0]).localeCompare(String(a[0])))[0]?.[1];
+ if(!prev)return null;
+ const t=prev.reduce((a,r)=>({s:a.s+scoreOf(r),m:a.m+maxOf(r)}),{s:0,m:0});
+ return t.m?t.s/t.m*100:null;
+}
+function renderDevelopment(){
+ const now=percentage(currentStudent),prev=previousPercentage(currentStudent);
+ let message;
+ if(!currentResults.length)message="No results were found for the selected assessment. Confirm that marks have been saved in Examination.";
+ else if(prev===null)message=`Current overall achievement is ${now.toFixed(1)}%. Continue tracking progress in the next assessment.`;
+ else{
+  const d=now-prev;
+  message=d>0.05?`Performance improved by ${d.toFixed(1)} percentage points compared with the previous recorded assessment.`:
+   d<-.05?`Performance decreased by ${Math.abs(d).toFixed(1)} percentage points. Focused revision and teacher support are recommended.`:
+   "Performance is broadly maintained. Continue regular revision.";
+ }
+ text("developmentText",message);
+}
+function renderComments(){
+ const p=percentage(currentStudent);let teacher,head;
+ if(!currentResults.length){
+  teacher="No assessment marks were matched. Please verify the saved results and selected filters.";
+  head="Please ensure the learner's records and assessment marks are complete.";
+ }else if(p>=80){
+  teacher="Excellent performance. The learner demonstrates a strong understanding of the assessed learning areas. Maintain this effort.";
+  head="Commendable achievement. Keep up the excellent work and continue developing the learner's potential.";
+ }else if(p>=65){
+  teacher="Very good progress. Continue consistent practice and strengthen learning areas where further improvement is possible.";
+  head="Good achievement. Maintain commitment, regular revision and collaboration between school and home.";
+ }else if(p>=50){
+  teacher="Satisfactory progress. Regular practice and focused attention to areas requiring improvement are encouraged.";
+  head="A fair effort has been recorded. Continued commitment and timely support are recommended.";
+ }else if(p>=35){
+  teacher="The learner needs additional practice and targeted support. Progress should be reviewed regularly.";
+  head="Further support and consistent follow-up are needed. School and home should work together to help the learner improve.";
+ }else{
+  teacher="The learner needs substantial support and guided practice. Please arrange focused assistance and monitor progress closely.";
+  head="Priority support is recommended. Work with teachers and the parent or guardian on practical improvement steps.";
+ }
+ text("teacherComment",teacher);
+ text("headteacherComment",head);
+ const ct=findTeacher(currentStudent,"",true);
+ text("signatureTeacher",ct?teacherFullName(ct):"Class Teacher");
+ text("signatureHeadteacher",val(schoolDetails,["headteacherName","principalName","hoiName","headOfInstitution"],"Principal / Head of Institution"));
+}
+
+function renderGraph(){
+ const canvas=$("performanceGraph");if(!canvas)return;
+ const ctx=canvas.getContext("2d");if(!ctx)return;
+ const w=Math.max(300,canvas.clientWidth||700),h=210,ratio=window.devicePixelRatio||1;
+ canvas.width=w*ratio;canvas.height=h*ratio;
+ ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,w,h);
+ const left=42,right=14,top=16,bottom=42,gw=w-left-right,gh=h-top-bottom;
+ ctx.font="10px Arial";ctx.textAlign="right";ctx.strokeStyle="#d7e0e8";ctx.fillStyle="#374151";
+ for(let v=0;v<=100;v+=20){
+  const y=top+gh-gh*v/100;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();ctx.fillText(v+"%",left-7,y+3);
+ }
+ if(!currentResults.length){ctx.textAlign="left";ctx.fillText("No performance data available.",left,top+18);return}
+ const pts=currentResults.map((r,i)=>({
+  x:currentResults.length===1?left+gw/2:left+i*gw/(currentResults.length-1),
+  y:top+gh-gh*Math.max(0,Math.min(100,scoreOf(r)/maxOf(r)*100))/100,
+  p:scoreOf(r)/maxOf(r)*100,label:areaOf(r)
+ }));
+ ctx.strokeStyle="#1769d2";ctx.fillStyle="#1769d2";ctx.lineWidth=2.5;ctx.beginPath();
+ pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+ pts.forEach(p=>{
+  ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,Math.PI*2);ctx.fill();
+  ctx.textAlign="center";ctx.fillText(p.p.toFixed(0)+"%",p.x,Math.max(10,p.y-8));
+  ctx.save();ctx.translate(p.x,h-7);ctx.rotate(-Math.PI/5);
+  ctx.fillText(p.label.length>15?p.label.slice(0,14)+"…":p.label,0,0);ctx.restore();
+ });
+}
+
+function updateCounter(){
+ text("learnerCounter",allSelectedStudents.length?`${currentIndex+1} / ${allSelectedStudents.length}`:"0 / 0");
+ $("previousBtn").disabled=currentIndex<=0;
+ $("nextBtn").disabled=currentIndex>=allSelectedStudents.length-1;
+}
+function renderLearner(s){
+ currentStudent=s;currentResults=filterResults(s);
+ text("learnerName",studentName(s));
+ text("admissionNumber",admission(s));
+ text("learnerGrade",gradeOf(s));
+ text("learnerStream",streamOf(s));
+ text("learnerGender",val(s,["gender","sex"],"—"));
+ text("schoolLevel",levelOf(s));
+ const ct=findTeacher(s,"",true);
+ text("classTeacher",ct?teacherFullName(ct):"Not assigned in Teachers records");
+ text("classTeacherInitials",initials(ct));
+ renderResults();renderSummary();renderDevelopment();renderComments();
+ text("openingDate",fmtDate(val(reportRequest,["openingDate","termOpeningDate"],"")));
+ text("closingDate",fmtDate(val(reportRequest,["closingDate","termClosingDate"],"")));
+ renderGraph();updateCounter();
+}
+function showLearner(index){
+ if(!allSelectedStudents.length)return;
+ currentIndex=Math.max(0,Math.min(index,allSelectedStudents.length-1));
+ $("emptyState").classList.add("hidden");
+ $("reportPage").classList.remove("hidden");
+ renderMeta();renderLearner(allSelectedStudents[currentIndex]);
+}
+function showEmpty(title,message){
+ text("emptyTitle",title);text("emptyMessage",message);
+ $("emptyState").classList.remove("hidden");$("reportPage").classList.add("hidden");
+}
+
+/* GENERATE BUTTON: applies all seven selection criteria before showing reports. */
+function generateReport(){
+ try{
+  if(!students.length)loadData();
+  if(!students.length){
+   generated=false;
+   showEmpty("No Learner Records Found","The students key is missing or empty in this Edge browser profile. Open GBH in the same profile where learners were registered, then reload.");
+   text("filterStatus","No learner records found.");
+   return;
+  }
+  syncRequestFromFilters();
+  allSelectedStudents=getFilteredLearners();
+  currentIndex=0;
+  generated=true;
+
+  if(!allSelectedStudents.length){
+   showEmpty("No Learners Match","No learner matches the selected level, grade, stream or learner. Clear some filters and generate again.");
+   text("filterStatus","No matching learners.");
+   updateCounter();return;
+  }
+
+  const withMarks=allSelectedStudents.filter(s=>filterResults(s).length).length;
+  showLearner(0);
+  text("filterStatus",`${allSelectedStudents.length} learner(s) selected • ${withMarks} with matching marks.`);
+ }catch(e){
+  console.error(e);
+  showEmpty("Report Could Not Load","An error occurred while generating the report: "+e.message);
+  text("filterStatus","Report generation failed.");
+ }
+}
+
+function clearFilters(){
+ ["filterYear","filterTerm","filterExam","filterLevel","filterGrade","filterStream","filterLearner"].forEach(id=>$(id).value="");
+ generateReport();
+}
+function reloadRecords(){
+ loadData();populateFilters();generateReport();
+}
+
+function navigateTo(file){window.location.href=file}
+function logoutUser(){
+ try{
+  localStorage.removeItem(STORAGE.session);
+  sessionStorage.removeItem(STORAGE.request);
+  localStorage.removeItem(STORAGE.request);
+ }catch(e){}
+ navigateTo("login.html");
+}
+function printCurrent(){
+ if(!generated||!currentStudent){alert("Boss, click Generate Report first.");return}
+ window.print();
+}
+
+/* Prints every currently selected learner, one report per page. */
+function printAllReports(){
+ if(!generated||!allSelectedStudents.length){
+  alert("Boss, generate the report first. Select the learners you want to print.");return;
+ }
+ const oldIndex=currentIndex;
+ const host=document.createElement("div");
+ host.id="gbhPrintBatch";
+ host.style.display="none";
+ const page=$("reportPage");
+
+ allSelectedStudents.forEach((s,i)=>{
+  showLearner(i);
+  const clone=page.cloneNode(true);
+  clone.classList.remove("hidden");
+  clone.classList.add("print-report-page");
+
+  const originalCanvases=page.querySelectorAll("canvas");
+  const clonedCanvases=clone.querySelectorAll("canvas");
+  originalCanvases.forEach((c,j)=>{
+   try{
+    const image=document.createElement("img");
+    image.src=c.toDataURL("image/png");
+    image.style.width="100%";
+    image.style.height="100%";
+    clonedCanvases[j].replaceWith(image);
+   }catch(e){}
+  });
+  host.appendChild(clone);
+ });
+
+ document.body.appendChild(host);
+ const style=document.createElement("style");
+ style.id="gbhBatchPrintStyle";
+ style.textContent="@media print{body>*:not(#gbhPrintBatch){display:none!important}#gbhPrintBatch{display:block!important;position:static!important;left:auto!important}#gbhPrintBatch .report-page{display:block!important;width:100%;padding:0;box-shadow:none}.print-report-page{break-after:page;page-break-after:always}.print-report-page:last-child{break-after:auto;page-break-after:auto}}";
+ document.head.appendChild(style);
+
+ const cleanup=()=>{
+  if(host.isConnected)host.remove();
+  if(style.isConnected)style.remove();
+  showLearner(oldIndex);
+  window.removeEventListener("afterprint",cleanup);
+ };
+ window.addEventListener("afterprint",cleanup);
+ window.print();
+ setTimeout(()=>{if(host.isConnected)cleanup()},2000);
+}
+
+function wireButtons(){
+ const actions={
+  generateBtn:generateReport,
+  emptyGenerateBtn:generateReport,
+  printCurrentBtn:printCurrent,
+  printAllBtn:printAllReports,
+  printFilteredBtn:printAllReports,
+  previousBtn:()=>showLearner(currentIndex-1),
+  nextBtn:()=>showLearner(currentIndex+1),
+  assessmentBtn:()=>navigateTo("assessment.html"),
+  examinationBtn:()=>navigateTo("examination.html"),
+  reloadBtn:reloadRecords,
+  clearFiltersBtn:clearFilters,
+  logoutBtn:logoutUser
+ };
+ Object.entries(actions).forEach(([id,fn])=>{
+  const el=$(id);
+  if(el)el.addEventListener("click",ev=>{
+   ev.preventDefault();
+   try{fn()}catch(e){console.error(e);alert("This action could not complete: "+e.message)}
+  });
+ });
+
+ /* Dependent dropdowns immediately narrow the available choices. */
+ ["filterLevel","filterGrade","filterStream"].forEach(id=>{
+  $(id).addEventListener("change",()=>{
+   const f=activeFilters();
+   const matches=students.filter(s=>
+    (!f.level||normalize(levelOf(s))===normalize(f.level))&&
+    (!f.grade||normalize(gradeOf(s))===normalize(f.grade))&&
+    (!f.stream||normalize(streamOf(s))===normalize(f.stream))
+   );
+   populateSelect("filterLearner",matches.map(studentId),"All matching learners");
+   const learner=$("filterLearner");
+   [...learner.options].forEach(o=>{
+    if(!o.value)return;
+    const s=matches.find(x=>studentId(x)===o.value);
+    if(s)o.textContent=studentName(s)+" — "+admission(s);
+   });
+  });
+ });
+}
+
+function initializeReport(){
+ try{
+  loadData();
+  renderSchool();
+  populateFilters();
+  wireButtons();
+  generateReport();
+ }catch(e){
+  console.error(e);
+  showEmpty("Report Could Not Load","The report encountered an error: "+e.message);
+ }
+}
+
+window.addEventListener("load",initializeReport);
+window.addEventListener("resize",()=>{if(currentStudent&&generated)renderGraph()});
+</script>
+</body>
+</html>

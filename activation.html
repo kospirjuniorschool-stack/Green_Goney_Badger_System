@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GREEN HONEY BADGER SYSTEM - Activation</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef4ef;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #183526;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 28px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        .brand {
+            text-align: center;
+            color: #176b3a;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.35;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 10px 0 22px;
+            font-size: 21px;
+        }
+
+        .notice {
+            background: #edf7ef;
+            border-left: 4px solid #21834a;
+            border-radius: 5px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc9c0;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #21834a;
+            box-shadow: 0 0 0 2px rgba(33, 131, 74, 0.12);
+        }
+
+        .key {
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 6px;
+            background: #176b3a;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #10532c;
+        }
+
+        button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        button.exit {
+            background: #5d6660;
+        }
+
+        .status {
+            display: none;
+            margin-top: 17px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.error {
+            background: #fff0f0;
+            color: #a32020;
+        }
+
+        .status.success {
+            background: #eaf7ed;
+            color: #176b3a;
+        }
+
+        .device {
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid #e1e7e2;
+            text-align: center;
+            font-size: 12px;
+            color: #58665d;
+            line-height: 1.6;
+        }
+
+        #deviceDisplay {
+            margin-top: 5px;
+            overflow-wrap: anywhere;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 23px;
+            color: #657168;
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+<main class="container">
+
+    <div class="brand">GREEN HONEY BADGER SYSTEM</div>
+    <h2>System Activation</h2>
+
+    <div class="notice">
+        This installation is not yet activated. Enter the school name,
+        school code and licence key supplied by the GREEN HONEY BADGER
+        administrator. An internet connection is required for activation.
+        Your entries are saved automatically on this computer.
+    </div>
+
+    <form id="activationForm">
+
+        <div class="group">
+            <label for="schoolName">School Name</label>
+            <input
+                id="schoolName"
+                type="text"
+                placeholder="Enter school name"
+                autocomplete="organization"
+                required
+            >
+        </div>
+
+        <div class="group">
+            <label for="schoolCode">School Code</label>
+            <input
+                id="schoolCode"
+                type="text"
+                placeholder="Enter school code"
+                autocomplete="off"
+                required
+            >
+        </div>
+
+        <div class="group">
+            <label for="licenceKey">Licence Key</label>
+            <input
+                id="licenceKey"
+                class="key"
+                type="text"
+                placeholder="Enter licence key"
+                autocomplete="off"
+                spellcheck="false"
+                required
+            >
+        </div>
+
+        <button type="submit" id="activateButton">
+            ACTIVATE SYSTEM
+        </button>
+
+        <button type="button" class="exit" id="exitButton">
+            EXIT
+        </button>
+
+    </form>
+
+    <div
+        id="activationStatus"
+        class="status"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+    <div class="device">
+        Activation is linked to this installation's device ID.
+        <div id="deviceDisplay"></div>
+    </div>
+
+    <footer>GREEN HONEY BADGER SYSTEM © 2026</footer>
+
+</main>
+
+<script>
+"use strict";
+
+/* LIVE GBH LICENSING SERVER */
+const GBH_LICENCE_SERVER =
+    "https://gbh-licensing-server-1.onrender.com";
+
+/* STORAGE KEYS */
+const PENDING_KEY = "gbhActivationPending";
+const DEVICE_KEY = "gbhDeviceId";
+
+/* PAGE ELEMENTS */
+const schoolNameInput = document.getElementById("schoolName");
+const schoolCodeInput = document.getElementById("schoolCode");
+const licenceKeyInput = document.getElementById("licenceKey");
+const activationForm = document.getElementById("activationForm");
+const activateButton = document.getElementById("activateButton");
+const exitButton = document.getElementById("exitButton");
+const statusBox = document.getElementById("activationStatus");
+const deviceDisplay = document.getElementById("deviceDisplay");
+
+/* DISPLAY A MESSAGE */
+function showStatus(message, type) {
+    statusBox.textContent = message;
+    statusBox.className = "status show " + type;
+}
+
+/* READ THE THREE FIELDS */
+function getPendingDetails() {
+    return {
+        schoolName: schoolNameInput.value,
+        schoolCode: schoolCodeInput.value,
+        licenceKey: licenceKeyInput.value
+    };
+}
+
+/* SAVE THE THREE FIELDS AUTOMATICALLY */
+function savePendingDetails() {
+    try {
+        localStorage.setItem(
+            PENDING_KEY,
+            JSON.stringify(getPendingDetails())
+        );
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+/* RESTORE THE THREE FIELDS WHEN THE PAGE OPENS */
+function restorePendingDetails() {
+    try {
+        const saved = localStorage.getItem(PENDING_KEY);
+
+        if (!saved) return;
+
+        const details = JSON.parse(saved);
+
+        schoolNameInput.value = details.schoolName || "";
+        schoolCodeInput.value = details.schoolCode || "";
+        licenceKeyInput.value = details.licenceKey || "";
+
+    } catch (error) {
+        console.error("Could not restore pending activation details.");
+    }
+}
+
+/* CREATE OR REUSE THIS INSTALLATION'S DEVICE ID */
+function getDeviceId() {
+    let deviceId = localStorage.getItem(DEVICE_KEY);
+
+    if (!deviceId) {
+        if (
+            window.crypto &&
+            typeof window.crypto.randomUUID === "function"
+        ) {
+            deviceId = window.crypto.randomUUID();
+        } else {
+            deviceId = "GBH-" +
+                Date.now().toString(36) + "-" +
+                Math.random().toString(36).slice(2, 14);
+        }
+
+        localStorage.setItem(DEVICE_KEY, deviceId);
+    }
+
+    return deviceId;
+}
+
+/* DISPLAY THE DEVICE ID */
+function showDeviceId() {
+    try {
+        deviceDisplay.textContent = getDeviceId();
+    } catch (error) {
+        deviceDisplay.textContent =
+            "Device ID storage is unavailable.";
+    }
+}
+
+/* SAVE WHILE THE USER TYPES */
+schoolNameInput.addEventListener("input", savePendingDetails);
+schoolCodeInput.addEventListener("input", savePendingDetails);
+licenceKeyInput.addEventListener("input", savePendingDetails);
+
+/* ACTIVATE THE LICENCE */
+activationForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const schoolName = schoolNameInput.value.trim();
+    const schoolCode = schoolCodeInput.value.trim();
+    const licenceKey = licenceKeyInput.value.trim();
+
+    if (!schoolName || !schoolCode || !licenceKey) {
+        showStatus(
+            "Please enter the school name, school code and licence key.",
+            "error"
+        );
+        return;
+    }
+
+    if (!savePendingDetails()) {
+        showStatus(
+            "Your entries could not be saved in browser storage. Activation has not started.",
+            "error"
+        );
+        return;
+    }
+
+    let deviceId;
+
+    try {
+        deviceId = getDeviceId();
+    } catch (error) {
+        showStatus(
+            "Unable to access device storage. Activation cannot continue.",
+            "error"
+        );
+        return;
+    }
+
+    activateButton.disabled = true;
+    activateButton.textContent = "CONTACTING LICENSING SERVER...";
+
+    try {
+        /*
+         * The server's /activate route requires:
+         * licenceKey and deviceId.
+         */
+        const response = await fetch(
+            GBH_LICENCE_SERVER + "/activate",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    licenceKey: licenceKey,
+                    deviceId: deviceId
+                })
+            }
+        );
+
+        let result;
+
+        try {
+            result = await response.json();
+        } catch (error) {
+            throw new Error(
+                "The licensing server returned an unreadable response."
+            );
+        }
+
+        /*
+         * Follow the actual server's success/error response.
+         */
+        if (!response.ok || result.success !== true) {
+            throw new Error(
+                result.message ||
+                "The server rejected the activation request."
+            );
+        }
+
+        const licence = result.licence;
+
+        if (!licence || typeof licence !== "object") {
+            throw new Error(
+                "The server did not return the expected licence details."
+            );
+        }
+
+        /*
+         * The server uses ACTIVE in uppercase.
+         */
+        if (
+            String(licence.status || "").toUpperCase() !== "ACTIVE"
+        ) {
+            throw new Error(
+                "The licence is not active. Please contact the administrator."
+            );
+        }
+
+        /*
+         * Check returned details if the server supplies them.
+         */
+        if (
+            licence.licenceKey &&
+            licence.licenceKey !== licenceKey
+        ) {
+            throw new Error(
+                "The returned licence key does not match the entered key."
+            );
+        }
+
+        if (
+            licence.schoolName &&
+            licence.schoolName.trim().toLowerCase() !==
+            schoolName.toLowerCase()
+        ) {
+            throw new Error(
+                "The school name does not match the licence record."
+            );
+        }
+
+        if (
+            licence.schoolCode &&
+            licence.schoolCode.trim().toLowerCase() !==
+            schoolCode.toLowerCase()
+        ) {
+            throw new Error(
+                "The school code does not match the licence record."
+            );
+        }
+
+        if (
+            licence.deviceId &&
+            licence.deviceId !== deviceId
+        ) {
+            throw new Error(
+                "The licence is linked to a different device."
+            );
+        }
+
+        /*
+         * Preserve the activation record.
+         * Keep these keys consistent with the rest of GBH.
+         */
+        const activationRecord = {
+            ...licence,
+            licenceKey: licence.licenceKey || licenceKey,
+            schoolName: licence.schoolName || schoolName,
+            schoolCode: licence.schoolCode || schoolCode,
+            deviceId: licence.deviceId || deviceId,
+            status: "ACTIVE",
+            activatedAt:
+                licence.activationDate || new Date().toISOString()
+        };
+
+        localStorage.setItem(
+            "gbhActivation",
+            JSON.stringify(activationRecord)
+        );
+
+        localStorage.setItem("schoolName", activationRecord.schoolName);
+        localStorage.setItem("schoolCode", activationRecord.schoolCode);
+        localStorage.setItem("licenceKey", activationRecord.licenceKey);
+
+        showStatus(
+            "Licence activation succeeded. Opening the login page...",
+            "success"
+        );
+
+        /*
+         * Allow the success message to be displayed briefly.
+         */
+        setTimeout(function () {
+            window.location.href = "login.html";
+        }, 800);
+
+    } catch (error) {
+        /*
+         * Do not clear the user's entries on failure.
+         */
+        savePendingDetails();
+
+        showStatus(
+            "Activation failed: " + error.message +
+            " Your school details and licence key have been retained.",
+            "error"
+        );
+
+    } finally {
+        activateButton.disabled = false;
+        activateButton.textContent = "ACTIVATE SYSTEM";
+    }
+});
+
+/* EXIT BUTTON */
+exitButton.addEventListener("click", function () {
+    window.close();
+
+    showStatus(
+        "If this page did not close, close its window using the X button.",
+        "error"
+    );
+});
+
+/* INITIALISE PAGE */
+restorePendingDetails();
+showDeviceId();
+
+</script>
+</body>
+</html>

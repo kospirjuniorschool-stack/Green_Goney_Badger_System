@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GREEN HONEY BADGER SYSTEM - Timetable</title>
+<script src="script.js"></script>
+<style>
+:root{--green:#126b38;--dark:#073d20;--light:#eef8f1;--border:#d4e3d9;--text:#1f2937;--muted:#68756d;--danger:#b42318;--blue:#175cd3;--shadow:0 5px 18px #0001}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f7f5;color:var(--text)}
+button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.gbh-header{background:linear-gradient(135deg,#073d20,#126b38);color:white;padding:18px 22px;box-shadow:0 3px 12px #0002}
+.header-inner{max-width:1500px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand-title{margin:0;font-size:24px;font-weight:800}.brand-subtitle{margin-top:5px;font-size:13px}
+.user-box{text-align:right;font-size:13px}.user-name{font-weight:800}.user-role{margin-top:4px}
+.main{max-width:1500px;margin:auto;padding:20px}
+.btn{border:0;border-radius:8px;padding:10px 15px;font-weight:800;transition:.2s}
+.btn:hover{filter:brightness(.94)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn-primary{background:var(--green);color:white}.btn-dark{background:#26332c;color:white}.btn-blue{background:var(--blue);color:white}.btn-warning{background:#f79009;color:white}.btn-danger{background:var(--danger);color:white}.btn-light{background:#eef2f0;color:#26332c;border:1px solid var(--border)}.btn-small{padding:7px 10px;font-size:11px}
+.top-bar,.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.view-buttons{display:flex;gap:8px;flex-wrap:wrap}.view-button.active{background:var(--green);color:white}
+.card{background:white;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+.card-header{padding:15px 18px;background:#f8fbf9;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.card-title{margin:0;color:var(--dark);font-size:17px;font-weight:800}.card-body{padding:18px}
+.message{display:none;margin-bottom:16px;padding:12px 14px;border-radius:8px;font-size:13px;font-weight:700}.message.show{display:block}.message.success{background:#e9f8ef;color:#176b3a;border:1px solid #b9e4c8}.message.error{background:#fff0ef;color:#a61b14;border:1px solid #f1b5b0}.message.warning{background:#fff7e8;color:#8a5000;border:1px solid #f0d49b}.message.info{background:#eef6ff;color:#164e91;border:1px solid #bdd5f5}
+.form-grid{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:15px}.form-group{display:flex;flex-direction:column;gap:6px}.form-group label{font-size:12px;font-weight:800}
+.form-control{width:100%;min-height:42px;padding:9px 11px;border:1px solid #cbd5d0;border-radius:7px;background:white;color:#111827;outline:none}.form-control:focus{border-color:var(--green);box-shadow:0 0 0 3px #126b381a}
+.form-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800}.badge-green{background:#e8f6ed;color:#176b3a}.badge-blue{background:#eaf2ff;color:#175cd3}.badge-orange{background:#fff2df;color:#995500}.badge-lock{background:#fff0ef;color:#a61b14}
+.table-scroll{overflow-x:auto}.data-table{width:100%;border-collapse:collapse;min-width:1000px}.data-table th,.data-table td{border-bottom:1px solid #e5ebe7;padding:10px 8px;font-size:12px;text-align:left}.data-table th{background:#f2f7f4;color:#234331;white-space:nowrap}.data-table tr:hover{background:#fafdfb}
+.search{max-width:450px;min-width:250px}.meta{font-size:12px;color:#58655e;margin-top:5px}.timetable-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.print-heading{display:none}
+.timetable-scroll{overflow-x:auto;padding:0 18px 18px}.timetable{width:100%;min-width:1050px;border-collapse:collapse;table-layout:fixed}.timetable th,.timetable td{border:1px solid #cbd8cf}.timetable th{background:#073d20;color:white;text-align:center;padding:9px 5px;font-size:11px}.period-column{width:105px}
+.period-cell{background:#f5f8f6;text-align:center;padding:7px 4px;font-size:11px;font-weight:800}.period-time{display:block;margin-top:3px;color:#68756d;font-size:9px}
+.lesson-cell{height:76px;padding:4px;vertical-align:middle;background:white}.lesson-box{width:100%;height:100%;min-height:66px;border:1px solid #abd0b7;border-left:5px solid var(--green);border-radius:6px;background:#f3fbf5;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;text-align:center;position:relative}
+.lesson-code{font-size:22px;line-height:1;font-weight:900;color:#073d20}.lesson-subject{margin-top:4px;font-size:9px;font-weight:800;color:#34443a}.lesson-teacher{margin-top:3px;font-size:9px;font-weight:800;color:#175cd3}.lesson-class{margin-top:2px;font-size:9px;font-weight:700;color:#69756e}
+.break-cell{background:#fff9eb;color:#765414;text-align:center;font-weight:900;font-size:11px}.activity-cell{background:#edf5ff;color:#174f91;text-align:center;font-weight:900;font-size:11px}.lunch-cell{background:#f4efff;color:#634e85;text-align:center;font-weight:900;font-size:11px}
+.locked-lesson{border:2px solid #b42318!important;border-left:6px solid #b42318!important;background:#fff5f4!important}
+.lock-ribbon{position:absolute;right:3px;top:2px;font-size:11px;color:#b42318;font-weight:900}
+.locked-empty{height:100%;min-height:66px;border:2px dashed #b42318;border-radius:6px;background:#fff5f4;color:#a61b14;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;font-size:10px;font-weight:900;padding:3px}
+.empty{padding:40px!important;text-align:center;color:#6b7280;font-weight:700}
+.legend{display:flex;gap:15px;flex-wrap:wrap;padding:0 18px 18px;font-size:11px;color:#59665f}.legend-item{display:flex;align-items:center;gap:6px}.legend-box{width:13px;height:13px;border-radius:3px;border:1px solid #aaa}
+.overlay{display:none;position:fixed;inset:0;z-index:9999;background:#031b0fc2;align-items:center;justify-content:center;padding:20px}.overlay.show{display:flex}
+.processing-box{width:min(460px,100%);background:white;border:1px solid var(--border);border-radius:16px;padding:26px;text-align:center;box-shadow:0 20px 60px #0004}
+.spinner{width:45px;height:45px;margin:0 auto 15px;border:4px solid #dcebe1;border-top-color:var(--green);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-track{height:12px;background:#e7eee9;border-radius:20px;overflow:hidden}.progress-bar{width:0;height:100%;border-radius:20px;background:var(--green);transition:width .45s ease,background-color .45s ease}
+.progress-text{margin-top:8px;font-size:13px;font-weight:900;color:var(--dark)}
+.progress-colours{display:flex;justify-content:space-between;gap:5px;margin:15px 0 8px}.progress-colour{flex:1;height:15px;border:1px solid #cbd5d0;border-radius:4px;opacity:.3;transition:opacity .45s,transform .45s}.progress-colour.active{opacity:1;transform:scaleY(1.25)}
+#processingMessage{font-size:17px;color:var(--dark);margin:0 0 18px}
+.footer{text-align:center;color:#758078;font-size:11px;padding:5px 0 25px}
+@media(max-width:1050px){.form-grid{grid-template-columns:repeat(2,minmax(180px,1fr))}}
+@media(max-width:650px){.gbh-header{padding:15px}.header-inner{flex-direction:column;align-items:flex-start}.user-box{text-align:left}.main{padding:12px}.form-grid{grid-template-columns:1fr}.top-bar{flex-direction:column;align-items:stretch}.view-buttons{width:100%}.view-buttons .btn{flex:1}.search{max-width:none;min-width:100%}}
+@media(prefers-reduced-motion:reduce){.progress-bar,.progress-colour,.spinner{transition:none;animation:none}}
+@media print{
+@page{size:landscape;margin:8mm}body{background:white!important}
+.gbh-header,.top-bar,.allocation-card,.records-card,.lock-card,.timetable-controls,.legend,.footer,.overlay,.no-print{display:none!important}
+.main{max-width:none;padding:0;margin:0}.card{border:none;box-shadow:none;margin:0}
+.print-heading{display:block;position:relative;min-height:58px;margin-bottom:8px}.print-school{text-align:center;font-size:18px;font-weight:900;text-transform:uppercase}.print-title{text-align:center;font-size:14px;font-weight:900;margin-top:4px}.print-right{position:absolute;right:0;top:0;text-align:right;font-size:11px;font-weight:900}
+.timetable-scroll{padding:0;overflow:visible}.timetable{min-width:0;width:100%}.timetable th{background:#e8eee9!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9px}.period-column{width:70px}.lesson-cell{height:60px}.lesson-box{min-height:50px;background:white!important;border-color:#888;-webkit-print-color-adjust:exact;print-color-adjust:exact}.lesson-code{font-size:16px;color:#000}.lesson-subject,.lesson-teacher,.lesson-class{font-size:7px}body.print-teacher .lesson-teacher{display:none}body.print-class .lesson-teacher,body.print-class .lesson-class{display:none}
+}
+</style>
+</head>
+<body>
+<header class="gbh-header"><div class="header-inner"><div><h1 class="brand-title">GREEN HONEY BADGER SYSTEM</h1><div class="brand-subtitle">Timetable Management</div></div><div class="user-box"><div id="userName" class="user-name">Loading...</div><div id="userRole" class="user-role"></div></div></div></header>
+<main class="main">
+<div class="top-bar"><div class="view-buttons"><button type="button" id="teacherView" class="btn btn-light view-button active">TEACHER TIMETABLE</button><button type="button" id="classView" class="btn btn-light view-button">CLASS TIMETABLE</button></div><button type="button" id="dashboardButton" class="btn btn-dark">← DASHBOARD</button></div>
+<div id="message" class="message"></div>
+
+<section class="card allocation-card"><div class="card-header"><h2 class="card-title">Timetable Allocation</h2><span id="editingBadge" class="badge badge-orange hidden">EDITING</span></div><div class="card-body"><div class="form-grid">
+<div class="form-group"><label for="level">LEARNING STAGE / LEVEL</label><select id="level" class="form-control"><option value="">Select Level</option><option>Preparatory</option><option>Pre Primary</option><option>Lower Primary</option><option>Upper Primary</option><option>Junior School</option></select></div>
+<div class="form-group"><label for="grade">GRADE / CLASS</label><select id="grade" class="form-control" disabled><option value="">Select Level First</option></select></div>
+<div class="form-group"><label for="stream">STREAM</label><select id="stream" class="form-control"><option value="">Select Stream</option><option>BLUE</option><option>GREEN</option><option>RED</option><option>YELLOW</option></select></div>
+<div class="form-group"><label for="teacher">TEACHER</label><select id="teacher" class="form-control"><option value="">Loading teachers...</option></select></div>
+<div class="form-group"><label for="subject">LEARNING AREA / SUBJECT</label><select id="subject" class="form-control"><option value="">Select Learning Area</option><option>Mathematics</option><option>English</option><option>Kiswahili</option><option>Integrated Science</option><option>Social Studies</option><option>Agriculture</option><option>CRE</option><option>IRE</option><option>HRE</option><option>Pretechnical Studies</option><option>Creative Arts and Sports</option><option>ICT</option><option>Computing</option><option>Music</option><option>French</option><option>German</option><option>Arabic</option><option>Business Studies</option><option>Home Science</option><option>Health Education</option><option>Life Skills</option><option>Environmental Activities</option><option>Movement Activities</option></select></div>
+<div class="form-group"><label for="lessons">LESSONS PER WEEK</label><input id="lessons" class="form-control" type="number" min="1" max="35" value="5"></div>
+<div class="form-group"><label for="year">ACADEMIC YEAR</label><select id="year" class="form-control"><option>2026</option><option>2027</option><option>2028</option></select></div>
+<div class="form-group"><label for="term">TERM</label><select id="term" class="form-control"><option>Term 1</option><option>Term 2</option><option>Term 3</option></select></div>
+</div><div class="form-actions"><button type="button" id="saveAllocation" class="btn btn-primary">SAVE ALLOCATION</button><button type="button" id="clearForm" class="btn btn-light">CLEAR</button><button type="button" id="saveClose" class="btn btn-dark">SAVE &amp; CLOSE</button></div></div></section>
+
+<!-- GBH PERIOD LOCK -->
+<section class="card lock-card">
+<div class="card-header"><div><h2 class="card-title">🔒 GBH PERIOD LOCK</h2><div class="meta">Reserve a lesson period for a specific teacher. The generator will protect the selected slot.</div></div><span class="badge badge-lock">LOCK PROTECTION</span></div>
+<div class="card-body">
+<div class="form-grid">
+<div class="form-group"><label for="lockYear">ACADEMIC YEAR</label><select id="lockYear" class="form-control"><option>2026</option><option>2027</option><option>2028</option></select></div>
+<div class="form-group"><label for="lockTerm">TERM</label><select id="lockTerm" class="form-control"><option>Term 1</option><option>Term 2</option><option>Term 3</option></select></div>
+<div class="form-group"><label for="lockTeacher">TEACHER TO PROTECT</label><select id="lockTeacher" class="form-control"><option value="">Select Teacher</option></select></div>
+<div class="form-group"><label for="lockDay">DAY</label><select id="lockDay" class="form-control"><option value="">Select Day</option><option>MONDAY</option><option>TUESDAY</option><option>WEDNESDAY</option><option>THURSDAY</option><option>FRIDAY</option></select></div>
+<div class="form-group"><label for="lockPeriod">PERIOD TO LOCK</label><select id="lockPeriod" class="form-control"><option value="">Select Period</option><option value="P1">P1 • 7:20–8:00</option><option value="P2">P2 • 8:00–8:40</option><option value="P3">P3 • 8:40–9:20</option><option value="P4">P4 • 9:40–10:20</option><option value="P5">P5 • 10:20–11:00</option><option value="P6">P6 • 11:00–11:40</option><option value="P7">P7 • 11:50–12:30</option><option value="P8">P8 • 12:30–1:10</option></select></div>
+</div>
+<div class="form-actions"><button type="button" id="lockPeriodButton" class="btn btn-danger">🔒 LOCK PERIOD</button><button type="button" id="unlockPeriodButton" class="btn btn-light">🔓 UNLOCK SELECTED SLOT</button><button type="button" id="refreshLocks" class="btn btn-light">REFRESH LOCKS</button></div>
+<p class="meta">Important: locking a slot requires a lesson allocation for that teacher in the selected year and term. If the slot cannot be honoured without a timetable conflict, generation will stop and explain why.</p>
+<div class="table-scroll" style="margin-top:18px"><table class="data-table" style="min-width:800px"><thead><tr><th>#</th><th>Year</th><th>Term</th><th>Day</th><th>Period</th><th>Protected Teacher</th><th>Status</th><th>Action</th></tr></thead><tbody id="lockBody"></tbody></table></div>
+</div>
+</section>
+
+<section class="card records-card"><div class="card-header"><h2 class="card-title">Saved Timetable Allocations</h2><span id="allocationCount" class="badge badge-green">0 Allocations</span></div><div class="card-body"><div class="toolbar"><input id="search" class="form-control search" type="search" placeholder="Search teacher, subject, grade or stream..."><button type="button" id="refresh" class="btn btn-light btn-small">REFRESH</button></div><div class="table-scroll"><table class="data-table"><thead><tr><th>#</th><th>Teacher</th><th>Level</th><th>Grade</th><th>Stream</th><th>Subject</th><th>Lessons</th><th>Year</th><th>Term</th><th>Actions</th></tr></thead><tbody id="allocationBody"></tbody></table></div></div></section>
+
+<section class="card"><div class="card-header"><div><h2 id="timetableTitle" class="card-title">Teacher Timetable</h2><div id="timetableMeta" class="meta">Select a teacher and generate the timetable.</div></div><div class="timetable-controls"><div id="classFilterBox" class="hidden"><select id="classFilter" class="form-control"><option value="">Select Grade / Stream</option></select></div><button type="button" id="generate" class="btn btn-primary">GENERATE TIMETABLE</button><button type="button" id="reshuffle" class="btn btn-warning">RESHUFFLE</button><button type="button" id="print" class="btn btn-blue">PRINT</button></div></div>
+<div id="printHeading" class="print-heading"><div id="printSchool" class="print-school">GREEN HONEY BADGER SYSTEM</div><div id="printTitle" class="print-title">TIMETABLE</div><div id="printRight" class="print-right"></div></div>
+<div class="timetable-scroll"><table id="timetable" class="timetable"><thead id="gridHead"></thead><tbody id="gridBody"></tbody></table></div>
+<div class="legend"><div class="legend-item"><span class="legend-box" style="background:#f3fbf5"></span>Lesson</div><div class="legend-item"><span class="legend-box" style="background:#fff9eb"></span>Break</div><div class="legend-item"><span class="legend-box" style="background:#edf5ff"></span>Activity</div><div class="legend-item"><span class="legend-box" style="background:#f4efff"></span>Lunch</div><div class="legend-item"><span class="legend-box" style="background:#fff5f4;border-color:#b42318"></span>🔒 Locked period</div></div></section>
+<div class="footer">GREEN HONEY BADGER SYSTEM • Timetable Management</div>
+</main>
+<div id="overlay" class="overlay"><div class="processing-box"><div class="spinner"></div><h3 id="processingMessage">Preparing timetable...</h3><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><div class="progress-colours" id="progressColours"><span class="progress-colour" style="background:#ef4444"></span><span class="progress-colour" style="background:#22c55e"></span><span class="progress-colour" style="background:#3b82f6"></span><span class="progress-colour" style="background:#fff"></span><span class="progress-colour" style="background:#1f2937"></span><span class="progress-colour" style="background:#ef4444"></span><span class="progress-colour" style="background:#f97316"></span><span class="progress-colour" style="background:#eab308"></span></div><div id="progressText" class="progress-text">0%</div></div></div>
+
+<script>
+(function(){
+"use strict";
+
+const KEY={teachers:"teachers",allocations:"gbhTimetableAllocations",generated:"gbhGeneratedTimetable",generatedMeta:"gbhGeneratedTimetableMeta",session:"gbhSession",school:"schoolDetails",locks:"gbhTimetablePeriodLocks"};
+const DAYS=["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"];
+const PERIODS=[
+{id:"P1",label:"P1",time:"7:20–8:00",type:"lesson"},
+{id:"P2",label:"P2",time:"8:00–8:40",type:"lesson"},
+{id:"P3",label:"P3",time:"8:40–9:20",type:"lesson"},
+{id:"BREAK1",label:"BREAK",time:"9:20–9:40",type:"break"},
+{id:"P4",label:"P4",time:"9:40–10:20",type:"lesson"},
+{id:"P5",label:"P5",time:"10:20–11:00",type:"lesson"},
+{id:"P6",label:"P6",time:"11:00–11:40",type:"lesson"},
+{id:"BREAK2",label:"BREAK",time:"11:40–11:50",type:"break"},
+{id:"P7",label:"P7",time:"11:50–12:30",type:"lesson"},
+{id:"P8",label:"P8",time:"12:30–1:10",type:"lesson"},
+{id:"LUNCH",label:"LUNCH",time:"1:10–2:30",type:"lunch"},
+{id:"P9",label:"P9 • ACTIVITY",time:"2:30–4:00",type:"activity"}
+];
+const LESSON_PERIODS=PERIODS.filter(p=>p.type==="lesson");
+const GRADES={"Preparatory":["PLAY GROUP","PP1","PP2"],"Pre Primary":["PP1","PP2","GRADE 1","GRADE 2","GRADE 3"],"Lower Primary":["GRADE 1","GRADE 2","GRADE 3"],"Upper Primary":["GRADE 4","GRADE 5","GRADE 6"],"Junior School":["GRADE 7","GRADE 8","GRADE 9"]};
+const CODES={"mathematics":"MAT","math":"MAT","maths":"MAT","english":"ENG","english language":"ENG","kiswahili":"KIS","integrated science":"SCI","science":"SCI","social studies":"SST","agriculture":"AGR","cre":"CRE","ire":"IRE","hre":"HRE","pretechnical studies":"PRE","pre-technical studies":"PRE","pretechnical":"PRE","creative arts and sports":"CAS","creative arts":"ART","sports":"SPT","ict":"ICT","computing":"COMP","computer studies":"COMP","music":"MUS","french":"FRE","german":"GER","arabic":"ARB","business studies":"BUS","home science":"H/S","health education":"HE","life skills":"L/S","environmental activities":"ENV","movement activities":"MOV"};
+const state={teachers:[],allocations:[],generated:[],generatedMeta:null,locks:[],session:null,editingId:null,view:"teacher",loggedTeacherId:"",loggedTeacherName:"",schoolName:"GREEN HONEY BADGER SYSTEM"};
+const $=id=>document.getElementById(id);
+function read(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch(e){console.error("GBH storage error:",key,e);return fallback}}
+function save(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){console.error("GBH save error:",key,e);message("Unable to save data on this device.","error");return false}}
+function text(v){return v===null||v===undefined?"":String(v).trim()}
+function norm(v){return text(v).toLowerCase().replace(/\s+/g," ").trim()}
+function array(v){if(Array.isArray(v))return v;if(typeof v==="string"&&v.trim())return v.split(",").map(x=>x.trim()).filter(Boolean);return v!==null&&v!==undefined&&v!==""?[v]:[]}
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function teacherId(t){return text(t.teacherId||t.id||t.tscNumber||t.tscNo||t.registrationNumber)}
+function teacherName(t){return text(t.name||t.fullName||t.teacherName||t.staffName||[t.firstName,t.middleName,t.lastName].filter(Boolean).join(" "))}
+function teacherSubjects(t){return [t.learningAreas,t.learningArea,t.subjects,t.subject,t.teachingSubjects,t.assignedSubjects].flatMap(array).map(text).filter(Boolean)}
+let messageTimer;
+function message(msg,type){const box=$("message");box.className="message show "+(type||"info");box.textContent=msg;clearTimeout(messageTimer);messageTimer=setTimeout(()=>box.classList.remove("show"),6000)}
+function loadSession(){state.session=read(KEY.session,null);const s=state.session||{};state.loggedTeacherId=text(s.teacherId||s.userId||s.id);state.loggedTeacherName=text(s.teacherName||s.teacherFullName||s.name||s.fullName||s.staffName||s.username);$("userName").textContent=state.loggedTeacherName||"GBH User";$("userRole").textContent=text(s.role||s.userRole)}
+function loadSchool(){const d=read(KEY.school,{});state.schoolName=text(d?.schoolName||d?.name||d?.institutionName)||"GREEN HONEY BADGER SYSTEM";$("printSchool").textContent=state.schoolName}
+function restrictedRole(){const role=norm(state.session?.role||state.session?.userRole);return role==="teacher"||role==="class teacher"}
+function ownTeacher(t){return teacherId(t)===state.loggedTeacherId||norm(teacherName(t))===norm(state.loggedTeacherName)}
+function populateTeachers(){const sel=$("teacher"),old=sel.value;sel.innerHTML='<option value="">Select Teacher</option>';let ts=state.teachers.slice();if(restrictedRole())ts=ts.filter(ownTeacher);ts.sort((a,b)=>teacherName(a).localeCompare(teacherName(b)));ts.forEach(t=>{const id=teacherId(t),name=teacherName(t);if(!id&&!name)return;const o=document.createElement("option");o.value=id||name;o.textContent=name||id;sel.appendChild(o)});if([...sel.options].some(o=>o.value===old))sel.value=old;if(restrictedRole()){const own=ts.find(ownTeacher);if(own)sel.value=teacherId(own)||teacherName(own);sel.disabled=true}}
+function populateLockTeachers(){const sel=$("lockTeacher"),old=sel.value;sel.innerHTML='<option value="">Select Teacher</option>';let ts=state.teachers.slice();if(restrictedRole())ts=ts.filter(ownTeacher);ts.sort((a,b)=>teacherName(a).localeCompare(teacherName(b)));ts.forEach(t=>{const id=teacherId(t),name=teacherName(t);if(!id&&!name)return;const o=document.createElement("option");o.value=id||name;o.textContent=name||id;sel.appendChild(o)});if([...sel.options].some(o=>o.value===old))sel.value=old;if(restrictedRole()){const own=ts.find(ownTeacher);if(own)sel.value=teacherId(own)||teacherName(own);sel.disabled=true}}
+function loadTeachers(){const d=read(KEY.teachers,[]);state.teachers=Array.isArray(d)?d:[];populateTeachers();populateLockTeachers()}
+function findTeacher(v){return state.teachers.find(t=>teacherId(t)===text(v)||teacherName(t)===text(v))||null}
+function updateGrades(){const level=$("level").value,g=$("grade");g.innerHTML="";if(!level){g.disabled=true;g.innerHTML='<option value="">Select Level First</option>';return}g.disabled=false;g.innerHTML='<option value="">Select Grade / Class</option>';(GRADES[level]||[]).forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;g.appendChild(o)})}
+function subjectCode(s){const k=norm(s);if(CODES[k])return CODES[k];for(const n of Object.keys(CODES))if(k.includes(n)||n.includes(k))return CODES[n];const words=text(s).split(/\s+/).filter(Boolean);return words.length>=2?words.slice(0,3).map(w=>w[0].toUpperCase()).join(""):text(s).replace(/[^A-Za-z]/g,"").substring(0,4).toUpperCase()||"SUB"}
+function loadAllocations(){const d=read(KEY.allocations,[]);state.allocations=Array.isArray(d)?d:[];renderAllocations();populateClassFilter()}
+function loadGenerated(){const d=read(KEY.generated,[]);state.generated=Array.isArray(d)?d:Array.isArray(d?.schedule)?d.schedule:[];state.generatedMeta=read(KEY.generatedMeta,null)}
+function loadLocks(){const d=read(KEY.locks,[]);state.locks=Array.isArray(d)?d:[];renderLocks()}
+function getFormData(){return{level:$("level").value,grade:$("grade").value,stream:$("stream").value.toUpperCase(),teacherValue:$("teacher").value,subject:$("subject").value,lessons:Number($("lessons").value),year:$("year").value,term:$("term").value}}
+function validate(){const d=getFormData();for(const [key,msg] of [["level","Select the learning stage / level."],["grade","Select the grade / class."],["stream","Select a stream."],["teacherValue","Select a teacher."],["subject","Select a learning area / subject."]])if(!d[key])return{ok:false,message:msg};if(!Number.isInteger(d.lessons)||d.lessons<1||d.lessons>35)return{ok:false,message:"Lessons per week must be between 1 and 35."};const t=findTeacher(d.teacherValue);if(!t)return{ok:false,message:"Selected teacher could not be found."};const duplicate=state.allocations.some(a=>a.id!==state.editingId&&norm(a.teacherId||a.teacherName)===norm(teacherId(t)||teacherName(t))&&norm(a.grade)===norm(d.grade)&&text(a.stream).toUpperCase()===d.stream&&norm(a.subject)===norm(d.subject)&&String(a.year)===String(d.year)&&norm(a.term)===norm(d.term));if(duplicate)return{ok:false,message:"This teacher, class, stream and subject already has an allocation for the selected year and term."};return{ok:true,data:{teacherId:teacherId(t),teacherName:teacherName(t),level:d.level,grade:d.grade,stream:d.stream,subject:d.subject,lessons:d.lessons,year:d.year,term:d.term}}}
+function saveAllocation(){const r=validate();if(!r.ok){message(r.message,"error");return false}const d=r.data;if(state.editingId){const i=state.allocations.findIndex(a=>a.id===state.editingId);if(i<0){message("Allocation no longer exists.","error");return false}state.allocations[i]={...state.allocations[i],...d,updatedAt:new Date().toISOString()};state.generated=state.generated.filter(l=>l.allocationId!==state.editingId);if(!save(KEY.generated,state.generated)||!save(KEY.allocations,state.allocations))return false;state.editingId=null;resetForm();loadAllocations();renderCurrentView();message("Allocation updated successfully.","success");return true}state.allocations.push({id:"TT-"+Date.now()+"-"+Math.random().toString(36).substring(2,8),...d,createdAt:new Date().toISOString()});if(!save(KEY.allocations,state.allocations))return false;resetForm();loadAllocations();message("Timetable allocation saved successfully.","success");return true}
+function resetForm(){state.editingId=null;$("editingBadge").classList.add("hidden");$("saveAllocation").textContent="SAVE ALLOCATION";$("level").value="";$("grade").innerHTML='<option value="">Select Level First</option>';$("grade").disabled=true;$("stream").value="";$("subject").value="";$("lessons").value="5";if(!restrictedRole())$("teacher").value="";populateTeachers()}
+function editAllocation(id){const a=state.allocations.find(x=>x.id===id);if(!a){message("Allocation not found.","error");return}state.editingId=id;$("editingBadge").classList.remove("hidden");$("saveAllocation").textContent="UPDATE ALLOCATION";$("level").value=a.level;updateGrades();$("grade").value=a.grade;$("stream").value=text(a.stream).toUpperCase();$("teacher").value=a.teacherId||a.teacherName;$("subject").value=a.subject;$("lessons").value=a.lessons;$("year").value=a.year;$("term").value=a.term;window.scrollTo({top:0,behavior:"smooth"});message("Allocation loaded. Make your changes and click UPDATE ALLOCATION.","info")}
+function deleteAllocation(id){const a=state.allocations.find(x=>x.id===id);if(!a)return;if(!confirm("Delete this allocation?\n\n"+a.teacherName+" • "+a.subject+" • "+a.grade+" "+a.stream))return;state.allocations=state.allocations.filter(x=>x.id!==id);state.generated=state.generated.filter(l=>l.allocationId!==id);if(!save(KEY.allocations,state.allocations)||!save(KEY.generated,state.generated))return;loadAllocations();renderCurrentView();message("Allocation deleted successfully.","success")}
+function renderAllocations(){const body=$("allocationBody"),q=norm($("search").value);let records=state.allocations.filter(a=>!q||norm([a.teacherName,a.level,a.grade,a.stream,a.subject,a.year,a.term].join(" ")).includes(q));$("allocationCount").textContent=state.allocations.length+" "+(state.allocations.length===1?"Allocation":"Allocations");body.innerHTML="";if(!records.length){body.innerHTML='<tr><td colspan="10" style="text-align:center;padding:25px">'+(state.allocations.length?"No matching allocations.":"No timetable allocations saved yet.")+"</td></tr>";return}records.forEach((a,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}</td><td><strong>${esc(a.teacherName)}</strong></td><td>${esc(a.level)}</td><td>${esc(a.grade)}</td><td><span class="badge badge-blue">${esc(a.stream)}</span></td><td>${esc(a.subject)}</td><td><span class="badge badge-green">${esc(a.lessons)}</span></td><td>${esc(a.year)}</td><td>${esc(a.term)}</td><td><button class="btn btn-blue btn-small" data-edit="${esc(a.id)}">EDIT</button> <button class="btn btn-danger btn-small" data-delete="${esc(a.id)}">DELETE</button></td>`;body.appendChild(tr)});body.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>editAllocation(b.dataset.edit)));body.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>deleteAllocation(b.dataset.delete)))}
+function populateClassFilter(){const sel=$("classFilter"),old=sel.value,classes=new Map();state.allocations.forEach(a=>classes.set(text(a.grade)+"||"+text(a.stream).toUpperCase(),{grade:a.grade,stream:text(a.stream).toUpperCase()}));sel.innerHTML='<option value="">Select Grade / Stream</option>';[...classes.values()].sort((a,b)=>(a.grade+" "+a.stream).localeCompare(b.grade+" "+b.stream)).forEach(a=>{const o=document.createElement("option");o.value=a.grade+"||"+a.stream;o.textContent=a.grade+" "+a.stream;sel.appendChild(o)});if([...sel.options].some(o=>o.value===old))sel.value=old}
+function slotKey(day,period){return text(day).toUpperCase()+"||"+text(period).toUpperCase()}
+function classKey(l){return norm(l.grade)+"||"+text(l.stream).toUpperCase()}
+function teacherKey(l){return norm(l.teacherId||l.teacherName)}
+function lockSlotKey(l){return String(l.year)+"||"+norm(l.term)+"||"+slotKey(l.day,l.periodId)}
+function activeLocks(year,term){return state.locks.filter(l=>String(l.year)===String(year)&&norm(l.term)===norm(term))}
+function lockForSlot(day,period,year,term){return activeLocks(year,term).find(l=>slotKey(l.day,l.periodId)===slotKey(day,period))||null}
+function sameTeacher(a,b){const aid=norm(a.teacherId),bid=norm(b.teacherId);if(aid&&bid)return aid===bid;return norm(a.teacherName)===norm(b.teacherName)}
+function lockTeacherName(l){const t=state.teachers.find(x=>(l.teacherId&&teacherId(x)===l.teacherId)||norm(teacherName(x))===norm(l.teacherName));return teacherName(t)||l.teacherName||l.teacherId||"Unknown teacher"}
+function lockPeriod(){const year=$("lockYear").value,term=$("lockTerm").value,teacher=findTeacher($("lockTeacher").value),day=$("lockDay").value,periodId=$("lockPeriod").value;if(!year||!term||!teacher||!day||!periodId){message("Select the year, term, teacher, day and lesson period before locking.","error");return}if(!LESSON_PERIODS.some(p=>p.id===periodId)){message("Only teaching periods P1–P8 can be locked.","error");return}const existing=state.locks.find(l=>String(l.year)===String(year)&&norm(l.term)===norm(term)&&slotKey(l.day,l.periodId)===slotKey(day,periodId));if(existing){message("This slot is already locked for "+lockTeacherName(existing)+". Unlock it first if you need to change the teacher.","warning");return}const hasAllocation=state.allocations.some(a=>String(a.year)===String(year)&&norm(a.term)===norm(term)&&(norm(a.teacherId)===norm(teacherId(teacher))||norm(a.teacherName)===norm(teacherName(teacher)))&&Number(a.lessons)>0);if(!hasAllocation){message("This teacher has no timetable allocation for "+year+" • "+term+". Save a teacher allocation before locking a period.","error");return}const lock={id:"LOCK-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),year,term,day,periodId,teacherId:teacherId(teacher),teacherName:teacherName(teacher),createdAt:new Date().toISOString()};state.locks.push(lock);if(!save(KEY.locks,state.locks)){state.locks=state.locks.filter(x=>x.id!==lock.id);return}renderLocks();renderCurrentView();message("🔒 Locked "+day+" "+periodId+" for "+teacherName(teacher)+". The generator will reserve this slot for that teacher.","success")}
+function unlockPeriod(){const year=$("lockYear").value,term=$("lockTerm").value,day=$("lockDay").value,periodId=$("lockPeriod").value;if(!year||!term||!day||!periodId){message("Select the year, term, day and period you want to unlock.","error");return}const lock=state.locks.find(l=>String(l.year)===String(year)&&norm(l.term)===norm(term)&&slotKey(l.day,l.periodId)===slotKey(day,periodId));if(!lock){message("No lock exists for that year, term, day and period.","warning");return}if(!confirm("Unlock "+lock.day+" "+lock.periodId+" for "+lockTeacherName(lock)+"?"))return;state.locks=state.locks.filter(l=>l.id!==lock.id);if(!save(KEY.locks,state.locks))return;renderLocks();renderCurrentView();message("🔓 Period unlocked successfully.","success")}
+function deleteLock(id){const lock=state.locks.find(l=>l.id===id);if(!lock)return;if(!confirm("Unlock "+lock.day+" "+lock.periodId+" for "+lockTeacherName(lock)+"?"))return;state.locks=state.locks.filter(l=>l.id!==id);if(!save(KEY.locks,state.locks))return;renderLocks();renderCurrentView();message("Period lock removed.","success")}
+function renderLocks(){const body=$("lockBody");body.innerHTML="";if(!state.locks.length){body.innerHTML='<tr><td colspan="8" style="text-align:center;padding:22px">No periods are locked yet. Use the form above to reserve a teacher period.</td></tr>';return}const sorted=state.locks.slice().sort((a,b)=>String(a.year).localeCompare(String(b.year))||norm(a.term).localeCompare(norm(b.term))||DAYS.indexOf(a.day)-DAYS.indexOf(b.day)||LESSON_PERIODS.findIndex(p=>p.id===a.periodId)-LESSON_PERIODS.findIndex(p=>p.id===b.periodId));sorted.forEach((l,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}</td><td>${esc(l.year)}</td><td>${esc(l.term)}</td><td>${esc(l.day)}</td><td><strong>${esc(l.periodId)}</strong></td><td>${esc(lockTeacherName(l))}</td><td><span class="badge badge-lock">🔒 LOCKED</span></td><td><button type="button" class="btn btn-danger btn-small" data-unlock="${esc(l.id)}">UNLOCK</button></td>`;body.appendChild(tr)});body.querySelectorAll("[data-unlock]").forEach(b=>b.addEventListener("click",()=>deleteLock(b.dataset.unlock)))}
+function getFormData(){return{level:$("level").value,grade:$("grade").value,stream:$("stream").value.toUpperCase(),teacherValue:$("teacher").value,subject:$("subject").value,lessons:Number($("lessons").value),year:$("year").value,term:$("term").value}}
+function conflict(c,placed,locks){const slot=slotKey(c.day,c.periodId),cls=classKey(c),teacher=teacherKey(c);const reserved=(locks||[]).find(l=>slotKey(l.day,l.periodId)===slot);if(reserved&&!sameTeacher(c,reserved))return true;if(placed.some(x=>slotKey(x.day,x.periodId)===slot&&teacherKey(x)===teacher))return true;if(placed.some(x=>slotKey(x.day,x.periodId)===slot&&classKey(x)===cls))return true;if(placed.some(x=>x.day===c.day&&classKey(x)===cls&&norm(x.subject)===norm(c.subject)))return true;return false}
+function shuffle(items){const r=items.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function allSlots(){const slots=[];DAYS.forEach(day=>LESSON_PERIODS.forEach(p=>slots.push({day,periodId:p.id})));return slots}
+function buildLessons(){const year=$("year").value,term=$("term").value;let allocations=state.allocations.filter(a=>String(a.year)===String(year)&&norm(a.term)===norm(term));if(restrictedRole())allocations=allocations.filter(a=>norm(a.teacherId)===norm(state.loggedTeacherId)||norm(a.teacherName)===norm(state.loggedTeacherName));const instances=[];allocations.forEach(a=>{for(let i=1;i<=Number(a.lessons);i++)instances.push({allocationId:a.id,teacherId:a.teacherId,teacherName:a.teacherName,level:a.level,grade:a.grade,stream:text(a.stream).toUpperCase(),subject:a.subject,lessonNumber:i,day:"",periodId:""})});instances.sort((a,b)=>Number(state.allocations.find(x=>x.id===b.allocationId)?.lessons||0)-Number(state.allocations.find(x=>x.id===a.allocationId)?.lessons||0));return instances}
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+let progressTimer=null,progressIndex=0;
+const PROGRESS_COLOURS=["#ef4444","#22c55e","#3b82f6","#ffffff","#1f2937","#ef4444","#f97316","#eab308"];
+function showProgress(msg,percent){$("overlay").classList.add("show");$("processingMessage").textContent=msg;const p=Math.max(0,Math.min(100,percent));const bar=$("progressBar");bar.style.width=p+"%";bar.style.backgroundColor=PROGRESS_COLOURS[Math.min(7,Math.floor(p/100*8))];$("progressText").textContent=Math.round(p)+"%";const items=document.querySelectorAll(".progress-colour");items.forEach((el,i)=>el.classList.toggle("active",i===progressIndex));progressIndex=(progressIndex+1)%items.length}
+function startProgressAnimation(){stopProgressAnimation();progressTimer=setInterval(()=>{const items=document.querySelectorAll(".progress-colour");items.forEach((el,i)=>el.classList.toggle("active",i===progressIndex));progressIndex=(progressIndex+1)%items.length},650)}
+function stopProgressAnimation(){if(progressTimer){clearInterval(progressTimer);progressTimer=null}}
+function hideProgress(){stopProgressAnimation();$("overlay").classList.remove("show");$("progressBar").style.width="0%";$("progressText").textContent="0%";document.querySelectorAll(".progress-colour").forEach(el=>el.classList.remove("active"));progressIndex=0}
+
+/* Locked slots are placed first. The remaining generator may not use a reserved slot for another teacher. */
+async function createSchedule(original,locks){
+const lessons=shuffle(original),placed=[],slots=allSlots();let nodes=0;const MAX_NODES=100000;
+const reservedSlots=new Set();
+for(const lock of locks){
+const sk=slotKey(lock.day,lock.periodId);
+if(reservedSlots.has(sk))return{error:"Two locks use the same slot. Remove the duplicate lock and try again."};
+reservedSlots.add(sk);
+const index=lessons.findIndex(l=>sameTeacher(l,lock));
+if(index<0)return{error:"Locked teacher "+lockTeacherName(lock)+" has no remaining lesson to place for "+lock.day+" "+lock.periodId+". Check the teacher's lesson allocations and other locks."};
+const candidate={...lessons[index],day:lock.day,periodId:lock.periodId};
+if(conflict(candidate,placed,locks))return{error:"The locked slot "+lock.day+" "+lock.periodId+" conflicts with another locked lesson for the same class, teacher or subject. Adjust the locks or allocations."};
+placed.push(candidate);lessons.splice(index,1);
+}
+function solve(index){
+nodes++;if(nodes>MAX_NODES)return false;
+if(index>=lessons.length)return true;
+const lesson=lessons[index];
+for(const slot of shuffle(slots)){
+const candidate={...lesson,day:slot.day,periodId:slot.periodId};
+if(conflict(candidate,placed,locks))continue;
+placed.push(candidate);if(solve(index+1))return true;placed.pop()
+}
+return false
+}
+const success=solve(0);return success?{schedule:placed}:null
+}
+let generationRunning=false;
+async function generate(forceReshuffle){
+if(generationRunning)return;
+const instances=buildLessons();
+if(!instances.length){message("No allocations found for "+$("year").value+" • "+$("term").value+". Save allocations first.","warning");return}
+const total=instances.length,available=DAYS.length*LESSON_PERIODS.length;
+if(total>available){message("There are "+total+" lessons to place, but only "+available+" lesson positions are available for each class. Reduce allocations or check class and teacher conflicts.","error");return}
+const locks=activeLocks($("year").value,$("term").value);
+if(locks.length>available){message("There are more period locks than available lesson slots. Remove unnecessary locks.","error");return}
+generationRunning=true;$("generate").disabled=true;$("reshuffle").disabled=true;startProgressAnimation();
+try{
+showProgress("Preparing lessons and period locks...",0);await wait(350);
+let answer=null,lockError="",attempts=forceReshuffle?100:150;
+for(let attempt=1;attempt<=attempts;attempt++){
+showProgress("Generating timetable... Attempt "+attempt+" of "+attempts,5+Math.round(attempt/attempts*88));await wait(70);
+answer=await createSchedule(instances,locks);
+if(answer&&answer.error){lockError=answer.error;answer=null;break}
+if(answer)break;
+await wait(50)
+}
+if(!answer){hideProgress();message(lockError||"The timetable could not be generated without conflicts. Locked periods are protected. Try reducing lesson counts or reviewing teacher/class allocations.","error");return}
+state.generated=answer.schedule.map(l=>({allocationId:l.allocationId,teacherId:l.teacherId,teacherName:l.teacherName,level:l.level,grade:l.grade,stream:l.stream,subject:l.subject,lessonNumber:l.lessonNumber,day:l.day,periodId:l.periodId}));
+state.generatedMeta={year:$("year").value,term:$("term").value,generatedAt:new Date().toISOString(),totalLessons:state.generated.length,lockedSlots:locks.length};
+if(!save(KEY.generated,state.generated)||!save(KEY.generatedMeta,state.generatedMeta)){message("The timetable was generated but could not be saved. Check local storage and try again.","error");return}
+showProgress("Timetable saved. Displaying lessons...",100);await wait(650);renderCurrentView();message("Timetable generated successfully. "+state.generated.length+" lessons placed. "+locks.length+" period lock(s) honoured.","success")
+}catch(e){console.error("GBH timetable generation error",e);message("An unexpected error occurred while generating the timetable.","error")}
+finally{hideProgress();generationRunning=false;$("generate").disabled=false;$("reshuffle").disabled=false}
+}
+function currentGenerated(){const y=$("year").value,t=$("term").value;if(state.generatedMeta&&(String(state.generatedMeta.year)!==String(y)||norm(state.generatedMeta.term)!==norm(t)))return[];return Array.isArray(state.generated)?state.generated:[]}
+function renderHeader(){$("gridHead").innerHTML="<tr><th class=\"period-column\">DAY</th>"+PERIODS.map(p=>`<th>${esc(p.label)}<span class="period-time" style="display:block;margin-top:3px;font-size:8px;color:inherit;opacity:.9">${esc(p.time)}</span></th>`).join("")+"</tr>"}
+function createLessonMap(lessons){const map=new Map();lessons.forEach(l=>map.set(slotKey(text(l.day).toUpperCase(),text(l.periodId).toUpperCase()),l));return map}
+function lessonHTML(l,view,locked){if(!l)return"";return `<div class="lesson-box${locked?" locked-lesson":""}">${locked?'<span class="lock-ribbon" title="Protected teacher period">🔒</span>':""}<div class="lesson-code">${esc(subjectCode(l.subject))}</div><div class="lesson-subject">${esc(l.subject)}</div>${view==="teacher"?`<div class="lesson-class">${esc(l.grade+" "+l.stream)}</div>`:`<div class="lesson-teacher">${esc(l.teacherName)}</div>`}</div>`}
+function renderGrid(lessons,view){
+const body=$("gridBody");body.innerHTML="";const map=createLessonMap(lessons),locks=activeLocks($("year").value,$("term").value);
+DAYS.forEach(day=>{
+const row=document.createElement("tr"),dc=document.createElement("td");dc.className="period-cell";dc.innerHTML="<strong>"+esc(day)+"</strong>";row.appendChild(dc);
+PERIODS.forEach(p=>{
+const cell=document.createElement("td");
+if(p.type==="break"||p.type==="activity"||p.type==="lunch"){cell.className=p.type==="break"?"break-cell":p.type==="activity"?"activity-cell":"lunch-cell";cell.innerHTML=esc(p.type==="activity"?"ACTIVITY":p.label)+'<span style="display:block;font-size:8px;margin-top:3px;font-weight:700">'+esc(p.time)+"</span>"}
+else{
+cell.className="lesson-cell";const l=map.get(slotKey(day,p.id)),lock=locks.find(x=>slotKey(x.day,x.periodId)===slotKey(day,p.id));
+if(l)cell.innerHTML=lessonHTML(l,view,!!lock);
+else if(lock)cell.innerHTML=`<div class="locked-empty">🔒 RESERVED<br>${esc(lockTeacherName(lock))}<br>${esc(p.id)}</div>`;
+}
+row.appendChild(cell)
+});body.appendChild(row)
+})
+}
+function updatePrint(label,view){$("printTitle").textContent=view==="teacher"?"TEACHER TIMETABLE":"CLASS TIMETABLE";$("printRight").innerHTML="<div>"+esc(label||(view==="teacher"?"Teacher":"Class"))+"</div><div>"+esc($("year").value)+" • "+esc($("term").value)+"</div>"}
+function renderTeacher(){
+renderHeader();const value=$("teacher").value;
+if(!value){$("gridBody").innerHTML='<tr><td colspan="13" class="empty">Select a teacher above to display the teacher timetable.</td></tr>';$("timetableMeta").textContent="Select a teacher and generate the timetable.";updatePrint("","teacher");return}
+const t=findTeacher(value);if(!t)return;const id=teacherId(t),name=teacherName(t),lessons=currentGenerated().filter(l=>norm(l.teacherId)===norm(id)||norm(l.teacherName)===norm(name));
+renderGrid(lessons,"teacher");$("timetableMeta").textContent=name+" • "+lessons.length+" lessons • "+$("year").value+" • "+$("term").value;updatePrint(name,"teacher")
+}
+function renderClass(){
+renderHeader();const selected=$("classFilter").value;
+if(!selected){$("gridBody").innerHTML='<tr><td colspan="13" class="empty">Select a Grade / Stream above to display the class timetable.</td></tr>';$("timetableMeta").textContent="Select a Grade / Stream.";updatePrint("","class");return}
+const [grade,stream]=selected.split("||"),lessons=currentGenerated().filter(l=>norm(l.grade)===norm(grade)&&text(l.stream).toUpperCase()===text(stream).toUpperCase());
+renderGrid(lessons,"class");const label=grade+" "+stream;$("timetableMeta").textContent=label+" • "+lessons.length+" lessons • "+$("year").value+" • "+$("term").value;updatePrint(label,"class")
+}
+function renderCurrentView(){state.view==="teacher"?renderTeacher():renderClass()}
+function switchView(view){state.view=view;$("teacherView").classList.toggle("active",view==="teacher");$("classView").classList.toggle("active",view==="class");$("timetableTitle").textContent=view==="teacher"?"Teacher Timetable":"Class Timetable";$("classFilterBox").classList.toggle("hidden",view!=="class");document.body.classList.toggle("print-teacher",view==="teacher");document.body.classList.toggle("print-class",view==="class");renderCurrentView()}
+function printTimetable(){renderCurrentView();setTimeout(()=>window.print(),150)}
+function bind(){
+$("teacherView").addEventListener("click",()=>switchView("teacher"));
+$("classView").addEventListener("click",()=>switchView("class"));
+$("dashboardButton").addEventListener("click",()=>location.href="dashboard.html");
+$("level").addEventListener("change",updateGrades);
+$("teacher").addEventListener("change",renderCurrentView);
+$("year").addEventListener("change",renderCurrentView);
+$("term").addEventListener("change",renderCurrentView);
+$("classFilter").addEventListener("change",renderCurrentView);
+$("saveAllocation").addEventListener("click",saveAllocation);
+$("clearForm").addEventListener("click",resetForm);
+$("saveClose").addEventListener("click",()=>{if(saveAllocation())setTimeout(()=>location.href="dashboard.html",350)});
+$("search").addEventListener("input",renderAllocations);
+$("refresh").addEventListener("click",()=>{loadTeachers();loadAllocations();loadGenerated();loadLocks();populateClassFilter();renderCurrentView();message("Timetable data refreshed.","success")});
+$("generate").addEventListener("click",()=>generate(false));
+$("reshuffle").addEventListener("click",()=>generate(true));
+$("print").addEventListener("click",printTimetable);
+$("lockPeriodButton").addEventListener("click",lockPeriod);
+$("unlockPeriodButton").addEventListener("click",unlockPeriod);
+$("refreshLocks").addEventListener("click",()=>{loadLocks();renderCurrentView();message("Period locks refreshed.","success")});
+$("year").addEventListener("change",()=>{$("lockYear").value=$("year").value;renderLocks()});
+$("term").addEventListener("change",()=>{$("lockTerm").value=$("term").value;renderLocks()});
+$("lockYear").addEventListener("change",renderLocks);
+$("lockTerm").addEventListener("change",renderLocks);
+}
+function init(){
+loadSession();loadSchool();loadTeachers();loadAllocations();loadGenerated();loadLocks();
+$("lockYear").value=$("year").value;$("lockTerm").value=$("term").value;
+bind();switchView("teacher");renderLocks()
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+window.GBH_TIMETABLE={generate,switchView,print:printTimetable,save:saveAllocation,edit:editAllocation,delete:deleteAllocation,lock:lockPeriod,unlock:unlockPeriod,loadLocks};
+})();
+</script>
+</body>
+</html>

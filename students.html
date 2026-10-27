@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GREEN HONEY BADGER SYSTEM - Students</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#f1f5f2;color:#17251c}
+.header{background:linear-gradient(135deg,#064e3b,#087f5b);color:white;padding:18px 25px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:0 3px 10px #0003}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-icon{width:52px;height:52px;border-radius:50%;background:#ffffff26;display:flex;align-items:center;justify-content:center;font-size:30px}
+.brand h1{margin:0;font-size:22px}
+.brand p{margin:4px 0 0;font-size:13px;opacity:.9}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.user-info{text-align:right;margin-right:8px}
+.user-info strong{display:block;font-size:14px}
+.user-info span{font-size:12px;opacity:.85}
+.header-btn{border:0;padding:10px 15px;border-radius:7px;cursor:pointer;font-weight:bold}
+.dashboard-btn{background:white;color:#065f46}
+.logout-btn{background:#b91c1c;color:white}
+.container{width:96%;max-width:1500px;margin:22px auto 40px}
+.page-title{background:white;border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 8px #0001}
+.page-title h2{margin:0;color:#065f46;font-size:25px}
+.page-title p{margin:7px 0 0;color:#64748b}
+.statistics{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}
+.stat-card{background:white;border-radius:12px;padding:18px;box-shadow:0 2px 8px #0001;border-left:5px solid #087f5b}
+.stat-card h3{margin:0;font-size:13px;color:#64748b;text-transform:uppercase}
+.stat-card strong{display:block;margin-top:7px;font-size:27px;color:#064e3b}
+.card{background:white;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 2px 8px #0002}
+.card-title{border-bottom:2px solid #e2e8f0;padding-bottom:12px;margin-bottom:20px}
+.card-title h3{margin:0;color:#065f46}
+.card-title p{margin:5px 0 0;color:#64748b;font-size:13px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.form-group{display:flex;flex-direction:column}
+.form-group label{font-size:13px;font-weight:bold;margin-bottom:7px;color:#334155}
+.required{color:#dc2626}
+.form-group input,.form-group select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:7px;background:white;font-size:14px;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:#087f5b;box-shadow:0 0 0 3px #087f5b1a}
+.form-buttons,.cloud-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;padding:11px 17px;border-radius:7px;cursor:pointer;font-weight:bold;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:#087f5b;color:white}
+.btn-secondary{background:#64748b;color:white}
+.btn-info{background:#2563eb;color:white}
+.btn-warning{background:#d97706;color:white}
+.btn-danger{background:#dc2626;color:white}
+.btn-light{background:#e2e8f0;color:#334155}
+.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:10px;align-items:center}
+.toolbar input,.toolbar select{min-width:0;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:white}
+.table-wrapper{width:100%;overflow-x:auto;margin-top:18px}
+table{width:100%;border-collapse:collapse;min-width:1100px}
+thead{background:#064e3b;color:white}
+th,td{padding:11px 9px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:13px;white-space:nowrap}
+tbody tr:nth-child(even){background:#f8fafc}
+tbody tr:hover{background:#ecfdf5}
+.action-buttons{display:flex;gap:5px}
+.small-btn{padding:7px 9px;border:0;border-radius:5px;color:white;cursor:pointer;font-size:11px;font-weight:bold}
+.view-btn{background:#2563eb}
+.edit-btn{background:#d97706}
+.delete-btn{background:#dc2626}
+.empty-row{text-align:center;padding:35px;color:#64748b}
+.message-container{position:fixed;top:20px;right:20px;z-index:9999;width:min(400px,calc(100% - 40px))}
+.message{display:none;padding:15px 18px;border-radius:9px;margin-bottom:10px;box-shadow:0 5px 20px #0003;font-weight:bold;font-size:13px;background:white;border-left:5px solid #087f5b}
+.message.success,.message.error,.message.warning,.message.info{display:block}
+.message.success{border-left-color:#16a34a;color:#166534}
+.message.error{border-left-color:#dc2626;color:#991b1b}
+.message.warning{border-left-color:#d97706;color:#92400e}
+.message.info{border-left-color:#2563eb;color:#1e40af}
+.cloud-panel{background:white;border:1px solid #cbd5e1;border-left:5px solid #2563eb;border-radius:10px;padding:16px 18px;margin-bottom:20px}
+.cloud-panel h3{margin:0 0 6px;color:#064e3b}
+.cloud-panel p{margin:6px 0;color:#475569;font-size:13px;line-height:1.5}
+.cloud-status{font-weight:bold}
+.cloud-actions{margin-top:12px}
+.modal-overlay{display:none;position:fixed;inset:0;background:#0f172aa6;z-index:5000;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:white;width:min(700px,100%);max-height:90vh;overflow-y:auto;border-radius:12px;box-shadow:0 15px 50px #0005}
+.modal-header{background:#064e3b;color:white;padding:17px 20px;display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{margin:0}
+.close-modal{background:transparent;border:0;color:white;font-size:25px;cursor:pointer}
+.modal-body{padding:22px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail-item{background:#f8fafc;padding:12px;border-radius:7px}
+.detail-item strong{display:block;font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:4px}
+.detail-item span{font-size:14px;font-weight:bold}
+.footer{text-align:center;color:#64748b;font-size:12px;padding:20px}
+@media(max-width:1100px){.statistics{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.header{flex-direction:column;align-items:flex-start}.header-right{width:100%}.user-info{text-align:left}.statistics{grid-template-columns:1fr 1fr}.form-grid,.toolbar,.detail-grid{grid-template-columns:1fr}.page-title h2{font-size:21px}}
+@media print{
+@page{size:A4 landscape;margin:12mm}
+body{background:white!important;font-family:"Times New Roman",Times,serif!important;color:black!important}
+.header,.page-title,.statistics,.card:not(#recordsCard),.toolbar,.form-buttons,.action-buttons,.footer,.message-container,.modal-overlay,.no-print{display:none!important}
+.container{width:100%;max-width:none;margin:0}
+.card{display:none;box-shadow:none;border:0;padding:0;margin:0}
+#recordsCard{display:block!important}
+#recordsCard .card-title{display:block!important;text-align:center;border:0;margin-bottom:12px}
+#recordsCard .card-title h3{font-family:"Times New Roman",Times,serif;color:black;font-size:18pt}
+#recordsCard .card-title p{font-family:"Times New Roman",Times,serif;color:black;font-size:11pt}
+.table-wrapper{overflow:visible}
+table{min-width:0;width:100%;border-collapse:collapse;font-family:"Times New Roman",Times,serif;font-size:9pt}
+th,td{border:1px solid black;padding:5px;color:black;white-space:normal}
+thead{background:white!important;color:black!important}
+tr{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="message-container"><div id="messageBox" class="message"></div></div>
+<header class="header">
+<div class="brand"><div class="brand-icon">🦡</div><div><h1>GREEN HONEY BADGER SYSTEM</h1><p>Students &amp; Learner Management</p></div></div>
+<div class="header-right"><div class="user-info"><strong id="accessUser">—</strong><span id="accessRole">—</span></div><button class="header-btn dashboard-btn" onclick="goDashboard()">Dashboard</button><button class="header-btn logout-btn" onclick="logoutUser()">Logout</button></div>
+</header>
+
+<main class="container">
+<section class="page-title"><h2>Students / Learner Registration</h2><p>Register, manage, search, update and print learner records.</p></section>
+
+<section class="cloud-panel no-print" aria-live="polite">
+<h3>☁️ Shared School Records</h3>
+<p id="cloudStatus" class="cloud-status">Checking Supabase connection…</p>
+<p id="cloudHelp">Local learner records remain on this computer. Cloud changes require an explicit action.</p>
+<div class="cloud-actions">
+<button type="button" class="btn btn-info" id="checkCloudButton" onclick="checkCloudStatus()">Check Cloud</button>
+<button type="button" class="btn btn-primary" id="uploadCloudButton" onclick="syncLocalLearners()" disabled>Sync Local Changes</button>
+<button type="button" class="btn btn-secondary" id="refreshCloudButton" onclick="refreshFromCloud()" disabled>Refresh from Cloud</button>
+</div>
+</section>
+
+<section class="statistics">
+<div class="stat-card"><h3>Total Learners</h3><strong id="totalLearners">0</strong></div>
+<div class="stat-card"><h3>Male Learners</h3><strong id="maleLearners">0</strong></div>
+<div class="stat-card"><h3>Female Learners</h3><strong id="femaleLearners">0</strong></div>
+<div class="stat-card"><h3>Active Learners</h3><strong id="activeLearners">0</strong></div>
+</section>
+
+<section class="card">
+<div class="card-title"><h3 id="formTitle">Register New Learner</h3><p>Enter the learner's official school information. Fields marked <span class="required">*</span> are required.</p></div>
+<form id="studentForm">
+<input type="hidden" id="editingId">
+<div class="form-grid">
+<div class="form-group"><label for="admissionNumber">Admission Number <span class="required">*</span></label><input type="text" id="admissionNumber" placeholder="e.g. 001/2026" required></div>
+<div class="form-group"><label for="studentName">Learner Full Name <span class="required">*</span></label><input type="text" id="studentName" placeholder="Surname Other Names" required></div>
+<div class="form-group"><label for="gender">Gender <span class="required">*</span></label><select id="gender" required><option value="">Select Gender</option><option value="Male">Male</option><option value="Female">Female</option></select></div>
+<div class="form-group"><label for="dateOfBirth">Date of Birth</label><input type="date" id="dateOfBirth"></div>
+<div class="form-group"><label for="schoolLevel">School Level <span class="required">*</span></label><select id="schoolLevel" required><option value="">Select School Level</option><option value="Preparatory">Preparatory</option><option value="Lower Primary">Lower Primary</option><option value="Upper Primary">Upper Primary</option><option value="Junior School">Junior School</option></select></div>
+<div class="form-group"><label for="grade">Grade / Class <span class="required">*</span></label><select id="grade" required disabled><option value="">Select School Level First</option></select></div>
+<div class="form-group"><label for="stream">Stream</label><select id="stream"><option value="">Select Stream</option><option value="BLUE">BLUE</option><option value="GREEN">GREEN</option><option value="RED">RED</option><option value="YELLOW">YELLOW</option></select></div>
+<div class="form-group"><label for="parentName">Parent / Guardian Name</label><input type="text" id="parentName" placeholder="Parent / Guardian full name"></div>
+<div class="form-group"><label for="parentPhone">Parent / Guardian Phone</label><input type="tel" id="parentPhone" placeholder="e.g. 0712345678"></div>
+<div class="form-group"><label for="status">Learner Status <span class="required">*</span></label><select id="status" required><option value="Active">Active</option><option value="Transferred">Transferred</option><option value="Graduated">Graduated</option><option value="Inactive">Inactive</option></select></div>
+</div>
+<div class="form-buttons"><button type="submit" class="btn btn-primary" id="saveButton">Register Learner</button><button type="button" class="btn btn-secondary" onclick="resetForm()">Clear Form</button><button type="button" class="btn btn-light" onclick="cancelEdit()" id="cancelEditButton" style="display:none">Cancel Edit</button></div>
+</form>
+</section>
+
+<section class="card" id="recordsCard">
+<div class="card-title"><h3>Learner Records</h3><p>Search and manage registered learners.</p></div>
+<div class="toolbar no-print">
+<input type="search" id="searchInput" placeholder="Search admission number, name, parent...">
+<select id="levelFilter"><option value="">All Levels</option><option value="Preparatory">Preparatory</option><option value="Lower Primary">Lower Primary</option><option value="Upper Primary">Upper Primary</option><option value="Junior School">Junior School</option></select>
+<select id="gradeFilter"><option value="">All Grades</option></select>
+<select id="genderFilter"><option value="">All Genders</option><option value="Male">Male</option><option value="Female">Female</option></select>
+<select id="statusFilter"><option value="">All Status</option><option value="Active">Active</option><option value="Transferred">Transferred</option><option value="Graduated">Graduated</option><option value="Inactive">Inactive</option></select>
+<button type="button" class="btn btn-info" onclick="printLearners()">🖨 Print</button>
+</div>
+<div class="table-wrapper"><table id="studentsTable"><thead><tr><th>#</th><th>Admission No.</th><th>Learner Name</th><th>Gender</th><th>Level</th><th>Grade</th><th>Stream</th><th>Parent / Guardian</th><th>Phone</th><th>Status</th><th class="no-print">Actions</th></tr></thead><tbody id="studentsTableBody"><tr><td colspan="11" class="empty-row">No learner records found.</td></tr></tbody></table></div>
+</section>
+</main>
+
+<div class="modal-overlay" id="studentModal"><div class="modal"><div class="modal-header"><h3>Learner Details</h3><button class="close-modal" onclick="closeStudentModal()">×</button></div><div class="modal-body" id="studentDetails"></div></div></div>
+<footer class="footer no-print">GREEN HONEY BADGER SYSTEM © <span id="currentYear"></span> — Students &amp; Learner Management</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="script.js"></script>
+
+<script>
+"use strict";
+
+const STUDENTS_KEY = "students";
+const EXPECTED_SCHOOL_ID = "f0fe8fc3-7b2d-4689-9c17-b2569410b17b";
+const CLOUD_SELECT = "id,school_id,admission_number,student_name,gender,date_of_birth,school_level,grade,stream,parent_name,parent_phone,status,created_at";
+
+let students = [];
+let cloudStudents = [];
+let cloudReady = false;
+let cloudBusy = false;
+let localStorageReadable = true;
+
+const gradeStructure = {
+    "Preparatory": ["PLAY GROUP", "PP1", "PP2"],
+    "Lower Primary": ["GRADE 1", "GRADE 2", "GRADE 3"],
+    "Upper Primary": ["GRADE 4", "GRADE 5", "GRADE 6"],
+    "Junior School": ["GRADE 7", "GRADE 8", "GRADE 9"]
+};
+
+document.addEventListener("DOMContentLoaded", async function () {
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+    loadStudents();
+    setupSchoolLevel();
+    setupFilters();
+    setupForm();
+    displayCurrentUser();
+    renderStudents();
+    updateStatistics();
+    await checkCloudStatus();
+});
+
+function getCurrentUserSafely() {
+    try {
+        return typeof window.getCurrentGBHUser === "function"
+            ? window.getCurrentGBHUser() : null;
+    } catch (error) {
+        console.error("Could not read GBH user:", error);
+        return null;
+    }
+}
+
+function displayCurrentUser() {
+    const user = getCurrentUserSafely();
+    document.getElementById("accessUser").textContent =
+        user ? (user.fullName || user.username || user.email || "User") : "User";
+    document.getElementById("accessRole").textContent =
+        user ? (user.role || "") : "Session not detected";
+}
+
+function getSupabaseClient() {
+    return window.GBH_SUPABASE_CLIENT || null;
+}
+
+function getSchoolId() {
+    const user = getCurrentUserSafely();
+    return user && user.schoolId ? String(user.schoolId) : null;
+}
+
+/* LOCAL DATA: NEVER CLEAR OR REPLACE AUTOMATICALLY */
+
+function loadStudents() {
+    try {
+        const saved = localStorage.getItem(STUDENTS_KEY);
+        const parsed = saved === null ? [] : JSON.parse(saved);
+
+        if (!Array.isArray(parsed)) {
+            throw new Error("The saved students value is not an array.");
+        }
+
+        students = parsed;
+        localStorageReadable = true;
+    } catch (error) {
+        localStorageReadable = false;
+        students = [];
+        console.error("Local learner loading failed:", error);
+        showMessage("Local learner data could not be read. Cloud upload is blocked for safety.", "error");
+    }
+}
+
+function saveStudents() {
+    if (!localStorageReadable) {
+        showMessage("Local storage was not read safely. Saving is blocked to protect existing records.", "error");
+        return false;
+    }
+
+    try {
+        localStorage.setItem(STUDENTS_KEY, JSON.stringify(students));
+        return true;
+    } catch (error) {
+        console.error("Local learner save failed:", error);
+        showMessage("Local records could not be saved. Check browser storage.", "error");
+        return false;
+    }
+}
+
+function setCloudStatus(message) {
+    document.getElementById("cloudStatus").textContent = message;
+}
+
+function setCloudBusy(busy) {
+    cloudBusy = busy;
+    document.getElementById("checkCloudButton").disabled = busy;
+    document.getElementById("uploadCloudButton").disabled =
+        busy || !cloudReady || !localStorageReadable || students.length === 0;
+    document.getElementById("refreshCloudButton").disabled = busy || !cloudReady;
+}
+
+/* VERIFY SESSION, SCHOOL MEMBERSHIP AND CLOUD ACCESS */
+
+async function checkCloudStatus() {
+    if (cloudBusy) return;
+
+    cloudReady = false;
+    setCloudBusy(true);
+
+    try {
+        const client = getSupabaseClient();
+
+        if (!window.GBH_SUPABASE_CONFIG || !window.supabase || !client) {
+            throw new Error("Supabase scripts/configuration are unavailable. Check supabase-config.js and supabase-client.js.");
+        }
+
+        const user = getCurrentUserSafely();
+        const schoolId = getSchoolId();
+
+        if (!user || !schoolId) {
+            throw new Error("No school-linked GBH user was detected. Sign in again.");
+        }
+
+        if (schoolId !== EXPECTED_SCHOOL_ID) {
+            throw new Error("The current school ID does not match the configured Kospir Junior School ID. Cloud actions are blocked.");
+        }
+
+        if (!localStorageReadable) {
+            throw new Error("Local learner storage could not be read. Cloud upload is blocked to protect existing learners.");
+        }
+
+        setCloudStatus("Checking Supabase session and school membership…");
+
+        const { data: sessionData, error: sessionError } = await client.auth.getSession();
+        if (sessionError) throw sessionError;
+
+        const session = sessionData && sessionData.session;
+        if (!session || !session.user) {
+            throw new Error("There is no active Supabase session on this page. Sign in with your cloud account first.");
+        }
+
+        const authUserId = session.user.id;
+
+        const { data: membership, error: membershipError } = await client
+            .from("school_members")
+            .select("id,school_id,user_id,role")
+            .eq("school_id", schoolId)
+            .eq("user_id", authUserId)
+            .limit(1);
+
+        if (membershipError) throw membershipError;
+
+        if (!Array.isArray(membership) || membership.length === 0) {
+            throw new Error("The signed-in Supabase account has no visible membership for Kospir Junior School. Check the school_members row and its RLS policy.");
+        }
+
+        const { data, error } = await client
+            .from("students")
+            .select(CLOUD_SELECT)
+            .eq("school_id", schoolId)
+            .limit(5000);
+
+        if (error) throw error;
+
+        cloudStudents = Array.isArray(data) ? data : [];
+        cloudReady = true;
+
+        setCloudStatus("Connected. Cloud learners returned: " + cloudStudents.length +
+            ". Local learners on this computer: " + students.length + ".");
+
+        document.getElementById("cloudHelp").textContent =
+            "Sync Local Changes adds missing learners and updates matching cloud records by school and admission number. It does not delete cloud records. Refresh preserves local-only records.";
+
+    } catch (error) {
+        cloudReady = false;
+        console.error("Supabase check failed:", error);
+        setCloudStatus("Cloud check failed: " + (error.message || String(error)));
+    } finally {
+        setCloudBusy(false);
+    }
+}
+
+function normalizeGender(value) {
+    const gender = String(value || "").trim().toLowerCase();
+    if (gender === "male" || gender === "boy") return "Male";
+    if (gender === "female" || gender === "girl") return "Female";
+    return String(value || "").trim();
+}
+
+function normalizeDate(value) {
+    if (!value) return null;
+    const date = String(value).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null;
+}
+
+function normalizedAdmission(value) {
+    return String(value || "").trim().toLowerCase();
+}
+
+function learnerName(student) {
+    return student.name || student.studentName || student.fullName || "";
+}
+
+function toCloudRow(student, schoolId) {
+    const statusMap = {
+        "Active": "ACTIVE",
+        "Transferred": "TRANSFERRED",
+        "Graduated": "GRADUATED",
+        "Inactive": "INACTIVE"
+    };
+
+    const status = String(student.status || "Active");
+
+    return {
+        school_id: schoolId,
+        admission_number: String(student.admissionNumber || "").trim(),
+        student_name: String(learnerName(student)).trim(),
+        gender: normalizeGender(student.gender),
+        date_of_birth: normalizeDate(student.dateOfBirth || student.dob),
+        school_level: String(student.schoolLevel || student.level || "").trim(),
+        grade: String(student.grade || student.class || "").trim(),
+        stream: student.stream ? String(student.stream).trim() : null,
+        parent_name: String(student.parentName || student.guardianName || "").trim() || null,
+        parent_phone: String(student.parentPhone || student.guardianPhone || "").trim() || null,
+        status: statusMap[status] || status.toUpperCase()
+    };
+}
+
+/* SAFE, EXPLICIT CLOUD SYNC — NO CLOUD DELETIONS */
+
+async function syncLocalLearners() {
+    if (cloudBusy) return;
+
+    if (!cloudReady) {
+        showMessage("Check the cloud connection first.", "warning");
+        return;
+    }
+
+    if (!localStorageReadable || !Array.isArray(students)) {
+        showMessage("Local learner data is not safe to sync.", "error");
+        return;
+    }
+
+    const client = getSupabaseClient();
+    const schoolId = getSchoolId();
+
+    if (!client || schoolId !== EXPECTED_SCHOOL_ID) {
+        showMessage("Sync blocked: school or Supabase client verification failed.", "error");
+        return;
+    }
+
+    if (!students.length) {
+        showMessage("There are no local learners to sync.", "warning");
+        return;
+    }
+
+    const invalid = students.filter(function (student) {
+        return !String(student.admissionNumber || "").trim() ||
+            !String(learnerName(student)).trim() ||
+            !normalizeGender(student.gender) ||
+            !String(student.schoolLevel || student.level || "").trim() ||
+            !String(student.grade || student.class || "").trim();
+    });
+
+    if (invalid.length) {
+        showMessage("Sync stopped: " + invalid.length + " local learner record(s) are missing required fields.", "error");
+        return;
+    }
+
+    const seen = new Set();
+    for (const student of students) {
+        const key = normalizedAdmission(student.admissionNumber);
+        if (seen.has(key)) {
+            showMessage("Sync stopped: duplicate admission numbers exist locally. Resolve them first.", "error");
+            return;
+        }
+        seen.add(key);
+    }
+
+    const confirmed = confirm(
+        "SYNC LOCAL LEARNERS — KOSPIR JUNIOR SCHOOL\n\n" +
+        "Local records: " + students.length + "\n" +
+        "Cloud records currently returned: " + cloudStudents.length + "\n\n" +
+        "Missing cloud learners will be inserted. Matching learners will be updated.\n" +
+        "No cloud learner will be deleted. Local records will not be erased.\n\nContinue?"
+    );
+
+    if (!confirmed) return;
+
+    setCloudBusy(true);
+    let inserted = 0;
+    let updated = 0;
+    let failed = 0;
+    const errors = [];
+
+    try {
+        setCloudStatus("Syncing learner records. Keep this page open…");
+
+        for (const student of students) {
+            const row = toCloudRow(student, schoolId);
+            const admission = row.admission_number;
+
+            try {
+                const { data: existingRows, error: findError } = await client
+                    .from("students")
+                    .select("id,admission_number")
+                    .eq("school_id", schoolId)
+                    .eq("admission_number", admission)
+                    .limit(2);
+
+                if (findError) throw findError;
+
+                if (existingRows && existingRows.length > 1) {
+                    throw new Error("More than one cloud record uses admission number " + admission + ". Resolve duplicates in Supabase first.");
+                }
+
+                if (existingRows && existingRows.length === 1) {
+                    const existing = existingRows[0];
+
+                    const { error: updateError } = await client
+                        .from("students")
+                        .update(row)
+                        .eq("school_id", schoolId)
+                        .eq("id", existing.id);
+
+                    if (updateError) throw updateError;
+                    updated++;
+                } else {
+                    const { error: insertError } = await client
+                        .from("students")
+                        .insert(row);
+
+                    if (insertError) throw insertError;
+                    inserted++;
+                }
+            } catch (error) {
+                failed++;
+                errors.push(admission + ": " + (error.message || String(error)));
+                console.error("Learner sync failed:", admission, error);
+            }
+        }
+
+        setCloudStatus("Sync finished. Added: " + inserted +
+            ", updated: " + updated + ", failed: " + failed + ".");
+
+        if (failed) {
+            console.error("STUDENT SYNC DIAGNOSTICS:", errors);
+            showMessage("Sync finished with " + failed + " failure(s). Local records remain saved. Check Console for details.", "warning");
+        } else {
+            showMessage("Sync successful: " + inserted + " added, " + updated + " updated.", "success");
+        }
+    } catch (error) {
+        console.error("Student sync failed:", error);
+        setCloudStatus("Sync failed: " + (error.message || String(error)) + ". Local records were retained.");
+        showMessage("Cloud sync failed. Local records were retained.", "error");
+    } finally {
+        setCloudBusy(false);
+        await checkCloudStatus();
+    }
+}
+
+/* REFRESH MERGES CLOUD-ONLY LEARNERS; LOCAL VALUES WIN ON MATCHES */
+
+async function refreshFromCloud() {
+    if (cloudBusy) return;
+
+    if (!cloudReady) {
+        showMessage("Check the cloud connection first.", "warning");
+        return;
+    }
+
+    if (!localStorageReadable) {
+        showMessage("Local storage could not be read. Refresh is blocked for safety.", "error");
+        return;
+    }
+
+    const client = getSupabaseClient();
+    if (!client) {
+        showMessage("Supabase client is unavailable.", "error");
+        return;
+    }
+
+    if (!confirm("REFRESH FROM CLOUD\n\nCloud-only learners will be added locally. Existing local learner details will be preserved when admission numbers match. No cloud records will be deleted.\n\nContinue?")) return;
+
+    setCloudBusy(true);
+    try {
+        setCloudStatus("Reading shared learner records…");
+
+        const { data, error } = await client
+            .from("students")
+            .select(CLOUD_SELECT)
+            .eq("school_id", getSchoolId())
+            .limit(5000);
+
+        if (error) throw error;
+
+        cloudStudents = Array.isArray(data) ? data : [];
+        const merged = students.slice();
+        let added = 0;
+        let matched = 0;
+
+        for (const cloud of cloudStudents) {
+            const admission = normalizedAdmission(cloud.admission_number);
+            if (!admission) continue;
+
+            const index = merged.findIndex(function (local) {
+                return normalizedAdmission(local.admissionNumber) === admission;
+            });
+
+            if (index >= 0) {
+                merged[index] = {
+                    ...merged[index],
+                    cloudId: cloud.id
+                };
+                matched++;
+            } else {
+                merged.push(fromCloudRow(cloud));
+                added++;
+            }
+        }
+
+        const previous = students;
+        students = merged;
+
+        if (!saveStudents()) {
+            students = previous;
+            throw new Error("Could not save refreshed records locally. Existing data was restored in memory.");
+        }
+
+        renderStudents();
+        updateStatistics();
+
+        setCloudStatus("Refresh complete. Cloud: " + cloudStudents.length +
+            "; added locally: " + added + "; matched: " + matched +
+            ". Local-only records preserved.");
+
+        showMessage("Cloud refresh completed. Local-only learner records were preserved.", "success");
+    } catch (error) {
+        console.error("Cloud refresh failed:", error);
+        setCloudStatus("Refresh failed: " + (error.message || String(error)));
+        showMessage("Cloud refresh failed. Existing local records were retained.", "error");
+    } finally {
+        setCloudBusy(false);
+    }
+}
+
+function fromCloudRow(cloud) {
+    const statusMap = {
+        "ACTIVE": "Active",
+        "TRANSFERRED": "Transferred",
+        "GRADUATED": "Graduated",
+        "INACTIVE": "Inactive"
+    };
+
+    const name = cloud.student_name || "";
+    return {
+        id: "GBH-STUDENT-" + cloud.id,
+        cloudId: cloud.id,
+        admissionNumber: cloud.admission_number || "",
+        name: name,
+        studentName: name,
+        fullName: name,
+        gender: normalizeGender(cloud.gender),
+        dateOfBirth: cloud.date_of_birth || "",
+        dob: cloud.date_of_birth || "",
+        schoolLevel: cloud.school_level || "",
+        level: cloud.school_level || "",
+        grade: cloud.grade || "",
+        class: cloud.grade || "",
+        stream: cloud.stream || "",
+        parentName: cloud.parent_name || "",
+        guardianName: cloud.parent_name || "",
+        parentPhone: cloud.parent_phone || "",
+        guardianPhone: cloud.parent_phone || "",
+        status: statusMap[String(cloud.status || "ACTIVE").toUpperCase()] || cloud.status || "Active",
+        registrationDate: cloud.created_at || new Date().toISOString(),
+        updatedAt: cloud.created_at || new Date().toISOString()
+    };
+}
+
+/* SCHOOL LEVEL AND GRADE OPTIONS */
+
+function setupSchoolLevel() {
+    const level = document.getElementById("schoolLevel");
+    const grade = document.getElementById("grade");
+
+    level.addEventListener("change", function () {
+        const selected = this.value;
+        grade.innerHTML = "";
+
+        if (!selected) {
+            grade.disabled = true;
+            grade.innerHTML = '<option value="">Select School Level First</option>';
+            return;
+        }
+
+        grade.disabled = false;
+        const first = document.createElement("option");
+        first.value = "";
+        first.textContent = "Select Grade / Class";
+        grade.appendChild(first);
+
+        (gradeStructure[selected] || []).forEach(function (item) {
+            const option = document.createElement("option");
+            option.value = item;
+            option.textContent = item;
+            grade.appendChild(option);
+        });
+    });
+}
+
+/* SEARCH AND FILTERS */
+
+function setupFilters() {
+    document.getElementById("levelFilter").addEventListener("change", updateGradeFilter);
+    document.getElementById("searchInput").addEventListener("input", renderStudents);
+
+    ["genderFilter", "statusFilter", "gradeFilter"].forEach(function (id) {
+        document.getElementById(id).addEventListener("change", renderStudents);
+    });
+}
+
+function updateGradeFilter() {
+    const level = document.getElementById("levelFilter").value;
+    const filter = document.getElementById("gradeFilter");
+    filter.innerHTML = '<option value="">All Grades</option>';
+
+    const grades = level ? (gradeStructure[level] || []) : Object.values(gradeStructure).flat();
+
+    grades.forEach(function (grade) {
+        const option = document.createElement("option");
+        option.value = grade;
+        option.textContent = grade;
+        filter.appendChild(option);
+    });
+
+    renderStudents();
+}
+
+/* REGISTRATION AND LOCAL SAVE */
+
+function setupForm() {
+    document.getElementById("studentForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        saveLearner();
+    });
+}
+
+function saveLearner() {
+    if (!localStorageReadable) {
+        showMessage("Saving blocked because local records could not be read safely.", "error");
+        return;
+    }
+
+    const editingId = document.getElementById("editingId").value;
+    const admissionNumber = document.getElementById("admissionNumber").value.trim();
+    const studentName = document.getElementById("studentName").value.trim();
+    const gender = document.getElementById("gender").value;
+    const dateOfBirth = document.getElementById("dateOfBirth").value;
+    const schoolLevel = document.getElementById("schoolLevel").value;
+    const grade = document.getElementById("grade").value;
+    const stream = document.getElementById("stream").value;
+    const parentName = document.getElementById("parentName").value.trim();
+    const parentPhone = document.getElementById("parentPhone").value.trim();
+    const status = document.getElementById("status").value;
+
+    if (!admissionNumber || !studentName || !gender || !schoolLevel || !grade || !status) {
+        showMessage("Please complete all required learner details.", "warning");
+        return;
+    }
+
+    const duplicate = students.find(function (student) {
+        return normalizedAdmission(student.admissionNumber) === normalizedAdmission(admissionNumber) &&
+            String(student.id) !== String(editingId);
+    });
+
+    if (duplicate) {
+        showMessage("Admission number already exists. Use a different number.", "error");
+        return;
+    }
+
+    const previous = editingId ? findStudent(editingId) : null;
+    if (editingId && !previous) {
+        showMessage("Learner record not found.", "error");
+        return;
+    }
+
+    const learner = {
+        ...(previous || {}),
+        id: editingId || generateStudentId(),
+        admissionNumber,
+        name: studentName,
+        studentName,
+        fullName: studentName,
+        gender,
+        dateOfBirth,
+        dob: dateOfBirth,
+        schoolLevel,
+        level: schoolLevel,
+        grade,
+        class: grade,
+        stream,
+        parentName,
+        guardianName: parentName,
+        parentPhone,
+        guardianPhone: parentPhone,
+        status,
+        registrationDate: previous?.registrationDate || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+
+    const oldStudents = students.slice();
+
+    if (editingId) {
+        const index = students.findIndex(function (student) {
+            return String(student.id) === String(editingId);
+        });
+        students[index] = learner;
+    } else {
+        students.push(learner);
+    }
+
+    if (!saveStudents()) {
+        students = oldStudents;
+        return;
+    }
+
+    resetForm();
+    renderStudents();
+    updateStatistics();
+
+    showMessage(
+        editingId
+            ? "Learner updated locally. Select Sync Local Changes to update the shared cloud record."
+            : "Learner registered locally. Select Sync Local Changes to share the record.",
+        "success"
+    );
+}
+
+function generateStudentId() {
+    return "GBH-STUDENT-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
+}
+
+function findStudent(id) {
+    return students.find(function (student) {
+        return String(student.id) === String(id);
+    });
+}
+
+/* DISPLAY LEARNERS */
+
+function renderStudents() {
+    const tbody = document.getElementById("studentsTableBody");
+    const search = document.getElementById("searchInput").value.trim().toLowerCase();
+    const level = document.getElementById("levelFilter").value;
+    const grade = document.getElementById("gradeFilter").value;
+    const gender = document.getElementById("genderFilter").value;
+    const status = document.getElementById("statusFilter").value;
+
+    const filtered = students.filter(function (student) {
+        const searchable = [
+            student.admissionNumber, learnerName(student),
+            student.parentName, student.parentPhone,
+            student.grade, student.stream
+        ].filter(Boolean).join(" ").toLowerCase();
+
+        return (!search || searchable.includes(search)) &&
+            (!level || (student.schoolLevel || student.level) === level) &&
+            (!grade || (student.grade || student.class) === grade) &&
+            (!gender || normalizeGender(student.gender) === gender) &&
+            (!status || (student.status || "Active") === status);
+    });
+
+    tbody.innerHTML = "";
+
+    if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="11" class="empty-row">No learner records match your search or filters.</td></tr>';
+        return;
+    }
+
+    filtered.forEach(function (student, index) {
+        const row = document.createElement("tr");
+        const values = [
+            index + 1, student.admissionNumber || "", learnerName(student),
+            normalizeGender(student.gender), student.schoolLevel || student.level || "",
+            student.grade || student.class || "", student.stream || "—",
+            student.parentName || student.guardianName || "—",
+            student.parentPhone || student.guardianPhone || "—",
+            student.status || "Active"
+        ];
+
+        row.innerHTML = values.map(function (value) {
+            return "<td>" + escapeHTML(value) + "</td>";
+        }).join("");
+
+        const actions = document.createElement("td");
+        actions.className = "no-print";
+        const buttons = document.createElement("div");
+        buttons.className = "action-buttons";
+
+        [["View", "view-btn", viewStudent], ["Edit", "edit-btn", editStudent], ["Delete", "delete-btn", deleteStudent]]
+            .forEach(function (item) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "small-btn " + item[1];
+                button.textContent = item[0];
+                button.addEventListener("click", function () {
+                    item[2](student.id);
+                });
+                buttons.appendChild(button);
+            });
+
+        actions.appendChild(buttons);
+        row.appendChild(actions);
+        tbody.appendChild(row);
+    });
+}
+
+/* EDIT AND RESET */
+
+function editStudent(id) {
+    const student = findStudent(id);
+    if (!student) {
+        showMessage("Learner record not found.", "error");
+        return;
+    }
+
+    document.getElementById("editingId").value = student.id;
+    document.getElementById("admissionNumber").value = student.admissionNumber || "";
+    document.getElementById("studentName").value = learnerName(student);
+    document.getElementById("gender").value = normalizeGender(student.gender);
+    document.getElementById("dateOfBirth").value = student.dateOfBirth || student.dob || "";
+    document.getElementById("schoolLevel").value = student.schoolLevel || student.level || "";
+    document.getElementById("schoolLevel").dispatchEvent(new Event("change"));
+    document.getElementById("grade").value = student.grade || student.class || "";
+    document.getElementById("stream").value = student.stream || "";
+    document.getElementById("parentName").value = student.parentName || student.guardianName || "";
+    document.getElementById("parentPhone").value = student.parentPhone || student.guardianPhone || "";
+    document.getElementById("status").value = student.status || "Active";
+
+    document.getElementById("formTitle").textContent = "Edit Learner Record";
+    document.getElementById("saveButton").textContent = "Update Learner";
+    document.getElementById("cancelEditButton").style.display = "inline-block";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    showMessage("Learner loaded for editing.", "info");
+}
+
+function cancelEdit() {
+    resetForm();
+}
+
+function resetForm() {
+    document.getElementById("studentForm").reset();
+    document.getElementById("editingId").value = "";
+    const grade = document.getElementById("grade");
+    grade.disabled = true;
+    grade.innerHTML = '<option value="">Select School Level First</option>';
+    document.getElementById("formTitle").textContent = "Register New Learner";
+    document.getElementById("saveButton").textContent = "Register Learner";
+    document.getElementById("cancelEditButton").style.display = "none";
+}
+
+/* DELETE LOCAL RECORD ONLY — CLOUD RECORDS ARE NEVER DELETED HERE */
+
+function deleteStudent(id) {
+    const student = findStudent(id);
+    if (!student) {
+        showMessage("Learner record not found.", "error");
+        return;
+    }
+
+    if (!confirm("Delete the LOCAL learner record for " + learnerName(student) + "?\n\nThis will not delete any cloud record.")) return;
+
+    const previous = students.slice();
+    students = students.filter(function (item) {
+        return String(item.id) !== String(id);
+    });
+
+    if (!saveStudents()) {
+        students = previous;
+        return;
+    }
+
+    renderStudents();
+    updateStatistics();
+    showMessage("Local record deleted. Any cloud record was left unchanged.", "success");
+}
+
+/* LEARNER DETAILS */
+
+function viewStudent(id) {
+    const student = findStudent(id);
+    if (!student) {
+        showMessage("Learner record not found.", "error");
+        return;
+    }
+
+    const item = function (label, value) {
+        return '<div class="detail-item"><strong>' + escapeHTML(label) +
+            '</strong><span>' + escapeHTML(value || "—") + '</span></div>';
+    };
+
+    document.getElementById("studentDetails").innerHTML =
+        '<div class="detail-grid">' +
+        item("Admission Number", student.admissionNumber) +
+        item("Learner Name", learnerName(student)) +
+        item("Gender", normalizeGender(student.gender)) +
+        item("Date of Birth", student.dateOfBirth || student.dob) +
+        item("School Level", student.schoolLevel || student.level) +
+        item("Grade / Class", student.grade || student.class) +
+        item("Stream", student.stream) +
+        item("Status", student.status) +
+        item("Parent / Guardian", student.parentName || student.guardianName) +
+        item("Parent / Guardian Phone", student.parentPhone || student.guardianPhone) +
+        item("Registration Date", formatDate(student.registrationDate)) +
+        item("Last Updated", formatDate(student.updatedAt)) +
+        '</div><div style="margin-top:20px;text-align:right">' +
+        '<button class="btn btn-warning" id="modalEditButton">Edit Learner</button></div>';
+
+    document.getElementById("modalEditButton").addEventListener("click", function () {
+        closeStudentModal();
+        editStudent(student.id);
+    });
+
+    document.getElementById("studentModal").classList.add("show");
+}
+
+function closeStudentModal() {
+    document.getElementById("studentModal").classList.remove("show");
+}
+
+document.getElementById("studentModal").addEventListener("click", function (event) {
+    if (event.target === this) closeStudentModal();
+});
+
+/* STATISTICS */
+
+function updateStatistics() {
+    document.getElementById("totalLearners").textContent = students.length;
+    document.getElementById("maleLearners").textContent =
+        students.filter(function (s) { return normalizeGender(s.gender) === "Male"; }).length;
+    document.getElementById("femaleLearners").textContent =
+        students.filter(function (s) { return normalizeGender(s.gender) === "Female"; }).length;
+    document.getElementById("activeLearners").textContent =
+        students.filter(function (s) { return !s.status || s.status === "Active"; }).length;
+}
+
+/* PRINT */
+
+function printLearners() {
+    if (!students.length) {
+        showMessage("There are no learner records to print.", "warning");
+        return;
+    }
+    window.print();
+}
+
+/* UTILITIES */
+
+function showMessage(message, type) {
+    const box = document.getElementById("messageBox");
+    box.textContent = message;
+    box.className = "message " + (type || "info");
+    clearTimeout(window.gbhMessageTimer);
+    window.gbhMessageTimer = setTimeout(function () {
+        box.className = "message";
+    }, 5000);
+}
+
+function escapeHTML(value) {
+    if (value === null || value === undefined) return "";
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function formatDate(value) {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleDateString("en-GB", {
+        day: "2-digit", month: "2-digit", year: "numeric"
+    });
+}
+
+/* NAVIGATION AND LOGOUT */
+
+function goDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+function logoutUser() {
+    if (typeof window.logout === "function") {
+        window.logout();
+        return;
+    }
+    localStorage.removeItem("gbhSession");
+    window.location.href = "login.html";
+}
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeStudentModal();
+});
+</script>
+</body>
+</html>

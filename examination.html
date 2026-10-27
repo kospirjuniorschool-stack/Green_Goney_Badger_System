@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GREEN HONEY BADGER SYSTEM - Examination</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17211b}
+.top{background:linear-gradient(135deg,#12372a,#1f6f50);color:#fff;padding:17px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:20}
+.top h1{margin:0;font-size:22px}.top small{opacity:.85}.actions{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:bold}.white{background:#fff;color:#12372a}.green{background:#1f6f50;color:#fff}.gold{background:#d7a928;color:#18200b}.red{background:#b42318;color:#fff}.blue{background:#155eef;color:#fff}
+.page{max-width:1500px;margin:20px auto;padding:0 16px}.card{background:#fff;border:1px solid #d9e3dd;border-radius:13px;box-shadow:0 8px 25px #12372a12;margin-bottom:18px}.head{padding:16px 19px;border-bottom:1px solid #d9e3dd;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.head h2{margin:0;color:#12372a}.body{padding:18px}
+.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.field label{display:block;font-size:11px;font-weight:800;color:#66736b;text-transform:uppercase;margin-bottom:5px}.field select,.field input,.field textarea{width:100%;padding:10px;border:1px solid #ccd8d1;border-radius:8px;background:#fff}.field select:disabled{background:#edf1ef}
+.help{background:#eef7f2;border-left:4px solid #2f8f68;padding:10px 12px;border-radius:6px;margin-bottom:13px;color:#315244}
+.areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px}.area{background:#fff;border:1px solid #d9e3dd;border-radius:10px;padding:14px;text-align:left;min-height:90px}.area:hover,.area.active{border-color:#1f6f50;box-shadow:0 5px 15px #12372a14}.area.active{background:#eef7f2}.area b{display:block;color:#12372a;margin-bottom:8px}.ok{color:#16794a;font-size:12px;font-weight:bold}.lock{color:#b42318;font-size:12px;font-weight:bold}
+.tablewrap{overflow:auto;border:1px solid #d9e3dd;border-radius:9px}table{border-collapse:collapse;width:100%;min-width:850px}th{background:#12372a;color:white;padding:10px 8px;font-size:11px;text-align:left}td{padding:8px;border-bottom:1px solid #e6ece8}tr:hover td{background:#f8fbf9}.mark{width:80px;text-align:center;padding:7px;border:1px solid #ccd8d1;border-radius:6px}.mark:disabled{background:#edf1ef}.plevel{text-align:center;font-weight:900}.EE1,.EE2{color:#087a46}.ME1,.ME2{color:#416f4f}.AE1,.AE2{color:#a35c13}.BE{color:#b42318}
+.empty{text-align:center;padding:30px;color:#66736b}.msg{display:none;padding:10px 12px;border-radius:7px;font-weight:bold;margin-top:12px}.msg.show{display:block}.success{background:#e3f6ea;color:#17643f}.error{background:#fde8e7;color:#9f2018}.info{background:#e7efff;color:#174aa6}
+.savebar{display:flex;justify-content:space-between;align-items:center;padding:12px 0;gap:10px}.badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#edf2ef;font-size:11px;font-weight:bold}.badge.ok{background:#e3f6ea}.badge.no{background:#fde8e7}
+.overlay{display:none;position:fixed;inset:0;background:#0a1912aa;z-index:100;overflow:auto;padding:20px}.overlay.open{display:block}.window{max-width:1250px;margin:auto;background:#eef1ef;border-radius:10px;min-height:95vh}.toolbar{background:white;padding:12px;display:flex;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:5}.toolbar div{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.reportControls{padding:14px;background:#f7f9f8;border-bottom:1px solid #d9e3dd;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.paper{background:#fff;max-width:1000px;margin:18px auto;padding:32px 38px;box-shadow:0 3px 16px #00000010;page-break-after:always}.paper:last-child{page-break-after:auto}.school{text-align:center;border-bottom:3px double #263c32;padding-bottom:12px}.school h1{margin:0;color:#12372a;font-size:24px}.school p{margin:3px;font-size:12px}.title{text-align:center}.title h2{margin:14px 0 4px;font-size:19px}.title p{margin:3px;color:#59665e}.details{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:11px;background:#f5f8f6;border:1px solid #dce4df;border-radius:7px;margin:15px 0}.details div{font-size:12px}.details b{display:block;font-size:9px;color:#6a766f;text-transform:uppercase}.reporttable{min-width:0}.reporttable th{font-size:10px}.reporttable td{font-size:11px}.reporttable td:nth-child(2),.reporttable td:nth-child(3){text-align:center}.reporttable td:last-child{text-align:right}.overall{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.box{border:1px solid #dce4df;border-radius:7px;text-align:center;padding:9px}.box span{display:block;font-size:9px;text-transform:uppercase;color:#6a766f;font-weight:bold}.box strong{display:block;margin-top:4px;font-size:17px;color:#183d2f}.chartbox{border:1px solid #dce4df;border-radius:7px;margin-top:15px;padding:8px}.chart{width:100%;height:250px}.comment{border:1px solid #dce4df;border-radius:7px;padding:10px;margin-top:12px}.comment h3{font-size:12px;color:#23483a;margin:0 0 6px}.comment p{font-size:12px;line-height:1.5;margin:0}.comment textarea{width:100%;min-height:70px;border:1px solid #ccd8d1;border-radius:6px;padding:8px}.right{text-align:right}
+@media(max-width:1000px){.grid6{grid-template-columns:repeat(3,1fr)}.reportControls{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){.top{position:static}.grid6,.reportControls{grid-template-columns:1fr 1fr}.details{grid-template-columns:1fr 1fr}.overall{grid-template-columns:1fr 1fr}.paper{padding:18px 12px}.overlay{padding:5px}}
+@media print{body{background:white}.top,.page,.toolbar,.reportControls,.noprint{display:none!important}.overlay{display:block!important;position:static;background:white;padding:0}.window{background:white}.paper{box-shadow:none;margin:0;max-width:none}}
+
+/* GREEN GLOW VISUAL FINISH */
+:root{--gbh-forest:#073d29;--gbh-green:#087f46;--gbh-lime:#b7ff61;--gbh-mint:#eafff0;--gbh-gold:#ffe58a;--gbh-glass:rgba(255,255,255,.88)}
+body{background:radial-gradient(ellipse at 12% 0%,#d9ffe4 0,transparent 35%),radial-gradient(ellipse at 92% 12%,#d6fff1 0,transparent 31%),linear-gradient(145deg,#f7fff8,#e9f7ee 45%,#f7fff9);background-attachment:fixed;color:#102b1d}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(circle,#fffbd1 0 1px,transparent 2px),radial-gradient(circle,#9bffc0 0 1px,transparent 2px),radial-gradient(circle,#fff 0 1px,transparent 2px);background-size:113px 113px,167px 167px,223px 223px;background-position:7px 17px,51px 72px,102px 12px;opacity:.45;animation:gbhSparkle 16s linear infinite}
+@keyframes gbhSparkle{0%{background-position:7px 17px,51px 72px,102px 12px;opacity:.22}50%{opacity:.55}100%{background-position:120px 130px,218px 245px,325px 235px;opacity:.22}}
+.top{background:linear-gradient(115deg,#032f20 0%,#075b36 40%,#0a8b4b 72%,#06482e 100%);border-bottom:1px solid #a6ffc3;box-shadow:0 8px 30px #064b2b55,inset 0 -1px 0 #d4ffdd;position:sticky;overflow:hidden}
+.top:after{content:"";position:absolute;top:-80%;left:-30%;width:30%;height:260%;transform:rotate(25deg);background:linear-gradient(90deg,transparent,#ffffff18,#ffffff55,#ffffff12,transparent);animation:gbhShine 9s ease-in-out infinite;pointer-events:none}
+@keyframes gbhShine{0%,30%{left:-35%}75%,100%{left:120%}}
+.top h1{text-shadow:0 0 12px #b8ffca55,0 2px 2px #001c10;font-weight:900;letter-spacing:.35px}
+.card{background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(242,255,246,.92));border:1px solid #b8e9c9;border-radius:17px;box-shadow:0 10px 28px #064b2b12,0 0 0 1px #ffffffaa inset;position:relative;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#087f46,#b7ff61,#fff2a5,#19b86b,#087f46);background-size:220% 100%;animation:gbhRibbon 8s linear infinite;opacity:.95}
+@keyframes gbhRibbon{to{background-position:220% 0}}
+.card:hover{border-color:#55c783;box-shadow:0 15px 34px #087f4621,0 0 18px #8cffb51a;transform:translateY(-1px)}
+.head{background:linear-gradient(90deg,#f0fff4aa,#ffffff70);border-bottom-color:#d4f0dd}.head h2{color:#075b36;text-shadow:0 1px 0 #fff}
+.btn{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;box-shadow:0 3px 9px #003d2017;position:relative;overflow:hidden}.btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 6px 17px #064b2b2b}.btn:active{transform:translateY(0) scale(.98)}
+.green{background:linear-gradient(135deg,#087f46,#0cab5a 58%,#087345);box-shadow:0 0 0 1px #aaffc6 inset,0 4px 13px #087f4633}.white{box-shadow:0 0 0 1px #b8ffd0 inset,0 4px 13px #001d1022}
+.field select,.field input,.field textarea,.comment textarea{border-color:#b7d9c2;box-shadow:0 1px 0 #fff inset;transition:border-color .2s,box-shadow .2s}.field select:focus,.field input:focus,.field textarea:focus,.comment textarea:focus{outline:none;border-color:#159653;box-shadow:0 0 0 3px #16a34a20,0 0 13px #16a34a18}
+.help{background:linear-gradient(110deg,#e4ffeb,#f6fff7);border-left-color:#12a45a;box-shadow:inset 0 0 0 1px #c7f4d4}
+.area{background:linear-gradient(145deg,#fff,#f1fff5);border-color:#c7e8d1;box-shadow:0 3px 12px #064b2b0a;transition:all .2s}.area:hover,.area.active{border-color:#16a34a;box-shadow:0 7px 20px #16a34a25,0 0 0 2px #c9ffd8 inset;transform:translateY(-2px)}.area.active{background:linear-gradient(145deg,#dfffe9,#f5fff7)}
+.tablewrap{border-color:#bfe3ca;box-shadow:0 4px 16px #064b2b0a}th{background:linear-gradient(100deg,#063c28,#087746,#0b5d39);text-shadow:0 1px 1px #001b10}tbody tr:nth-child(even) td{background:#f4fff7}tr:hover td{background:#e8ffef!important}
+.mark{border-color:#b4d9c0}.mark:focus{outline:none;border-color:#0a9850;box-shadow:0 0 0 3px #16a34a25,0 0 12px #16a34a1c}
+.badge{border:1px solid #d0ead8}.badge.ok{background:linear-gradient(120deg,#d8ffe3,#f3fff5);color:#075b36}.overlay{backdrop-filter:blur(5px)}.window{box-shadow:0 20px 70px #001a0f66;border:1px solid #b7e9c7}.paper{border-radius:5px}
+.cloud-card{border-color:#6bd494;background:linear-gradient(135deg,#f3fff6,#e4ffed 48%,#fbfff4);box-shadow:0 10px 28px #0b7a3d1a,0 0 0 1px #ffffffaa inset}
+.cloud-status{padding:10px 13px;border-radius:10px;background:#eaf8ee;border:1px solid #c5e7cf;color:#21573a;font-weight:700;font-size:13px;min-height:40px;display:flex;align-items:center;gap:8px;overflow-wrap:anywhere}.cloud-status:before{content:"✦";color:#0a9850;text-shadow:0 0 8px #62ed9a}.cloud-status.error{background:#fff0ee;border-color:#f3c3bd;color:#9f2018}.cloud-status.error:before{color:#c52a21}.cloud-status.success{background:#e3ffeb;border-color:#8ce0a7;color:#075b36}
+.cloud-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.cloud-note{font-size:12px;color:#3d6950;line-height:1.55;margin:8px 0 0}
+@media(max-width:650px){.top{position:relative}.top h1{font-size:19px}.card:hover{transform:none}.cloud-actions .btn{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{body:before{display:none}.card{box-shadow:none;transform:none}.card:before{display:none}}
+
+</style>
+</head>
+<body>
+<header class="top">
+<div><h1>GREEN HONEY BADGER SYSTEM</h1><small>Examination & Assessment Management</small></div>
+<div class="actions"><button class="btn white" onclick="GBH.dashboard()">Dashboard</button><button class="btn gold" type="button" onclick="window.location.href='report.html'">Learner Performance Report</button><button class="btn blue" type="button" onclick="window.location.href='examination_analysis.html'">Examination Analysis</button><button class="btn red" onclick="GBH.logout()">Logout</button></div>
+</header>
+
+<main class="page">
+<section class="card"><div class="head"><div><h2>Examination Records</h2><small>Select Year, Term, Exam, Level, Grade and Stream.</small></div></div><div class="body">
+<div class="grid6">
+<div class="field"><label>Year</label><select id="year" onchange="GBH.context()"><option value="">Select Year</option><option>2026</option><option>2027</option><option>2028</option></select></div>
+<div class="field"><label>Term</label><select id="term" onchange="GBH.context()"><option value="">Select Term</option><option>Term 1</option><option>Term 2</option><option>Term 3</option></select></div>
+<div class="field"><label>Exam</label><select id="exam" onchange="GBH.context()"><option value="">Select Exam</option><option>CAT1</option><option>CAT2</option><option>MID TERM</option><option>END TERM</option><option>ANNUAL</option></select></div>
+<div class="field"><label>Level</label><select id="level" onchange="GBH.level()"><option value="">Select Level</option><option value="Preparatory">PREPARATORY</option><option value="Lower Primary">LOWER PRIMARY</option><option value="Upper Primary">UPPER PRIMARY</option><option value="Junior School">JUNIOR SCHOOL</option></select></div>
+<div class="field"><label>Grade</label><select id="grade" onchange="GBH.grade()" disabled><option value="">Select Grade</option></select></div>
+<div class="field"><label>Stream</label><select id="stream" onchange="GBH.stream()" disabled><option value="">Select Stream</option></select></div>
+</div><div id="contextMsg" class="msg"></div></div></section>
+
+<section class="card"><div class="head"><div><h2>Learning Areas</h2><small>When Level is selected, all learning areas for that level appear here.</small></div></div><div class="body"><div id="areaHelp" class="help">Select a level.</div><div id="areas" class="areas"><div class="empty">Learning areas will appear here.</div></div></div></section>
+
+<section class="card"><div class="head"><div><h2 id="entryTitle">Learner Mark Entry</h2><small id="entrySub">Select a learning area.</small></div><div id="assignBadge"></div></div><div class="body"><div id="lock"></div><div id="entry"><div class="empty">Select a learning area to load learners.</div></div><div id="savebar" class="savebar" style="display:none"><div id="saveMsg" class="msg" style="margin:0"></div><button class="btn green" onclick="GBH.save()">Save Marks</button></div></div></section>
+
+<section class="card"><div class="head"><div><h2>Examination Record — All Learning Areas</h2><small>Complete learner matrix for the selected context.</small></div></div><div class="body"><div id="matrix"><div class="empty">Select Level, Grade and Stream.</div></div></div></section>
+</main>
+
+<div id="overlay" class="overlay">
+<div class="window">
+<div class="toolbar noprint"><div><b style="color:#12372a">Assessment Report</b><span id="userBadge" class="badge"></span></div><div><button class="btn blue" onclick="GBH.print()">Print</button><button class="btn red" onclick="GBH.closeReport()">Close</button></div></div>
+<div class="reportControls noprint">
+<div class="field"><label>Year</label><select id="ryear"><option value="">Select Year</option><option>2026</option><option>2027</option><option>2028</option></select></div>
+<div class="field"><label>Term</label><select id="rterm"><option value="">Select Term</option><option>Term 1</option><option>Term 2</option><option>Term 3</option></select></div>
+<div class="field"><label>Exam</label><select id="rexam"><option value="">Select Exam</option><option>CAT1</option><option>CAT2</option><option>MID TERM</option><option>END TERM</option><option>ANNUAL</option></select></div>
+<div class="field"><label>WHOLE / Individual</label><select id="scope" onchange="GBH.scope()"><option value="WHOLE">WHOLE — All Learners</option><option value="INDIVIDUAL">INDIVIDUAL</option></select></div>
+<div class="field"><label>Level</label><select id="rlevel" onchange="GBH.rlevel()"><option value="">Select Level</option><option value="Preparatory">PREPARATORY</option><option value="Lower Primary">LOWER PRIMARY</option><option value="Upper Primary">UPPER PRIMARY</option><option value="Junior School">JUNIOR SCHOOL</option></select></div>
+<div class="field"><label>Grade</label><select id="rgrade" onchange="GBH.rgrade()" disabled><option value="">Select Grade</option></select></div>
+<div class="field"><label>Stream</label><select id="rstream" onchange="GBH.rlearners()"><option value="">All Streams</option></select></div>
+<div class="field" id="learnerField" style="display:none"><label>Learner</label><select id="rlearner"><option value="">Select Learner</option></select></div>
+<div style="display:flex;align-items:end"><button class="btn green" style="width:100%" onclick="GBH.report()">View</button></div>
+</div>
+<div id="rmsg" class="msg noprint" style="margin:12px 15px"></div><div id="output"><div class="empty noprint">Select report conditions and click View.</div></div>
+</div></div>
+
+<section class="card cloud-card"><div class="head"><div><h2>☁️ GBH Cloud Connection</h2><small>Local-first examination marks • Secure Supabase sync</small></div><span class="badge" id="cloudBadge">Checking connection…</span></div><div class="body"><div id="cloudStatus" class="cloud-status">Your local marks remain on this computer. Cloud sync only runs when you press a button.</div><div class="cloud-actions"><button class="btn white" type="button" onclick="GBH.cloudStatus()">↻ Check Cloud</button><button class="btn green" type="button" onclick="GBH.syncCloud()">☁️ Sync Local Marks</button><button class="btn blue" type="button" onclick="GBH.importCloud()">⇩ Import Missing Cloud Marks</button></div><p class="cloud-note">Sync uses the selected Year, Term, Exam, Level, Grade and Stream. Import adds only missing local results; it never replaces an existing local mark. Internet is required for cloud actions; marks entry and reports remain available offline.</p></div></section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="script.js"></script>
+
+<script>
+"use strict";
+const GBH=(function(){
+const S={students:"students",teachers:"teachers",results:"examResults",school:"schoolDetails"};
+const streams=["BLUE","GREEN","RED","YELLOW"];
+const grades={"Preparatory":["PLAY GROUP","PP1","PP2"],"Lower Primary":["GRADE 1","GRADE 2","GRADE 3"],"Upper Primary":["GRADE 4","GRADE 5","GRADE 6"],"Junior School":["GRADE 7","GRADE 8","GRADE 9"]};
+const areas={
+"Preparatory":["Language Activities","Mathematical Activities","Environmental Activities","Creative Activities","Religious Activities"],
+"Lower Primary":["English","Kiswahili","Mathematics","Environmental Activities","Creative Activities","Religious Education"],
+"Upper Primary":["English","Kiswahili","Mathematics","Science & Technology","Social Studies","Agriculture","Creative Arts","Religious Education"],
+"Junior School":["English","Kiswahili","Mathematics","Integrated Science","Social Studies","Agriculture","CRE","Pretechnical","Creative Arts and Sports"]
+};
+let selected="",learners=[],assignment=null,user=null;
+
+function read(k,d=[]){try{const x=JSON.parse(localStorage.getItem(k));return x??d}catch(e){return d}}
+function save(k,x){localStorage.setItem(k,JSON.stringify(x))}
+function students(){let x=read(S.students,[]);return Array.isArray(x)?x:[]}
+function teachers(){let x=read(S.teachers,[]);return Array.isArray(x)?x:[]}
+function results(){let x=read(S.results,[]);return Array.isArray(x)?x:[]}
+function school(){return read(S.school,{})}
+function norm(x){return String(x??"").trim().toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim()}
+function compact(x){return norm(x).replace(/\s/g,"")}
+function name(s){return String(s.name||s.studentName||s.fullName||"").trim()}
+function adm(s){return String(s.admissionNumber||s.adm||s.admissionNo||"").trim()}
+function sid(s){return String(s.id||s.studentId||adm(s)||name(s)).trim()}
+function lev(s){return String(s.schoolLevel||s.level||"").trim()}
+function grd(s){return String(s.grade||s.class||"").trim()}
+function str(s){return String(s.stream||"").trim().toUpperCase()}
+function active(s){return !["transferred","graduated","inactive","deleted"].includes(norm(s.status||"Active"))}
+function initials(n){return String(n||"").trim().split(/\s+/).filter(Boolean).map(x=>x[0]).join("").toUpperCase()}
+function tin(t){return String(t?.initials||t?.teacherInitials||initials(t?.name||t?.fullName||t?.teacherName||"")).toUpperCase()}
+
+function currentUser(){
+ try{if(typeof window.getCurrentGBHUser==="function")return window.getCurrentGBHUser()||null}catch(e){}
+ for(const k of ["currentGBHUser","currentUser","loggedInUser","gbhCurrentUser","activeUser"]){const x=read(k,null);if(x)return x}
+ return null
+}
+function uid(u){return String(u?.teacherId||u?.tsc||u?.tscNumber||u?.TSC||u?.id||u?.userId||"")}
+function uname(u){return String(u?.name||u?.fullName||u?.teacherName||u?.username||u?.userName||"").trim()}
+function sameTeacher(t,u){
+ if(!t||!u)return false;
+ const a=[t.teacherId,t.tsc,t.tscNumber,t.TSC,t.id,t.userId].filter(Boolean).map(compact);
+ const b=[u.teacherId,u.tsc,u.tscNumber,u.TSC,u.id,u.userId].filter(Boolean).map(compact);
+ if(a.some(x=>b.includes(x)))return true;
+ return [t.name,t.fullName,t.teacherName,t.username].filter(Boolean).some(x=>[u.name,u.fullName,u.teacherName,u.username,u.userName].filter(Boolean).some(y=>norm(x)===norm(y)));
+}
+function subjectMatch(v,a){
+ const aliases={ "creative arts and sports":["creative arts sports","creative arts & sports","creative arts"],"science and technology":["science technology"],"pretechnical":["pre technical","pre-technical"],"religious education":["religious activities","religious studies"]};
+ const n=norm(v);if(!n)return false;const list=[n,...(aliases[n]||[])].map(norm);const target=norm(a);
+ return list.some(x=>x===target||x.includes(target)||target.includes(x))
+}
+function scan(o,a,d=0){
+ if(o==null||d>5)return false;
+ if(Array.isArray(o))return o.some(x=>scan(x,a,d+1));
+ if(typeof o!=="object")return subjectMatch(o,a);
+ const keys=["subject","subjects","learningArea","learningAreas","assignedSubject","assignedSubjects","assignedLearningArea","assignedLearningAreas","teachingSubject","teachingSubjects","subjectAssignment","subjectAssignments","area","areas","taughtSubjects"];
+ for(const k of keys)if(k in o&&scan(o[k],a,d+1))return true;
+ for(const [k,v] of Object.entries(o)){if(["name","fullName","teacherName","teacherId","tsc","tscNumber","TSC","id","userId","phone","email","gender","status","initials"].includes(k))continue;if(typeof v==="object"&&scan(v,a,d+1))return true}
+ return false
+}
+function isSystemAdministrator(u){
+ const role=norm(u?.role||u?.userRole||u?.designation||u?.accountType||u?.position||"");
+ return role.includes("system administrator")||role==="administrator"||role==="admin";
+}
+function assigned(a){
+ user=user||currentUser();
+ if(user&&isSystemAdministrator(user)){const t=teachers().find(x=>sameTeacher(x,user))||null;return {assigned:true,teacher:t,reason:"System Administrator full access"};}
+ if(!user)return {assigned:false,teacher:null,reason:"No teacher identity could be verified."};
+ const matches=teachers().filter(t=>sameTeacher(t,user));
+ if(!matches.length)return {assigned:false,teacher:null,reason:"Your teacher record could not be matched with the Teachers module."};
+ const t=matches.find(x=>scan(x,a));
+ return t?{assigned:true,teacher:t,reason:"Assigned"}:{assigned:false,teacher:matches[0],reason:"You are not assigned to this learning area."}
+}
+function teacherFor(a){return teachers().find(t=>scan(t,a))||null}
+
+function learnerList(l,g,s=""){return students().filter(x=>lev(x)===l&&grd(x)===g&&(!s||str(x)===s.toUpperCase())&&active(x)).sort((a,b)=>name(a).localeCompare(name(b)))}
+function ctx(){return{year:val("year"),term:val("term"),exam:val("exam"),level:val("level"),grade:val("grade"),stream:val("stream")}}
+function val(id){return document.getElementById(id).value}
+function esc(x){return String(x??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function option(v,l){return `<option value="${esc(v)}">${esc(l)}</option>`}
+function perf(n){n=Number(n);if(!Number.isFinite(n))return"";return n>=80?"EE1":n>=70?"EE2":n>=60?"ME1":n>=50?"ME2":n>=40?"AE1":n>=30?"AE2":"BE"}
+function remark(p){return({EE1:"Exceeds Expectation – Outstanding",EE2:"Exceeds Expectation – Very Good",ME1:"Meets Expectation – Good",ME2:"Meets Expectation – Satisfactory",AE1:"Approaches Expectation – Fair",AE2:"Approaches Expectation – Needs Improvement",BE:"Below Expectation – Requires Support"})[p]||""}
+function msg(id,text,type){const e=document.getElementById(id);e.textContent=text||"";e.className="msg "+(text?"show ":"")+(type||"info")}
+
+function context(){
+ const l=val("level");document.getElementById("grade").innerHTML='<option value="">Select Grade</option>';document.getElementById("stream").innerHTML='<option value="">Select Stream</option>';document.getElementById("grade").disabled=!l;document.getElementById("stream").disabled=true;selected="";renderAreas();clearEntry();renderMatrix()
+}
+function level(){
+ const l=val("level"),g=document.getElementById("grade");g.innerHTML='<option value="">Select Grade</option>';document.getElementById("stream").innerHTML='<option value="">Select Stream</option>';g.disabled=!l;document.getElementById("stream").disabled=true;if(l)(grades[l]||[]).forEach(x=>g.innerHTML+=option(x,x));renderAreas();clearEntry();renderMatrix()
+}
+function grade(){
+ const l=val("level"),g=val("grade"),s=document.getElementById("stream");s.innerHTML='<option value="">Select Stream</option>';if(!l||!g){s.disabled=true;return}
+ [...new Set([...streams,...students().filter(x=>lev(x)===l&&grd(x)===g).map(str).filter(Boolean)])].forEach(x=>s.innerHTML+=option(x,x));s.disabled=false;clearEntry();renderMatrix()
+}
+function stream(){clearEntry();renderAreas();renderMatrix()}
+function renderAreas(){
+ const l=val("level"),box=document.getElementById("areas");if(!l){box.innerHTML='<div class="empty">Select a level to display all learning areas.</div>';return}
+ document.getElementById("areaHelp").textContent=`${(areas[l]||[]).length} learning areas for ${l}. Click one to open its learner record.`;
+ box.innerHTML=(areas[l]||[]).map(a=>{const x=assigned(a);return `<button class="area ${selected===a?"active":""}" onclick='GBH.area(${JSON.stringify(a)})'><b>${esc(a)}</b><span class="${x.assigned?"ok":"lock"}">${x.assigned?"✓ Assigned to you":"🔒 View only / not assigned"}</span></button>`}).join("")
+}
+function area(a){
+ const c=ctx();if(!c.year||!c.term||!c.exam){msg("contextMsg","Please select Year, Term and Exam first.","error");return}if(!c.level||!c.grade||!c.stream){msg("contextMsg","Please select Level, Grade and Stream first.","error");return}
+ selected=a;learners=learnerList(c.level,c.grade,c.stream);assignment=assigned(a);renderAreas();renderEntry()
+}
+function find(c,s,a,rs=results()){return rs.find(r=>(String(r.studentId||"")===sid(s)||String(r.admissionNumber||"")===adm(s))&&String(r.year)===String(c.year)&&norm(r.term)===norm(c.term)&&norm(r.exam)===norm(c.exam)&&norm(r.schoolLevel||r.level)===norm(c.level)&&norm(r.grade||r.class)===norm(c.grade)&&String(r.stream||"").toUpperCase()===c.stream.toUpperCase()&&subjectMatch(r.subject||r.learningArea,a))}
+function renderEntry(){
+ const e=document.getElementById("entry"),c=ctx();if(!selected){clearEntry();return}
+ document.getElementById("entryTitle").textContent="Mark Entry — "+selected;document.getElementById("entrySub").textContent=`${c.year} • ${c.term} • ${c.exam} • ${c.level} • ${c.grade} • ${c.stream}`;
+ document.getElementById("assignBadge").innerHTML=assignment.assigned?'<span class="badge ok">✓ SUBJECT TEACHER</span>':'<span class="badge no">🔒 NOT ASSIGNED</span>';
+ if(!learners.length){document.getElementById("lock").innerHTML='<div class="msg show error">No active learners found for this Grade and Stream.</div>';e.innerHTML='<div class="empty">No learners.</div>';document.getElementById("savebar").style.display="none";return}
+ document.getElementById("lock").innerHTML=assignment.assigned?`<div class="help">✓ You are verified as the teacher assigned to <b>${esc(selected)}</b>. You may enter this subject only.</div>`:`<div class="msg show error">🔒 Entry Locked. ${esc(assignment.reason)} Only the assigned teacher may enter these marks.</div>`;
+ const rows=learners.map((s,i)=>{const r=find(c,s,selected),m=r?.marks??"",p=perf(m);return `<tr><td>${i+1}</td><td>${esc(adm(s))}</td><td><b>${esc(name(s))}</b></td><td>${esc(s.gender||"")}</td><td><input class="mark" type="number" min="0" max="100" value="${esc(m)}" data-id="${esc(sid(s))}" oninput="GBH.preview(this)" ${assignment.assigned?"":"disabled"}></td><td id="p_${esc(sid(s))}" class="plevel ${p}">${p||"—"}</td><td>${esc(r?.teacherInitials||tin(assignment.teacher)||tin(teacherFor(selected))||"")}</td></tr>`}).join("");
+ e.innerHTML=`<div class="tablewrap"><table><thead><tr><th>#</th><th>Admission No.</th><th>Learner Name</th><th>Gender</th><th>Marks / 100</th><th>Performance</th><th>Teacher Initials</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+ document.getElementById("savebar").style.display=assignment.assigned?"flex":"none";msg("saveMsg","","info")
+}
+function preview(i){const e=document.getElementById("p_"+CSS.escape(i.dataset.id));if(!e)return;const p=perf(i.value);e.textContent=p||"—";e.className="plevel "+p}
+function saveMarks(){
+ const c=ctx();if(!assignment?.assigned){msg("saveMsg","You are not the assigned teacher for this learning area.","error");return}
+ let rs=results(),count=0;
+ document.querySelectorAll(".mark:not(:disabled)").forEach(i=>{
+  const s=learners.find(x=>sid(x)===i.dataset.id);if(!s)return;const ix=rs.findIndex(r=>find(c,s,selected,[r]));
+  if(i.value===""){if(ix>=0)rs.splice(ix,1);return}
+  const m=Number(i.value);if(!Number.isFinite(m)||m<0||m>100)return;
+  const t=assignment.teacher||teacherFor(selected);
+  const rec={id:"EX-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),year:String(c.year),term:c.term,exam:c.exam,schoolLevel:c.level,level:c.level,grade:c.grade,class:c.grade,stream:c.stream,studentId:sid(s),admissionNumber:adm(s),studentName:name(s),subject:selected,learningArea:selected,marks:m,score:m,performanceLevel:perf(m),teacherId:t?.teacherId||t?.tsc||t?.id||uid(user),teacherName:t?.name||t?.fullName||t?.teacherName||uname(user),teacherInitials:tin(t)||initials(uname(user)),dateSaved:new Date().toISOString()};
+  if(ix>=0){rec.id=rs[ix].id||rec.id;rs[ix]=rec}else rs.push(rec);count++
+ });save(S.results,rs);msg("saveMsg",`Marks saved! ${count} learner record(s) updated for ${selected}.`,"success");renderEntry();renderMatrix()
+}
+function clearEntry(){document.getElementById("entryTitle").textContent="Learner Mark Entry";document.getElementById("entrySub").textContent="Select a learning area.";document.getElementById("entry").innerHTML='<div class="empty">Select a learning area to load learners.</div>';document.getElementById("lock").innerHTML="";document.getElementById("assignBadge").innerHTML="";document.getElementById("savebar").style.display="none";msg("saveMsg","","info")}
+
+function renderMatrix(){
+ const c=ctx(),box=document.getElementById("matrix");if(!c.level||!c.grade||!c.stream){box.innerHTML='<div class="empty">Select Level, Grade and Stream.</div>';return}
+ const ls=learnerList(c.level,c.grade,c.stream),aa=areas[c.level]||[],rs=results();if(!ls.length){box.innerHTML='<div class="empty">No active learners found.</div>';return}
+ let h='<tr><th>#</th><th>Admission No.</th><th>Learner</th>'+aa.map(a=>`<th>${esc(a)}</th>`).join("")+'<th>Average</th><th>Overall Level</th></tr>';
+ let b=ls.map((s,i)=>{let scores=[];let cells=aa.map(a=>{const r=find(c,s,a,rs);if(r&&r.marks!==""&&r.marks!=null){scores.push(Number(r.marks));const p=perf(r.marks);return `<td><b>${r.marks}</b><div class="${p}" style="font-size:11px;font-weight:bold">${p}</div></td>`}return'<td>—</td>'}).join("");let avg=scores.length?scores.reduce((a,x)=>a+x,0)/scores.length:null,p=avg==null?"":perf(avg);return `<tr><td>${i+1}</td><td>${esc(adm(s))}</td><td><b>${esc(name(s))}</b></td>${cells}<td><b>${avg==null?"—":avg.toFixed(1)}</b></td><td class="${p}"><b>${p||"—"}</b></td></tr>`}).join("");
+ box.innerHTML=`<div class="tablewrap"><table><thead>${h}</thead><tbody>${b}</tbody></table></div>`
+}
+
+function openReport(){
+ document.getElementById("overlay").classList.add("open");document.body.style.overflow="hidden";user=currentUser();document.getElementById("userBadge").textContent=uname(user)||"Current User";
+ const c=ctx();if(c.year)document.getElementById("ryear").value=c.year;if(c.term)document.getElementById("rterm").value=c.term;if(c.exam)document.getElementById("rexam").value=c.exam;if(c.level){document.getElementById("rlevel").value=c.level;rlevel()}if(c.grade){document.getElementById("rgrade").value=c.grade;rgrade()}if(c.stream)document.getElementById("rstream").value=c.stream
+}
+function closeReport(){document.getElementById("overlay").classList.remove("open");document.body.style.overflow=""}
+function scope(){document.getElementById("learnerField").style.display=val("scope")==="INDIVIDUAL"?"block":"none";rlearners()}
+function rlevel(){const l=val("rlevel"),g=document.getElementById("rgrade");g.innerHTML='<option value="">Select Grade</option>';document.getElementById("rstream").innerHTML='<option value="">All Streams</option>';g.disabled=!l;if(l)(grades[l]||[]).forEach(x=>g.innerHTML+=option(x,x));rlearners()}
+function rgrade(){const l=val("rlevel"),g=val("rgrade"),s=document.getElementById("rstream");s.innerHTML='<option value="">All Streams</option>';if(l&&g)[...new Set([...streams,...students().filter(x=>lev(x)===l&&grd(x)===g).map(str).filter(Boolean)])].forEach(x=>s.innerHTML+=option(x,x));rlearners()}
+function rlearners(){if(val("scope")!=="INDIVIDUAL")return;const x=learnerList(val("rlevel"),val("rgrade"),val("rstream")),e=document.getElementById("rlearner");e.innerHTML='<option value="">Select Learner</option>';x.forEach(s=>e.innerHTML+=option(sid(s),`${adm(s)} — ${name(s)}`))}
+function commentKey(s,c){return["gbhPrincipalComment",c.year,c.term,c.exam,c.level,c.grade,str(s),sid(s)].map(compact).join("_")}
+function schoolVal(o,keys){for(const k of keys)if(o[k]!=null&&String(o[k]).trim())return String(o[k]);return""}
+function comment(s,c){return localStorage.getItem(commentKey(s,c))||""}
+
+function report(){
+ const c={year:val("ryear"),term:val("rterm"),exam:val("rexam"),level:val("rlevel"),grade:val("rgrade"),stream:val("rstream")},scopeV=val("scope"),chosen=val("rlearner");
+ if(!c.year||!c.term||!c.exam||!c.level||!c.grade){msg("rmsg","Complete Year, Term, Exam, Level and Grade.","error");return}
+ if(scopeV==="INDIVIDUAL"&&!chosen){msg("rmsg","Select a learner for the Individual report.","error");return}
+ let cohort=learnerList(c.level,c.grade,c.stream);if(scopeV==="INDIVIDUAL")cohort=cohort.filter(s=>sid(s)===chosen);if(!cohort.length){msg("rmsg","No active learners found.","error");return}
+ const ranking=learnerList(c.level,c.grade,c.stream).map(s=>({s,d:assessment(s,c)})).filter(x=>x.d.avg!=null).sort((a,b)=>b.d.avg-a.d.avg),pos=new Map(ranking.map((x,i)=>[sid(x.s),i+1]));
+ document.getElementById("output").innerHTML=cohort.map(s=>paper(s,assessment(s,c),c,pos.get(sid(s))||"—")).join("");
+ cohort.forEach(s=>{const d=assessment(s,c);draw("chart_"+safe(sid(s)),d.chartA,d.chartS)});msg("rmsg","Report generated successfully.","success")
+}
+function assessment(s,c){
+ const rs=results(),rows=(areas[c.level]||[]).map(a=>{const r=find(c,s,a,rs);const score=r&&r.marks!==""&&r.marks!=null?Number(r.marks):null;const t=r?.teacherInitials||tin(teacherFor(a));return{area:a,score,level:score==null?"":perf(score),initials:t,remark:remark(score==null?"":perf(score))}}),scores=rows.filter(x=>x.score!=null).map(x=>x.score),avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null;
+ return{rows,avg,level:avg==null?"":perf(avg),chartA:rows.filter(x=>x.score!=null).map(x=>x.area),chartS:rows.filter(x=>x.score!=null).map(x=>x.score),teacher:avg==null?"Assessment record is incomplete.":avg>=80?"Excellent performance. The learner demonstrates outstanding mastery and should maintain this high standard.":avg>=70?"Very good performance. Continued practice will support further improvement.":avg>=60?"Good performance. Continued effort and regular practice are recommended.":avg>=50?"Satisfactory performance. Consistent practice and support in weaker areas are recommended.":avg>=40?"The learner is approaching expectations. Focused support and close follow-up are recommended.":"The learner requires focused support, individual guidance and regular practice."}
+}
+function paper(s,d,c,pos){
+ const sc=school(),sn=schoolVal(sc,["schoolName","name","institutionName","school"])||"SCHOOL ADMINISTRATION",addr=schoolVal(sc,["address","location","postalAddress","physicalAddress"]),phone=schoolVal(sc,["phone","telephone","phoneNumber","contact"]),email=schoolVal(sc,["email","emailAddress"]),logo=schoolVal(sc,["logo","logoUrl","schoolLogo"]),id=safe(sid(s)),rows=d.rows.map(r=>`<tr><td>${esc(r.area)}</td><td>${r.score==null?"—":r.score}</td><td class="${r.level}"><b>${r.level||"—"}</b></td><td>${esc(r.initials||"—")}</td><td>${esc(r.remark||"—")}</td></tr>`).join("");
+ return `<section class="paper"><div class="school">${logo?`<img src="${esc(logo)}" style="max-height:70px;max-width:100px" onerror="this.style.display='none'">`:""}<h1>${esc(sn)}</h1>${addr?`<p>${esc(addr)}</p>`:""}${phone||email?`<p>${phone?"Tel: "+esc(phone):""}${phone&&email?" | ":""}${email?"Email: "+esc(email):""}</p>`:""}</div><div class="title"><h2>Learner Assessment Report</h2><p>${esc(c.year)} • ${esc(c.term)} • ${esc(c.exam)}</p></div><div class="details"><div><b>Admission No.</b>${esc(adm(s))}</div><div><b>Learner</b>${esc(name(s))}</div><div><b>Gender</b>${esc(s.gender||"")}</div><div><b>Level</b>${esc(c.level)}</div><div><b>Grade</b>${esc(c.grade)}</div><div><b>Stream</b>${esc(str(s))}</div></div><div class="tablewrap"><table class="reporttable"><thead><tr><th>Learning Area</th><th>Score</th><th>Performance L.</th><th>Teacher Initials</th><th>Remarks</th></tr></thead><tbody>${rows}</tbody></table></div><div class="overall"><div class="box"><span>Overall Marks</span><strong>${d.avg==null?"—":d.avg.toFixed(1)}</strong></div><div class="box"><span>Overall Performance</span><strong class="${d.level}">${d.level||"—"}</strong></div><div class="box"><span>Overall Position</span><strong>${pos}</strong></div><div class="box"><span>Class Position</span><strong>${pos}</strong></div></div><div class="chartbox"><b style="font-size:12px">Performance Line Graph</b><canvas class="chart" id="chart_${id}" width="900" height="250"></canvas></div><div class="comment"><h3>Class Teacher's Comment</h3><p>${esc(d.teacher)}</p></div><div class="comment noprint"><h3>Principal / HOI's Comment</h3><textarea id="pc_${id}" placeholder="Enter Principal / HOI comment...">${esc(comment(s,c))}</textarea><div class="right"><button class="btn green" onclick='GBH.saveComment(${JSON.stringify(sid(s))},${JSON.stringify(c)})'>Save Comment</button></div></div><div class="comment" style="display:none"><h3>Principal / HOI's Comment</h3><p id="print_${id}">${esc(comment(s,c))}</p></div><p style="font-size:10px;color:#6c766f;display:flex;justify-content:space-between"><span>GREEN HONEY BADGER SYSTEM</span><span>Generated ${new Date().toLocaleDateString()}</span></p></section>`
+}
+function saveComment(id,c){const e=document.getElementById("pc_"+safe(id));if(!e)return;localStorage.setItem(commentKey(students().find(s=>sid(s)===id)||{id},c),e.value.trim());alert("Principal / HOI comment saved.")}
+function safe(x){return String(x||"item").replace(/[^a-zA-Z0-9_-]/g,"_")}
+function draw(id,labels,scores){
+ const c=document.getElementById(id);if(!c)return;const x=c.getContext("2d"),w=c.width,h=c.height,L=55,R=20,T=20,B=55,cw=w-L-R,ch=h-T-B;x.clearRect(0,0,w,h);x.font="11px Arial";for(let v=0;v<=100;v+=20){const y=T+ch-(v/100)*ch;x.beginPath();x.moveTo(L,y);x.lineTo(w-R,y);x.strokeStyle="#dfe6e1";x.stroke();x.fillStyle="#66736b";x.textAlign="right";x.fillText(v,L-7,y+3)}if(!scores.length){x.textAlign="center";x.fillText("No recorded scores available.",w/2,h/2);return}const pts=scores.map((s,i)=>({x:labels.length===1?L+cw/2:L+i*(cw/(labels.length-1)),y:T+ch-(s/100)*ch}));x.beginPath();pts.forEach((p,i)=>i?x.lineTo(p.x,p.y):x.moveTo(p.x,p.y));x.strokeStyle="#1f6f50";x.lineWidth=3;x.stroke();pts.forEach((p,i)=>{x.beginPath();x.arc(p.x,p.y,4,0,7);x.fillStyle="#1f6f50";x.fill();x.fillStyle="#17211b";x.font="bold 10px Arial";x.textAlign="center";x.fillText(scores[i],p.x,p.y-9);x.save();x.translate(p.x,h-B+10);x.rotate(-Math.PI/7);x.font="10px Arial";x.fillStyle="#56635b";x.fillText(String(labels[i]).slice(0,18),0,0);x.restore()});x.beginPath();x.moveTo(L,T);x.lineTo(L,T+ch);x.lineTo(w-R,T+ch);x.strokeStyle="#9eaaa3";x.lineWidth=1;x.stroke()
+}
+function printReport(){window.print()}
+function dashboard(){location.href="dashboard.html"}
+function logout(){try{if(typeof window.logout==="function"){window.logout();return}}catch(e){}["currentGBHUser","currentUser","loggedInUser","gbhCurrentUser","activeUser"].forEach(k=>localStorage.removeItem(k));location.href="login.html"}
+
+async function cloudClient(){
+ let c=window.GBH_SUPABASE_CLIENT||window.supabaseClient||window.gbhSupabase;
+ if(c&&typeof c.from==="function")return c;
+ const cfg=window.GBH_SUPABASE_CONFIG||{};const url=cfg.URL||cfg.url||"",key=cfg.PUBLISHABLE_KEY||cfg.ANON_KEY||cfg.anonKey||"";
+ if(!window.supabase||typeof window.supabase.createClient!=="function")throw Error("Supabase library did not load. Check your internet connection and reload.");
+ if(!url||!key||key.includes("YOUR_"))throw Error("Supabase configuration is missing. Check supabase-config.js. Never use a service-role key in this page.");
+ c=window.supabase.createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});window.GBH_SUPABASE_CLIENT=c;return c;
+}
+const CLOUD_SCHOOL_ID="f0fe8fc3-7b2d-4689-9c17-b2569410b17b";
+function cloudMessage(text,type="info"){
+ const e=document.getElementById("cloudStatus"),b=document.getElementById("cloudBadge");if(e){e.textContent=text;e.className="cloud-status"+(type==="error"?" error":type==="success"?" success":"")}if(b){b.textContent=type==="error"?"Needs attention":type==="success"?"Connected":"Cloud status";b.className="badge"+(type==="success"?" ok":type==="error"?" no":"")}
+}
+async function cloudAccess(){
+ const c=await cloudClient();const {data:sd,error:se}=await c.auth.getSession();if(se)throw se;const session=sd?.session;if(!session?.user?.id)throw Error("No Supabase login session found. Sign in with your cloud-enabled account; local GBH login and local marks are unchanged.");
+ const {data:member,error:me}=await c.from("school_members").select("id,school_id,user_id,role").eq("school_id",CLOUD_SCHOOL_ID).eq("user_id",session.user.id).limit(1).maybeSingle();
+ if(me)throw Error("Could not verify school membership: "+me.message);if(!member)throw Error("This cloud account is not a member of Kospir Junior School in the selected Supabase project.");return c;
+}
+function termNumber(t){const m=String(t||"").match(/([123])/);return m?Number(m[1]):NaN}
+function cloudUuid(v){return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(v||""))}
+function localMatchesContext(r,c){return String(r.year)===String(c.year)&&norm(r.term)===norm(c.term)&&norm(r.exam)===norm(c.exam)&&norm(r.schoolLevel||r.level)===norm(c.level)&&norm(r.grade||r.class)===norm(c.grade)&&String(r.stream||"").toUpperCase()===String(c.stream||"").toUpperCase()}
+function selectedLocalResults(c){let rs=results().filter(r=>localMatchesContext(r,c)&&r.marks!==""&&r.marks!=null&&Number.isFinite(Number(r.marks))&&Number(r.marks)>=0&&Number(r.marks)<=100);if(selected)rs=rs.filter(r=>subjectMatch(r.subject||r.learningArea,selected));return rs}
+async function cloudStatus(){
+ try{const c=await cloudClient();const {data,error}=await c.auth.getSession();if(error)throw error;if(!data?.session?.user){cloudMessage("Supabase client loaded, but no cloud login session is active. Local marks remain safe and available.","info");return}
+ const {data:m,error:e}=await c.from("school_members").select("id").eq("school_id",CLOUD_SCHOOL_ID).eq("user_id",data.session.user.id).limit(1).maybeSingle();if(e)throw e;if(!m)throw Error("Cloud session found, but this user has no verified membership for Kospir Junior School.");cloudMessage("Cloud connected and school membership verified. No data was changed. Select the examination context before syncing.","success")
+ }catch(e){cloudMessage(e?.message||String(e),"error")}
+}
+async function syncCloud(){
+ const cxt=ctx();if(!cxt.year||!cxt.term||!cxt.exam||!cxt.level||!cxt.grade||!cxt.stream){cloudMessage("Select Year, Term, Exam, Level, Grade and Stream before syncing. No data was changed.","error");return}
+ const term=termNumber(cxt.term);if(!Number.isInteger(term)||term<1||term>3){cloudMessage("The selected term could not be mapped to Term 1, 2 or 3.","error");return}
+ try{
+  cloudMessage("Connecting securely and checking cloud membership…");const c=await cloudAccess();
+  const {data:cloudStudents,error:stErr}=await c.from("students").select("id,admission_number,school_id").eq("school_id",CLOUD_SCHOOL_ID).limit(5000);if(stErr)throw Error("Could not read cloud learners: "+stErr.message);
+  const cloudByAdm=new Map((cloudStudents||[]).filter(x=>x.admission_number).map(x=>[norm(x.admission_number),x]));
+  const {data:existing,error:exErr}=await c.from("exam_results").select("id,student_id,subject,marks_obtained,teacher_remarks").eq("school_id",CLOUD_SCHOOL_ID).eq("academic_year",Number(cxt.year)).eq("term",term).eq("exam_type",cxt.exam).eq("grade",cxt.grade).limit(5000);if(exErr)throw Error("Could not read existing cloud marks: "+exErr.message);
+  const local=selectedLocalResults(cxt);if(!local.length){cloudMessage("No saved local marks match this selected context. Local records were not changed.","info");return}
+  let added=0,updated=0,unchanged=0,skipped=0,failed=0;const duplicateKeys=new Set();
+  for(const r of local){
+   const admNo=String(r.admissionNumber||"").trim()||adm(students().find(s=>sid(s)===String(r.studentId))||{});const cs=cloudByAdm.get(norm(admNo));if(!cs||!cloudUuid(cs.id)){skipped++;continue}
+   const subj=String(r.subject||r.learningArea||"").trim();if(!subj){skipped++;continue}
+   const key=cs.id+"|"+norm(subj);if(duplicateKeys.has(key)){skipped++;continue}duplicateKeys.add(key);
+   const old=(existing||[]).filter(x=>String(x.student_id)===String(cs.id)&&norm(x.subject)===norm(subj));if(old.length>1){skipped++;continue}
+   const teacherRaw=r.cloudTeacherId||r.teacherCloudId||r.teacher_cloud_id||r.teacher?.cloudId||null;
+   const payload={school_id:CLOUD_SCHOOL_ID,student_id:cs.id,teacher_id:cloudUuid(teacherRaw)?teacherRaw:null,academic_year:Number(cxt.year),term,exam_type:String(r.exam||cxt.exam),grade:String(r.grade||r.class||cxt.grade),subject:subj,marks_obtained:Number(r.marks??r.score),maximum_marks:100,performance_level:String(r.performanceLevel||perf(r.marks)||""),teacher_remarks:r.teacherRemarks||r.teacherRemark||null,updated_at:new Date().toISOString()};
+   try{if(old.length===1){if(Number(old[0].marks_obtained)===payload.marks_obtained&&String(old[0].performance_level||"")===payload.performance_level){unchanged++;continue}const {error}=await c.from("exam_results").update(payload).eq("id",old[0].id).eq("school_id",CLOUD_SCHOOL_ID);if(error)throw error;updated++}else{const {error}=await c.from("exam_results").insert(payload);if(error)throw error;added++}}catch(err){
+  failed++;
+  console.error("GBH EXAM RESULT SYNC FAILED:", {
+    message: err?.message || String(err),
+    code: err?.code || null,
+    details: err?.details || null,
+    hint: err?.hint || null
+  });
+}
+  }
+  const type=failed?"error":"success";cloudMessage(`Cloud sync finished for ${cxt.year} • ${cxt.term} • ${cxt.exam} • ${cxt.grade} • ${cxt.stream}. Added: ${added}; updated: ${updated}; unchanged: ${unchanged}; skipped: ${skipped}; failed: ${failed}. Local records were preserved.`,type);
+ }catch(e){cloudMessage(e?.message||String(e),"error")}
+}
+async function importCloud(){
+ const cxt=ctx();if(!cxt.year||!cxt.term||!cxt.exam||!cxt.level||!cxt.grade||!cxt.stream){cloudMessage("Select Year, Term, Exam, Level, Grade and Stream before importing. No data was changed.","error");return}
+ const term=termNumber(cxt.term);if(!Number.isInteger(term)||term<1||term>3){cloudMessage("The selected term could not be mapped to Term 1, 2 or 3.","error");return}
+ try{
+  cloudMessage("Checking cloud access and loading marks…");const c=await cloudAccess();
+  const {data:cloudStudents,error:stErr}=await c.from("students").select("id,admission_number,student_name,school_level,grade,stream,school_id").eq("school_id",CLOUD_SCHOOL_ID).limit(5000);if(stErr)throw Error("Could not read cloud learners: "+stErr.message);
+  const cloudById=new Map((cloudStudents||[]).map(x=>[String(x.id),x]));
+  const {data:rows,error}=await c.from("exam_results").select("id,school_id,student_id,teacher_id,academic_year,term,exam_type,grade,subject,marks_obtained,maximum_marks,performance_level,teacher_remarks").eq("school_id",CLOUD_SCHOOL_ID).eq("academic_year",Number(cxt.year)).eq("term",term).eq("exam_type",cxt.exam).eq("grade",cxt.grade).limit(5000);if(error)throw Error("Could not read cloud examination marks: "+error.message);
+  let all=results(),added=0,conflicts=0,skipped=0;
+  for(const r of rows||[]){const cs=cloudById.get(String(r.student_id));if(!cs){skipped++;continue}const localStudent=students().find(s=>norm(adm(s))===norm(cs.admission_number));if(!localStudent||lev(localStudent)!==cxt.level||grd(localStudent)!==cxt.grade||str(localStudent)!==cxt.stream){skipped++;continue}
+   const subject=String(r.subject||"").trim();if(!subject||!Number.isFinite(Number(r.marks_obtained))){skipped++;continue}
+   const cc={year:cxt.year,term:cxt.term,exam:cxt.exam,level:cxt.level,grade:cxt.grade,stream:cxt.stream};const prior=find(cc,localStudent,subject,all);
+   if(prior){if(Number(prior.marks)!==Number(r.marks_obtained))conflicts++;else skipped++;continue}
+   all.push({id:"CLOUD-"+String(r.id),year:String(r.academic_year),term:cxt.term,exam:r.exam_type,schoolLevel:cxt.level,level:cxt.level,grade:r.grade,class:r.grade,stream:str(localStudent),studentId:sid(localStudent),admissionNumber:adm(localStudent),studentName:name(localStudent),subject,learningArea:subject,marks:Number(r.marks_obtained),score:Number(r.marks_obtained),performanceLevel:r.performance_level||perf(r.marks_obtained),teacherId:null,teacherName:"",teacherInitials:"",teacherRemarks:r.teacher_remarks||"",cloudId:r.id,dateSaved:new Date().toISOString()});added++
+  }
+  if(added){save(S.results,all);renderMatrix();if(selected)renderEntry()}
+  cloudMessage(`Cloud import finished. Added ${added} missing local mark(s); ${conflicts} conflicting local mark(s) left untouched; ${skipped} skipped. Existing local marks were never overwritten.`,conflicts?"info":"success");
+ }catch(e){cloudMessage(e?.message||String(e),"error")}
+}
+function init(){user=currentUser();const y=new Date().getFullYear();if([...document.getElementById("year").options].some(o=>o.value==y))document.getElementById("year").value=y;document.getElementById("userBadge").textContent=uname(user)||"Current User";renderAreas();renderMatrix();cloudStatus()}
+return{context,level,grade,stream,area,preview,save:saveMarks,openReport,closeReport,scope,rlevel,rgrade,rlearners,report,saveComment,print:printReport,dashboard,logout,init,cloudStatus,syncCloud,importCloud}
+})();
+document.addEventListener("DOMContentLoaded",GBH.init);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")GBH.closeReport()});
+</script>
+</body>
+</html>

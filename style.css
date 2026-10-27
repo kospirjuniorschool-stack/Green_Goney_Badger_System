@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+}
+
+.welcome-box {
+    width: 500px;
+    max-width: 90%;
+    margin: 150px auto;
+    padding: 50px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-box h1 {
+    color: #1f4e78;
+    font-size: 36px;
+}
+
+.welcome-box p {
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.welcome-box button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    background: #1f4e78;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.welcome-box button:hover {
+    background: #163a5a;
+}
+
+.automatic-comment {
+
+    min-height: 55px;
+
+    background: #fafafa;
+
+    line-height: 1.5;
+
+    white-space: normal;
+
+}

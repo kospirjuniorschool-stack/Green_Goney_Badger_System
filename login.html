@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GREEN HONEY BADGER SYSTEM - Login</title>
+
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #064e3b 0%, #047857 45%, #10b981 100%);
+    padding: 20px;
+}
+
+.login-wrapper { width: 100%; max-width: 480px; }
+
+.login-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 36px 32px 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    border: 1px solid rgba(255,255,255,.4);
+}
+
+.system-header { text-align: center; margin-bottom: 22px; }
+
+.system-logo {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #047857, #10b981);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 28px;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(4,120,87,.3);
+}
+
+.system-name {
+    margin: 0;
+    color: #064e3b;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: .4px;
+}
+
+.system-subtitle {
+    margin: 7px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.login-title {
+    margin: 0 0 22px;
+    text-align: center;
+    color: #111827;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* LICENCE COUNTDOWN */
+.licence-countdown {
+    width: 100%;
+    margin: 0 auto 24px;
+    padding: 15px 12px;
+    border: 1px solid rgba(59,130,246,.4);
+    border-radius: 12px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    text-align: center;
+}
+
+.licence-countdown.warning,
+.licence-countdown.expired {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.countdown-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.countdown-dot {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 50%;
+    background: #2563eb;
+    animation: gbhBlink 1s infinite;
+}
+
+.warning .countdown-dot,
+.expired .countdown-dot { background: #dc2626; }
+
+.countdown-value {
+    font-size: clamp(12px, 2.8vw, 17px);
+    line-height: 1.8;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.countdown-note {
+    margin-top: 5px;
+    font-size: 10px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+@keyframes gbhBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .countdown-dot { animation: none; }
+}
+
+/* LOGIN FORM */
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.input-wrapper { position: relative; }
+
+.form-control {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    background: #fff;
+    color: #111827;
+    font-size: 15px;
+    outline: none;
+    transition: all .2s ease;
+}
+
+.password-input { padding-right: 52px; }
+
+.form-control:focus {
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5,150,105,.12);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 36px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.password-toggle:hover {
+    background: #f3f4f6;
+    color: #047857;
+}
+
+.login-button {
+    width: 100%;
+    height: 50px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #047857, #059669);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.login-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(4,120,87,.25);
+}
+
+.login-button:active { transform: translateY(0); }
+
+.login-button:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.message {
+    display: none;
+    margin: 0 0 17px;
+    padding: 11px 13px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.message.error {
+    display: block;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.message.success {
+    display: block;
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.loading {
+    display: none;
+    margin-top: 10px;
+    text-align: center;
+    color: #047857;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.password-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 21px;
+    flex-wrap: wrap;
+}
+
+.password-links a {
+    color: #047857;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.password-links a:hover {
+    color: #064e3b;
+    text-decoration: underline;
+}
+
+.link-separator { color: #d1d5db; }
+
+.security-note {
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 15px;
+    color: rgba(255,255,255,.85);
+    font-size: 11px;
+}
+
+@media (max-width: 480px) {
+    body { padding: 14px; }
+    .login-card { padding: 30px 22px 25px; }
+    .system-name { font-size: 19px; }
+}
+</style>
+</head>
+
+<body>
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <div class="system-header">
+            <div class="system-logo">GBH</div>
+            <h1 class="system-name">GREEN HONEY BADGER SYSTEM</h1>
+            <p class="system-subtitle">
+                School Management &amp; Administration System
+            </p>
+        </div>
+
+        <section id="gbhLicenceCountdown"
+            class="licence-countdown"
+            aria-live="polite"
+            aria-atomic="true">
+            <div class="countdown-heading">
+                <span class="countdown-dot"></span>
+                <span id="gbhCountdownHeading">LICENCE VALIDITY</span>
+            </div>
+            <div class="countdown-value" id="gbhCountdownValue">
+                CHECKING LICENCE...
+            </div>
+            <div class="countdown-note" id="gbhCountdownNote">
+                GREEN HONEY BADGER SYSTEM
+            </div>
+        </section>
+
+        <h2 class="login-title">System Login</h2>
+
+        <form id="loginForm" autocomplete="on">
+            <div id="loginMessage" class="message"
+                role="alert" aria-live="polite"></div>
+
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" name="username"
+                    class="form-control"
+                    placeholder="Enter your username or email"
+                    autocomplete="username"
+                    autocapitalize="none"
+                    spellcheck="false" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password"
+                        class="form-control password-input"
+                        placeholder="Enter your password"
+                        autocomplete="current-password" required>
+
+                    <button type="button" id="passwordToggle"
+                        class="password-toggle"
+                        aria-label="Show password"
+                        title="Show password">👁</button>
+                </div>
+            </div>
+
+            <button type="submit" id="loginButton"
+                class="login-button">LOGIN</button>
+
+            <div id="loadingMessage" class="loading" role="status">
+                Signing in securely...
+            </div>
+        </form>
+
+        <div class="password-links">
+            <a href="forgot_password.html">Forgot Password?</a>
+            <span class="link-separator">|</span>
+            <a href="change_password.html">Change Password</a>
+        </div>
+
+        <div class="security-note">
+            Your login credentials are protected by the
+            GREEN HONEY BADGER SYSTEM security system.
+        </div>
+    </div>
+
+    <div class="footer">
+        GREEN HONEY BADGER SYSTEM &copy; 2026
+    </div>
+</div>
+
+<!-- PASSWORD SHOW / HIDE -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.getElementById("password");
+    const passwordToggle = document.getElementById("passwordToggle");
+
+    if (passwordInput && passwordToggle) {
+        passwordToggle.addEventListener("click", function () {
+            const show = passwordInput.type === "password";
+            passwordInput.type = show ? "text" : "password";
+            passwordToggle.textContent = show ? "🙈" : "👁";
+            passwordToggle.setAttribute("aria-label",
+                show ? "Hide password" : "Show password");
+            passwordToggle.setAttribute("title",
+                show ? "Hide password" : "Show password");
+        });
+    }
+});
+</script>
+
+<!-- LIVE LICENCE COUNTDOWN: EXISTING STORAGE KEYS PRESERVED -->
+<script>
+(function () {
+    "use strict";
+
+    const panel = document.getElementById("gbhLicenceCountdown");
+    const heading = document.getElementById("gbhCountdownHeading");
+    const value = document.getElementById("gbhCountdownValue");
+    const note = document.getElementById("gbhCountdownNote");
+
+    function readStorage(key) {
+        try { return localStorage.getItem(key); }
+        catch (error) { return null; }
+    }
+
+    function parseExpiry(raw) {
+        if (raw === null || raw === undefined || raw === "") return null;
+
+        const text = String(raw).trim();
+        if (!text) return null;
+
+        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text);
+
+        if (match) {
+            const year = Number(match[1]);
+            const month = Number(match[2]) - 1;
+            const day = Number(match[3]);
+            const date = new Date(year, month, day, 23, 59, 59, 999);
+
+            if (date.getFullYear() !== year ||
+                date.getMonth() !== month ||
+                date.getDate() !== day) return null;
+
+            return date;
+        }
+
+        const date = new Date(text);
+        return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    function readLicence() {
+        for (const key of ["gbhActivation", "gbhLicenceCache"]) {
+            const raw = readStorage(key);
+            if (!raw) continue;
+
+            try {
+                const record = JSON.parse(raw);
+                if (record && typeof record === "object") return record;
+            } catch (error) {
+                // Try the other existing storage record.
+            }
+        }
+        return null;
+    }
+
+    function addCalendarMonth(date) {
+        const result = new Date(date);
+        const day = result.getDate();
+        result.setDate(1);
+        result.setMonth(result.getMonth() + 1);
+
+        const lastDay = new Date(
+            result.getFullYear(), result.getMonth() + 1, 0
+        ).getDate();
+
+        result.setDate(Math.min(day, lastDay));
+        return result;
+    }
+
+    function display(mode, title, message, detail) {
+        panel.classList.remove("warning", "expired");
+        if (mode) panel.classList.add(mode);
+        heading.textContent = title;
+        value.textContent = message;
+        note.textContent = detail;
+    }
+
+    function update() {
+        const licence = readLicence();
+
+        if (!licence) {
+            display("", "LICENCE ACTIVATION", "LICENCE DETAILS NOT FOUND",
+                "Activate the system to display the licence countdown.");
+            return;
+        }
+
+        const status = String(licence.status || "").toUpperCase();
+
+        if (status && status !== "ACTIVE") {
+            display("warning", "LICENCE STATUS", "LICENCE IS NOT ACTIVE",
+                "Please contact the licensing administrator.");
+            return;
+        }
+
+        const expiry = parseExpiry(
+            licence.expiryDate || licence.expiry ||
+            licence.licenceExpiryDate
+        );
+
+        if (!expiry) {
+            display("", "LICENCE VALIDITY", "EXPIRY DATE UNAVAILABLE",
+                "The saved licence record does not contain a readable expiry date.");
+            return;
+        }
+
+        const now = new Date();
+        const remaining = expiry.getTime() - now.getTime();
+
+        if (remaining <= 0) {
+            display("expired", "LICENCE EXPIRED",
+                "00 DAYS : 00 HOURS : 00 MINUTES : 00 SECONDS",
+                "The licence has reached its expiry date.");
+            return;
+        }
+
+        let months = Math.max(0,
+            (expiry.getFullYear() - now.getFullYear()) * 12 +
+            expiry.getMonth() - now.getMonth());
+
+        while (months > 0) {
+            const anchor = new Date(now);
+            const day = anchor.getDate();
+            anchor.setDate(1);
+            anchor.setMonth(anchor.getMonth() + months);
+            const lastDay = new Date(
+                anchor.getFullYear(), anchor.getMonth() + 1, 0
+            ).getDate();
+            anchor.setDate(Math.min(day, lastDay));
+
+            if (anchor <= expiry) break;
+            months--;
+        }
+
+        const anchor = new Date(now);
+        const originalDay = anchor.getDate();
+        anchor.setDate(1);
+        anchor.setMonth(anchor.getMonth() + months);
+
+        const lastDay = new Date(
+            anchor.getFullYear(), anchor.getMonth() + 1, 0
+        ).getDate();
+        anchor.setDate(Math.min(originalDay, lastDay));
+
+        const remainder = Math.max(0, expiry.getTime() - anchor.getTime());
+        const warning = expiry <= addCalendarMonth(now);
+        let message;
+
+        if (months > 0) {
+            const days = Math.floor(remainder / 86400000);
+            const hours = Math.floor((remainder % 86400000) / 3600000);
+            const minutes = Math.floor((remainder % 3600000) / 60000);
+            const seconds = Math.floor((remainder % 60000) / 1000);
+
+            message = months + (months === 1 ? " MONTH" : " MONTHS") +
+                " : " + days + " DAYS" +
+                " : " + String(hours).padStart(2, "0") + " HOURS" +
+                " : " + String(minutes).padStart(2, "0") + " MINUTES" +
+                " : " + String(seconds).padStart(2, "0") + " SECONDS";
+        } else {
+            const total = Math.floor(remaining / 1000);
+            const days = Math.floor(total / 86400);
+            const hours = Math.floor((total % 86400) / 3600);
+            const minutes = Math.floor((total % 3600) / 60);
+            const seconds = total % 60;
+
+            message = days + " DAYS" +
+                " : " + String(hours).padStart(2, "0") + " HOURS" +
+                " : " + String(minutes).padStart(2, "0") + " MINUTES" +
+                " : " + String(seconds).padStart(2, "0") + " SECONDS";
+        }
+
+        display(warning ? "warning" : "",
+            warning ? "LICENCE EXPIRING SOON" : "LICENCE VALIDITY",
+            "REMAINING: " + message,
+            warning ? "One calendar month or less remains."
+                : "Your licence countdown updates automatically.");
+    }
+
+    update();
+    window.setInterval(update, 1000);
+})();
+</script>
+
+<!-- SUPABASE LIBRARY MUST LOAD BEFORE THE GBH SYSTEM SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
+
+<!-- MAIN GBH SYSTEM AUTHENTICATION -->
+<script src="script.js"></script>
+
+</body>
+</html>

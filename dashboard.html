@@ -1,0 +1,1397 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>GREEN HONEY BADGER SYSTEM - Dashboard</title>
+
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    html,
+    body {
+
+        width: 100%;
+        min-height: 100%;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+    }
+
+
+    body {
+
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                135deg,
+                #eef8f1,
+                #ffffff
+            );
+
+        color:
+            #20352a;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .header {
+
+        width: 100%;
+
+        background:
+            linear-gradient(
+                135deg,
+                #063b20,
+                #087f3d,
+                #0aa94f
+            );
+
+        color: #ffffff;
+
+        padding:
+            18px 25px;
+
+        display: flex;
+
+        justify-content:
+            space-between;
+
+        align-items:
+            center;
+
+        gap: 20px;
+
+        box-shadow:
+            0 4px 15px
+            rgba(0,0,0,0.15);
+    }
+
+
+    .brand {
+
+        display: flex;
+
+        align-items:
+            center;
+
+        gap: 12px;
+    }
+
+
+    .brand-logo {
+
+        width: 48px;
+        height: 48px;
+
+        border-radius: 50%;
+
+        display: flex;
+
+        justify-content:
+            center;
+
+        align-items:
+            center;
+
+        background:
+            rgba(255,255,255,0.15);
+
+        font-size: 28px;
+    }
+
+
+    .brand-text h1 {
+
+        font-size: 20px;
+
+        font-weight: 800;
+
+        letter-spacing:
+            0.5px;
+    }
+
+
+    .brand-text p {
+
+        font-size: 12px;
+
+        opacity:
+            0.85;
+
+        margin-top:
+            3px;
+    }
+
+
+    /* =====================================================
+       USER AREA
+    ===================================================== */
+
+    .user-area {
+
+        display: flex;
+
+        align-items:
+            center;
+
+        gap: 12px;
+
+        text-align:
+            right;
+    }
+
+
+    .user-info {
+
+        font-size:
+            13px;
+
+        line-height:
+            1.5;
+    }
+
+
+    .user-name {
+
+        font-weight:
+            700;
+    }
+
+
+    .user-role {
+
+        opacity:
+            0.85;
+
+        font-size:
+            11px;
+    }
+
+
+    #logoutButton {
+
+        border:
+            none;
+
+        background:
+            rgba(255,255,255,0.15);
+
+        color:
+            #ffffff;
+
+        padding:
+            9px 14px;
+
+        border-radius:
+            8px;
+
+        cursor:
+            pointer;
+
+        font-weight:
+            700;
+
+        font-size:
+            12px;
+    }
+
+
+    #logoutButton:hover {
+
+        background:
+            rgba(255,255,255,0.25);
+    }
+
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .main {
+
+        width: 100%;
+
+        max-width:
+            1200px;
+
+        margin:
+            0 auto;
+
+        padding:
+            30px 20px 50px;
+    }
+
+
+    /* =====================================================
+       WELCOME
+    ===================================================== */
+
+    .welcome {
+
+        background:
+            #ffffff;
+
+        border-radius:
+            18px;
+
+        padding:
+            25px;
+
+        margin-bottom:
+            25px;
+
+        box-shadow:
+            0 8px 25px
+            rgba(0,0,0,0.08);
+
+        border-left:
+            5px solid #087f3d;
+    }
+
+
+    .welcome h2 {
+
+        color:
+            #075a2d;
+
+        font-size:
+            24px;
+
+        margin-bottom:
+            7px;
+    }
+
+
+    .welcome p {
+
+        color:
+            #66756d;
+
+        font-size:
+            14px;
+
+        line-height:
+            1.5;
+    }
+
+
+    /* =====================================================
+       ACCESS INFORMATION
+    ===================================================== */
+
+    .access-box {
+
+        margin-top:
+            15px;
+
+        display:
+            flex;
+
+        flex-wrap:
+            wrap;
+
+        gap:
+            10px;
+    }
+
+
+    .access-item {
+
+        background:
+            #f1f8f3;
+
+        border:
+            1px solid #d5e9db;
+
+        border-radius:
+            8px;
+
+        padding:
+            8px 12px;
+
+        font-size:
+            12px;
+
+        color:
+            #476153;
+    }
+
+
+    .access-item strong {
+
+        color:
+            #075a2d;
+    }
+
+
+    /* =====================================================
+       MODULE TITLE
+    ===================================================== */
+
+    .section-title {
+
+        color:
+            #075a2d;
+
+        font-size:
+            20px;
+
+        font-weight:
+            800;
+
+        margin:
+            25px 0 15px;
+    }
+
+
+    /* =====================================================
+       MODULE GRID
+    ===================================================== */
+
+    .module-grid {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fit,
+                minmax(220px, 1fr)
+            );
+
+        gap:
+            18px;
+    }
+
+
+    /* =====================================================
+       MODULE CARD
+    ===================================================== */
+
+    .module-card {
+
+        display:
+            block;
+
+        background:
+            #ffffff;
+
+        border-radius:
+            16px;
+
+        padding:
+            25px;
+
+        text-decoration:
+            none;
+
+        color:
+            #20352a;
+
+        box-shadow:
+            0 7px 22px
+            rgba(0,0,0,0.08);
+
+        border:
+            1px solid #e0ebe4;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+
+    .module-card:hover {
+
+        transform:
+            translateY(-3px);
+
+        box-shadow:
+            0 12px 28px
+            rgba(0,0,0,0.13);
+
+        border-color:
+            #0aa94f;
+    }
+
+
+    .module-icon {
+
+        width:
+            55px;
+
+        height:
+            55px;
+
+        border-radius:
+            14px;
+
+        display:
+            flex;
+
+        justify-content:
+            center;
+
+        align-items:
+            center;
+
+        background:
+            #e9f7ee;
+
+        font-size:
+            29px;
+
+        margin-bottom:
+            16px;
+    }
+
+
+    .module-card h3 {
+
+        color:
+            #075a2d;
+
+        font-size:
+            17px;
+
+        margin-bottom:
+            7px;
+    }
+
+
+    .module-card p {
+
+        color:
+            #718078;
+
+        font-size:
+            12px;
+
+        line-height:
+            1.5;
+    }
+
+
+    /* =====================================================
+       USER MANAGEMENT SPECIAL CARD
+    ===================================================== */
+
+    .user-management-card {
+
+        border:
+            2px solid #087f3d;
+    }
+
+
+    .user-management-card .module-icon {
+
+        background:
+            #dff7e7;
+    }
+
+
+    /* =====================================================
+       SETTINGS SPECIAL CARD
+    ===================================================== */
+
+    .settings-card {
+
+        border:
+            2px solid #087f3d;
+    }
+
+
+    .settings-card .module-icon {
+
+        background:
+            #dff7e7;
+    }
+
+
+    /* =====================================================
+       TIMETABLE SPECIAL CARD
+    ===================================================== */
+
+    .timetable-card {
+
+        border:
+            2px solid #087f3d;
+    }
+
+
+    .timetable-card .module-icon {
+
+        background:
+            #dff7e7;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+
+        text-align:
+            center;
+
+        margin-top:
+            40px;
+
+        color:
+            #7a887f;
+
+        font-size:
+            11px;
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 650px) {
+
+        .header {
+
+            padding:
+                15px;
+
+            align-items:
+                flex-start;
+        }
+
+
+        .brand-text h1 {
+
+            font-size:
+                16px;
+        }
+
+
+        .brand-text p {
+
+            font-size:
+                10px;
+        }
+
+
+        .brand-logo {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            font-size:
+                24px;
+        }
+
+
+        .user-area {
+
+            flex-direction:
+                column;
+
+            align-items:
+                flex-end;
+
+            gap:
+                6px;
+        }
+
+
+        .user-info {
+
+            display:
+                none;
+        }
+
+
+        .main {
+
+            padding:
+                20px 15px 40px;
+        }
+
+
+        .welcome {
+
+            padding:
+                20px;
+        }
+
+
+        .welcome h2 {
+
+            font-size:
+                21px;
+        }
+
+
+        .module-grid {
+
+            grid-template-columns:
+                1fr;
+        }
+
+    }
+
+</style>
+
+</head><body><!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+
+    <div class="brand">
+
+
+        <div class="brand-logo">
+
+            🦡
+
+        </div>
+
+
+        <div class="brand-text">
+
+            <h1>
+                GREEN HONEY BADGER
+            </h1>
+
+            <p>
+                School Management System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         LOGGED-IN USER
+    ================================================= -->
+
+    <div class="user-area">
+
+
+        <div class="user-info">
+
+            <div
+                class="user-name"
+                id="accessUser">
+
+                User
+
+            </div>
+
+
+            <div
+                class="user-role"
+                id="accessRole">
+
+                —
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="logoutButton">
+
+            LOGOUT
+
+        </button>
+
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- =================================================
+         WELCOME
+    ================================================= -->
+
+    <section class="welcome">
+
+
+        <h2>
+
+            Welcome to GREEN HONEY BADGER SYSTEM
+
+        </h2>
+
+
+        <p>
+
+            Select a module below to manage school
+            information, learners, teachers, examinations,
+            fees and learner assessment reports.
+
+        </p>
+
+
+        <!-- =================================================
+             ACCESS INFORMATION
+        ================================================= -->
+
+        <div class="access-box">
+
+
+            <div class="access-item">
+
+                User:
+
+                <strong id="welcomeUser">
+
+                    —
+
+                </strong>
+
+            </div>
+
+
+            <div class="access-item">
+
+                Role:
+
+                <strong id="welcomeRole">
+
+                    —
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         MODULE TITLE
+    ================================================= -->
+
+    <h2 class="section-title">
+
+        School Management Modules
+
+    </h2>
+
+
+
+    <!-- =================================================
+         MODULE GRID
+    ================================================= -->
+
+    <section class="module-grid">
+
+
+        <!-- =================================================
+             STUDENTS
+        ================================================= -->
+
+        <a
+            href="students.html"
+            class="module-card">
+
+            <div class="module-icon">
+
+                👨‍🎓
+
+            </div>
+
+
+            <h3>
+
+                Students
+
+            </h3>
+
+
+            <p>
+
+                Register and manage learners,
+                classes, streams and learner information.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             TEACHERS
+        ================================================= -->
+
+        <a
+            href="teachers.html"
+            class="module-card">
+
+            <div class="module-icon">
+
+                👩‍🏫
+
+            </div>
+
+
+            <h3>
+
+                Teachers
+
+            </h3>
+
+
+            <p>
+
+                Manage teachers, teacher profiles,
+                assignments and teacher information.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             EXAMINATION
+        ================================================= -->
+
+        <a
+            href="examination.html"
+            class="module-card">
+
+            <div class="module-icon">
+
+                📝
+
+            </div>
+
+
+            <h3>
+
+                Examination
+
+            </h3>
+
+
+            <p>
+
+                Enter learner marks, manage assessments
+                and analyse examination performance.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             FEES
+        ================================================= -->
+
+        <a
+            href="fees.html"
+            class="module-card">
+
+            <div class="module-icon">
+
+                💰
+
+            </div>
+
+
+            <h3>
+
+                Fees
+
+            </h3>
+
+
+            <p>
+
+                Manage learner fee records,
+                payments, balances and fee information.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             REPORTS
+        ================================================= -->
+
+        <a
+            href="report.html"
+            class="module-card">
+
+            <div class="module-icon">
+
+                📊
+
+            </div>
+
+
+            <h3>
+
+                Reports / Learner Assessments
+
+            </h3>
+
+
+            <p>
+
+                Generate learner assessment reports,
+                performance records and academic reports.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             TIMETABLE
+             LINKED TO timetable.html
+        ================================================= -->
+
+        <a
+            href="timetable.html"
+            class="module-card timetable-card"
+            id="timetableCard">
+
+            <div class="module-icon">
+
+                🗓️
+
+            </div>
+
+
+            <h3>
+
+                Timetable
+
+            </h3>
+
+
+            <p>
+
+                Create, save and generate teacher
+                and class timetables using assigned
+                teachers, grades, streams and learning areas.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             USER MANAGEMENT
+             SYSTEM ADMINISTRATOR ONLY
+        ================================================= -->
+
+        <a
+            href="users.html"
+            class="module-card user-management-card"
+            id="userManagementCard"
+            style="display:none;">
+
+            <div class="module-icon">
+
+                👤
+
+            </div>
+
+
+            <h3>
+
+                User Management
+
+            </h3>
+
+
+            <p>
+
+                Create and manage GBH login accounts,
+                assign roles and connect user accounts
+                to registered teachers.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================================
+             SETTINGS
+             CONNECTED TO settings.html
+        ================================================= -->
+
+        <a
+            href="settings.html"
+            class="module-card settings-card"
+            id="settingsCard">
+
+            <div class="module-icon">
+
+                ⚙️
+
+            </div>
+
+
+            <h3>
+
+                Settings / Administration
+
+            </h3>
+
+
+            <p>
+
+                Manage system settings, school information,
+                academic preferences and administrative
+                functions.
+
+            </p>
+
+        </a>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================= -->
+
+    <div class="footer">
+
+        GREEN HONEY BADGER SYSTEM
+
+        <br>
+
+        School Management System
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     GBH SYSTEM JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =====================================================
+     DASHBOARD USER & ACCESS CONTROL
+===================================================== -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            /* =================================================
+               GET CURRENT USER
+            ================================================= */
+
+            let currentUser = null;
+
+
+            /*
+               First try the central GBH user function.
+            */
+
+            if (
+                typeof window.getCurrentGBHUser ===
+                "function"
+            ) {
+
+                try {
+
+                    currentUser =
+                        window.getCurrentGBHUser();
+
+                } catch (error) {
+
+                    console.warn(
+                        "GBH user function could not be read.",
+                        error
+                    );
+
+                }
+
+            }
+
+
+            /*
+               Compatibility fallback.
+
+               This keeps the dashboard compatible
+               with the existing GBH session system.
+            */
+
+            if (!currentUser) {
+
+                try {
+
+                    currentUser =
+                        JSON.parse(
+                            sessionStorage.getItem(
+                                "gbhSession"
+                            ) ||
+                            localStorage.getItem(
+                                "gbhSession"
+                            ) ||
+                            "null"
+                        );
+
+                } catch (error) {
+
+                    currentUser = null;
+
+                }
+
+            }
+
+
+            /* =================================================
+               NO LOGIN SESSION
+            ================================================= */
+
+            if (!currentUser) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+
+            /* =================================================
+               DISPLAY USER
+            ================================================= */
+
+            const accessUser =
+                document.getElementById(
+                    "accessUser"
+                );
+
+
+            const accessRole =
+                document.getElementById(
+                    "accessRole"
+                );
+
+
+            const welcomeUser =
+                document.getElementById(
+                    "welcomeUser"
+                );
+
+
+            const welcomeRole =
+                document.getElementById(
+                    "welcomeRole"
+                );
+
+
+            const displayName =
+                currentUser.fullName ||
+                currentUser.name ||
+                currentUser.username ||
+                "User";
+
+
+            const role =
+                currentUser.role ||
+                "User";
+
+
+            if (accessUser) {
+
+                accessUser.textContent =
+                    displayName;
+
+            }
+
+
+            if (accessRole) {
+
+                accessRole.textContent =
+                    role;
+
+            }
+
+
+            if (welcomeUser) {
+
+                welcomeUser.textContent =
+                    displayName;
+
+            }
+
+
+            if (welcomeRole) {
+
+                welcomeRole.textContent =
+                    role;
+
+            }
+
+
+
+            /* =================================================
+               USER MANAGEMENT VISIBILITY
+            ================================================= */
+
+            const userManagementCard =
+                document.getElementById(
+                    "userManagementCard"
+                );
+
+
+            /*
+               ONLY the System Administrator
+               receives User Management.
+            */
+
+            if (
+                userManagementCard &&
+                role ===
+                "System Administrator"
+            ) {
+
+                userManagementCard.style.display =
+                    "block";
+
+            } else if (userManagementCard) {
+
+                userManagementCard.style.display =
+                    "none";
+
+            }
+
+
+
+            /* =================================================
+               LOGOUT
+            ================================================= */
+
+            const logoutButton =
+                document.getElementById(
+                    "logoutButton"
+                );
+
+
+            if (logoutButton) {
+
+                logoutButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        /*
+                           Use the central GBH logout
+                           function where available.
+                        */
+
+                        if (
+                            typeof window.logout ===
+                            "function"
+                        ) {
+
+                            try {
+
+                                window.logout();
+
+                                return;
+
+                            } catch (error) {
+
+                                console.warn(
+                                    "Central logout failed. Using fallback.",
+                                    error
+                                );
+
+                            }
+
+                        }
+
+
+                        /*
+                           Fallback logout.
+                        */
+
+                        sessionStorage.removeItem(
+                            "gbhSession"
+                        );
+
+
+                        localStorage.removeItem(
+                            "gbhSession"
+                        );
+
+
+                        window.location.href =
+                            "login.html";
+
+                    }
+                );
+
+            }
+
+
+        }
+    );
+
+</script>
+
+</body></html>

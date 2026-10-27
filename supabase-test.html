@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GBH Supabase Connection Test</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #f0f5f2;
+      font-family: Arial, sans-serif;
+      color: #18352a;
+    }
+    main {
+      max-width: 480px;
+      margin: 25px auto;
+      padding: 24px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px #00000012;
+    }
+    h1 { color: #137447; font-size: 23px; }
+    p { line-height: 1.5; }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      border: 1px solid #b9c9bf;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 13px;
+      border: 0;
+      border-radius: 7px;
+      background: #137447;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:disabled { opacity: .6; cursor: wait; }
+    #result {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 7px;
+      background: #f1f5f3;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .note { font-size: 13px; color: #53665b; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>GREEN HONEY BADGER SYSTEM</h1>
+  <h2>Supabase Online Login Test</h2>
+
+  <p>
+    Sign in using your existing Supabase Auth email and password.
+    This test does not create users or change database security.
+  </p>
+
+  <form id="testForm">
+    <label for="email">Supabase email</label>
+    <input id="email" type="email" autocomplete="username"
+      required placeholder="Enter your registered email">
+
+    <label for="password">Supabase password</label>
+    <input id="password" type="password"
+      autocomplete="current-password" required
+      placeholder="Enter your password">
+
+    <button id="loginButton" type="submit">Sign In and Test</button>
+  </form>
+
+  <div id="result" role="status">Ready to test.</div>
+  <p class="note">
+    Use your Supabase Auth account, not your local GBH administrator
+    password unless they are the same. This test does not display
+    or store your password.
+  </p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+"use strict";
+
+const resultBox = document.getElementById("result");
+const loginButton = document.getElementById("loginButton");
+
+document.getElementById("testForm").addEventListener("submit",
+  async function (event) {
+    event.preventDefault();
+    loginButton.disabled = true;
+    resultBox.textContent = "Signing in to Supabase...";
+
+    try {
+      if (!window.GBH_SUPABASE_CONFIG ||
+          !window.supabase ||
+          typeof window.supabase.createClient !== "function") {
+        throw new Error(
+          "Supabase configuration or library is missing. Check your internet connection and file names."
+        );
+      }
+
+      const client = window.supabase.createClient(
+        window.GBH_SUPABASE_CONFIG.URL,
+        window.GBH_SUPABASE_CONFIG.PUBLISHABLE_KEY,
+        {
+          auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false
+          }
+        }
+      );
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const { data: authData, error: authError } =
+        await client.auth.signInWithPassword({ email, password });
+
+      if (authError) {
+        throw new Error("Login failed: " + authError.message);
+      }
+
+      resultBox.textContent =
+        "LOGIN SUCCESSFUL.\nChecking your school membership...";
+
+      const { data: membership, error: membershipError } =
+        await client
+          .from("school_members")
+          .select("school_id, role")
+          .eq("user_id", authData.user.id)
+          .maybeSingle();
+
+      if (membershipError) {
+        resultBox.textContent =
+          "LOGIN SUCCESSFUL, BUT MEMBERSHIP CHECK FAILED.\n" +
+          membershipError.message +
+          "\n\nCheck the school_members SELECT policy.";
+        return;
+      }
+
+      if (!membership) {
+        resultBox.textContent =
+          "LOGIN SUCCESSFUL, BUT NO SCHOOL MEMBERSHIP WAS VISIBLE.\n" +
+          "Check that this Auth user has a matching school_members row.";
+        return;
+      }
+
+      const { data: schools, error: schoolError } =
+        await client
+          .from("schools")
+          .select("id, school_name")
+          .eq("id", membership.school_id);
+
+      if (schoolError) {
+        resultBox.textContent =
+          "LOGIN SUCCESSFUL.\nMEMBERSHIP FOUND.\n" +
+          "School query failed: " + schoolError.message;
+        return;
+      }
+
+      resultBox.textContent =
+        "SUCCESS! ONLINE AUTHENTICATION WORKS.\n\n" +
+        "Authenticated user ID: " + authData.user.id + "\n" +
+        "Membership role: " + membership.role + "\n" +
+        "School ID: " + membership.school_id + "\n" +
+        "School rows returned: " + schools.length + "\n" +
+        "School details: " + JSON.stringify(schools, null, 2);
+
+    } catch (error) {
+      resultBox.textContent = error.message || String(error);
+    } finally {
+      loginButton.disabled = false;
+    }
+  }
+);
+</script>
+</body>
+</html>

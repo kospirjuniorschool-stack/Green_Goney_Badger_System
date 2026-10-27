@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GREEN HONEY BADGER SYSTEM - User Management</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6f9;color:#1f2937}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.header{background:linear-gradient(135deg,#064e3b,#047857,#059669);color:white;padding:18px 22px}
+.header-inner,.nav-inner,.main{max-width:1450px;margin:auto}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px}
+.brand-icon{width:48px;height:48px;border-radius:12px;background:white;color:#047857;display:grid;place-items:center;font-size:25px}
+.brand h1{font-size:19px;margin:0}.brand p{font-size:12px;margin:5px 0 0}
+.current-user{background:#ffffff20;padding:10px 13px;border-radius:9px;font-size:13px}
+.nav-bar{background:white;border-bottom:1px solid #dce3e8;padding:10px 15px}
+.nav-inner{display:flex;gap:8px;flex-wrap:wrap}
+.nav-btn{border:0;background:#eef2f5;color:#374151;padding:10px 13px;border-radius:8px;font-weight:bold}
+.nav-btn:hover,.nav-btn.active{background:#047857;color:white}
+.main{padding:24px 18px 45px}
+.page-title{margin-bottom:20px}.page-title h2{margin:0;color:#065f46;font-size:26px}
+.page-title p{color:#6b7280;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}
+.stat-card,.card{background:white;border:1px solid #e2e8f0;border-radius:13px;box-shadow:0 3px 12px #0000000a}
+.stat-card{padding:19px}.stat-label{color:#6b7280;font-size:12px;font-weight:bold}
+.stat-value{color:#065f46;font-size:29px;font-weight:bold;margin-top:8px}
+.card{margin-bottom:22px;overflow:hidden}
+.card-header{padding:17px 20px;background:#f0fdf4;border-bottom:1px solid #d1fae5}
+.card-header h3{margin:0;color:#065f46;font-size:18px}
+.card-header p{margin:6px 0 0;color:#6b7280;font-size:13px}
+.card-body{padding:20px}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.form-group{display:flex;flex-direction:column;gap:7px;min-width:0}
+.form-group.full{grid-column:1/-1}
+label{font-size:13px;font-weight:bold;color:#374151}
+input,select{width:100%;min-width:0;padding:11px;border:1px solid #cbd5e1;border-radius:8px;background:white;color:#111827}
+input:focus,select:focus{outline:2px solid #a7f3d0;border-color:#059669}
+.help-text{font-size:11px;color:#6b7280;line-height:1.5}
+.password-box{display:flex;gap:7px}.password-box input{flex:1}
+.small-btn{border:0;border-radius:7px;padding:0 12px;background:#e5e7eb}
+.teacher-box,.recovery-box{padding:15px;border-radius:10px}
+.teacher-box{background:#f0fdf4;border:1px solid #bbf7d0}
+.teacher-info{display:none;background:white;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;line-height:1.7}
+.recovery-box{background:#eff6ff;border:1px solid #bfdbfe}
+.recovery-box h4{margin:0 0 8px;color:#1e40af}
+.recovery-box>p{font-size:12px;line-height:1.5;color:#475569}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.btn{border:0;border-radius:8px;padding:11px 15px;font-weight:bold}
+.btn-primary{background:#047857;color:white}.btn-primary:hover{background:#065f46}
+.btn-secondary{background:#e5e7eb;color:#374151}
+.btn-danger{background:#dc2626;color:white}
+.message{display:none;padding:12px 14px;margin-bottom:15px;border-radius:8px;font-size:13px;font-weight:bold}
+.message.show{display:block}.message.success{background:#dcfce7;color:#166534}
+.message.error{background:#fee2e2;color:#991b1b}.message.info{background:#dbeafe;color:#1e40af}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.search-box{flex:1;min-width:200px}.filter-box{width:205px;max-width:100%}
+.table-wrap{width:100%;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1000px}
+thead{background:#064e3b;color:white}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #e5e7eb;font-size:12px;vertical-align:middle}
+th{white-space:nowrap}tbody tr:hover{background:#f8fafc}
+.role{display:inline-block;background:#ecfdf5;color:#065f46;border-radius:6px;padding:5px 7px;font-weight:bold;font-size:11px}
+.status{display:inline-block;border-radius:20px;padding:5px 8px;font-weight:bold;font-size:11px}
+.status.active{background:#dcfce7;color:#166534}.status.inactive{background:#fee2e2;color:#991b1b}
+.table-actions{display:flex;gap:5px;flex-wrap:wrap}
+.table-btn{border:0;border-radius:6px;padding:7px 9px;font-size:11px;font-weight:bold}
+.edit-btn{background:#dbeafe;color:#1d4ed8}
+.toggle-btn{background:#fef3c7;color:#92400e}
+.delete-btn{background:#fee2e2;color:#b91c1c}
+.table-btn:hover{filter:brightness(.95)}
+.empty{text-align:center;padding:35px;color:#6b7280}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:1000;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}.modal-box{background:white;width:min(480px,100%);border-radius:13px;overflow:hidden}
+.modal-header{padding:16px;background:#064e3b;color:white;display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{margin:0}.close-modal{border:0;background:none;color:white;font-size:25px}
+.modal-body{padding:20px;line-height:1.6}
+.footer{text-align:center;padding:20px;color:#6b7280;font-size:12px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.stats,.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}.main{padding:16px 10px 35px}.card-body{padding:14px}.filter-box{flex:1}.header-inner{align-items:flex-start}.brand h1{font-size:16px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">🦡</div>
+      <div><h1>GREEN HONEY BADGER SYSTEM</h1><p>User &amp; Account Management</p></div>
+    </div>
+    <div class="current-user" id="currentUserDisplay">System User</div>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <button type="button" class="nav-btn" data-page="dashboard.html">🏠 Dashboard</button>
+    <button type="button" class="nav-btn active">👥 Users</button>
+    <button type="button" class="nav-btn" data-page="teachers.html">👨‍🏫 Teachers</button>
+    <button type="button" class="nav-btn" data-page="students.html">🎓 Students</button>
+    <button type="button" class="nav-btn" data-page="examination.html">📝 Examination</button>
+    <button type="button" class="nav-btn" id="logoutBtn">🚪 Logout</button>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="page-title">
+    <h2>System Users</h2>
+    <p>Create and manage authorized system accounts.</p>
+  </div>
+
+  <div id="message" class="message" role="status" aria-live="polite"></div>
+
+  <section class="stats">
+    <div class="stat-card"><div class="stat-label">TOTAL USERS</div><div class="stat-value" id="totalUsers">0</div></div>
+    <div class="stat-card"><div class="stat-label">ACTIVE USERS</div><div class="stat-value" id="activeUsers">0</div></div>
+    <div class="stat-card"><div class="stat-label">TEACHER ACCOUNTS</div><div class="stat-value" id="teacherUsers">0</div></div>
+    <div class="stat-card"><div class="stat-label">ADMINISTRATORS</div><div class="stat-value" id="adminUsers">0</div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-header">
+      <h3 id="formTitle">Create New User</h3>
+      <p>Complete the account details and recovery information.</p>
+    </div>
+    <div class="card-body">
+      <form id="userForm">
+        <input type="hidden" id="editUserId">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="username">Username *</label>
+            <input id="username" type="text" autocomplete="off" required>
+            <div class="help-text">Every username must be unique.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password <span id="passwordRequired">*</span></label>
+            <div class="password-box">
+              <input id="password" type="password" autocomplete="new-password">
+              <button type="button" class="small-btn" id="passwordToggle">Show</button>
+            </div>
+            <div class="help-text" id="passwordHelp">Minimum 4 characters. When editing, leave blank to keep the current password.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="role">User Role *</label>
+            <select id="role" required>
+              <option value="">Select role</option>
+              <option>System Administrator</option>
+              <option>Principal-Headteacher</option>
+              <option>Examination Department</option>
+              <option>Bursar</option>
+              <option>Class Teacher</option>
+              <option>Teacher</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="status">Account Status *</label>
+            <select id="status" required>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="teacherId">Linked Teacher</label>
+            <select id="teacherId"><option value="">Not linked</option></select>
+            <div class="help-text">Link a teacher when required by the account role.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Teacher Information</label>
+            <div class="teacher-box">
+              <strong>👨‍🏫 Teacher Connection</strong>
+              <div id="teacherInfo" class="teacher-info"></div>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <div class="recovery-box">
+              <h4>🔐 Password Recovery</h4>
+              <p>New accounts require a recovery question and answer. When editing an existing account, leave both recovery fields blank to keep its current recovery information.</p>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="recoveryQuestion">Recovery Question <span id="recoveryRequired">*</span></label>
+                  <select id="recoveryQuestion">
+                    <option value="">Select a question</option>
+                    <option value="What is your first name?">What is your first name?</option>
+                    <option value="What is your mother's first name?">What is your mother's first name?</option>
+                    <option value="In which month were you born?">In which month were you born?</option>
+                    <option value="What is your favourite colour?">What is your favourite colour?</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="recoveryAnswer">Recovery Answer <span id="answerRequired">*</span></label>
+                  <input id="recoveryAnswer" type="password" autocomplete="off" placeholder="Enter recovery answer">
+                  <div class="help-text">For your security, avoid an answer others can easily guess.</div>
+                </div>
+              </div>
+              <div class="actions">
+                <button type="button" class="btn btn-secondary" id="recoveryToggle">Show/Hide Recovery Answer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="saveUserBtn">💾 Save User</button>
+          <button type="button" class="btn btn-secondary" id="clearBtn">↺ Clear Form</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-header">
+      <h3>User Records</h3>
+      <p>Search, edit, activate, deactivate, or delete accounts.</p>
+    </div>
+    <div class="card-body">
+      <div class="toolbar">
+        <div class="search-box"><input type="search" id="searchInput" placeholder="🔎 Search username, role, teacher..."></div>
+        <div class="filter-box">
+          <select id="roleFilter">
+            <option value="ALL">All Roles</option>
+            <option>System Administrator</option>
+            <option>Principal-Headteacher</option>
+            <option>Examination Department</option>
+            <option>Bursar</option>
+            <option>Class Teacher</option>
+            <option>Teacher</option>
+          </select>
+        </div>
+        <div class="filter-box">
+          <select id="statusFilter">
+            <option value="ALL">All Statuses</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>USERNAME</th><th>ROLE</th><th>LINKED TEACHER</th>
+              <th>INITIALS</th><th>RECOVERY</th><th>STATUS</th><th>CREATED</th><th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="deleteTitle">Confirm Delete</h3>
+      <button type="button" class="close-modal" id="closeModalBtn" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="deleteText">Are you sure you want to delete this user?</p>
+      <p>This removes the account from this browser's local user records.</p>
+      <div class="actions">
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete User</button>
+        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">GREEN HONEY BADGER SYSTEM © <span id="currentYear"></span></footer>
+
+<script src="script.js"></script>
+<script>
+"use strict";
+
+(function () {
+  const USERS_KEY = "systemUsers";
+  const TEACHERS_KEY = "teachers";
+
+  let users = [];
+  let teachers = [];
+  let pendingDeleteId = null;
+  let messageTimer = null;
+
+  const $ = id => document.getElementById(id);
+
+  function readArray(key) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch (error) {
+      console.error("Could not read " + key, error);
+      return [];
+    }
+  }
+
+  function loadData() {
+    users = readArray(USERS_KEY);
+    teachers = readArray(TEACHERS_KEY);
+  }
+
+  function persistUsers() {
+    try {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      return true;
+    } catch (error) {
+      console.error("Could not save users", error);
+      showMessage("Could not save the user records. Check browser storage.", "error");
+      return false;
+    }
+  }
+
+  function userId(user) {
+    return String(user.id ?? user.userId ?? user.username ?? "");
+  }
+
+  function username(user) {
+    return String(user.username ?? user.userName ?? "");
+  }
+
+  function statusOf(user) {
+    if (user.status !== undefined) {
+      return String(user.status).toLowerCase() === "inactive" ? "Inactive" : "Active";
+    }
+    return user.active === false ? "Inactive" : "Active";
+  }
+
+  function teacherId(teacher) {
+    return String(teacher.teacherId ?? teacher.id ?? teacher.tscNumber ?? teacher.tsc ?? "");
+  }
+
+  function teacherName(teacher) {
+    return String(teacher.name ?? teacher.teacherName ?? teacher.fullName ?? teacher.full_name ?? "Unnamed Teacher");
+  }
+
+  function initials(name) {
+    const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "";
+    return parts.length === 1
+      ? parts[0].slice(0, 2).toUpperCase()
+      : (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function teacherInitials(teacher) {
+    return teacher.initials || teacher.teacherInitials || initials(teacherName(teacher));
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    })[character]);
+  }
+
+  function showMessage(text, type) {
+    const box = $("message");
+    box.textContent = text;
+    box.className = "message show " + (type || "info");
+    clearTimeout(messageTimer);
+    messageTimer = setTimeout(() => { box.className = "message"; }, 6000);
+  }
+
+  function showCurrentUser() {
+    let current = null;
+
+    try {
+      if (typeof window.getCurrentGBHUser === "function") {
+        current = window.getCurrentGBHUser();
+      }
+    } catch (error) {
+      console.warn("Could not obtain current GBH user.", error);
+    }
+
+    if (!current) {
+      for (const key of ["gbhSession", "currentGBHUser", "currentUser"]) {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(key) || "null");
+          if (parsed) {
+            current = parsed.user || parsed.currentUser || parsed;
+            if (current.username || current.name) break;
+          }
+        } catch (error) {}
+      }
+    }
+
+    $("currentUserDisplay").textContent = current
+      ? (current.name || current.fullName || current.username || "System User") +
+        " • " + (current.role || "User")
+      : "GREEN HONEY BADGER SYSTEM";
+  }
+
+  function populateTeachers(selectedValue = "") {
+    const select = $("teacherId");
+    select.replaceChildren(new Option("Not linked", ""));
+
+    teachers.slice().sort((a, b) => teacherName(a).localeCompare(teacherName(b)))
+      .forEach(teacher => {
+        const id = teacherId(teacher);
+        if (!id) return;
+        const option = new Option(teacherName(teacher) + " — " + teacherInitials(teacher), id);
+        select.add(option);
+      });
+
+    select.value = String(selectedValue || "");
+    updateTeacherInfo();
+  }
+
+  function updateTeacherInfo() {
+    const selected = $("teacherId").value;
+    const teacher = teachers.find(item => teacherId(item) === selected);
+    const box = $("teacherInfo");
+
+    if (!teacher) {
+      box.style.display = "none";
+      box.textContent = "";
+      return;
+    }
+
+    box.style.display = "block";
+    box.innerHTML =
+      "<strong>" + escapeHTML(teacherName(teacher)) + "</strong><br>" +
+      "Initials: " + escapeHTML(teacherInitials(teacher)) + "<br>" +
+      "TSC: " + escapeHTML(teacher.tscNumber || teacher.tsc || "Not provided");
+  }
+
+  function updateRequirements() {
+    const editing = Boolean($("editUserId").value);
+    $("password").required = !editing;
+    $("passwordRequired").textContent = editing ? "" : "*";
+    $("recoveryQuestion").required = !editing;
+    $("recoveryAnswer").required = !editing;
+    $("recoveryRequired").textContent = editing ? "" : "*";
+    $("answerRequired").textContent = editing ? "" : "*";
+  }
+
+  function togglePassword() {
+    const input = $("password");
+    input.type = input.type === "password" ? "text" : "password";
+    $("passwordToggle").textContent = input.type === "password" ? "Show" : "Hide";
+  }
+
+  function toggleRecoveryAnswer() {
+    const input = $("recoveryAnswer");
+    input.type = input.type === "password" ? "text" : "password";
+  }
+
+  function saveUser(event) {
+    if (event) event.preventDefault();
+
+    const editId = $("editUserId").value;
+    const name = $("username").value.trim();
+    const password = $("password").value;
+    const role = $("role").value;
+    const status = $("status").value;
+    const selectedTeacher = $("teacherId").value;
+    const question = $("recoveryQuestion").value;
+    const answer = $("recoveryAnswer").value.trim();
+
+    if (!name || !role) {
+      showMessage("Enter a username and select a role.", "error");
+      return;
+    }
+
+    if (!editId && password.length < 4) {
+      showMessage("The password must contain at least 4 characters.", "error");
+      return;
+    }
+
+    if (editId && password && password.length < 4) {
+      showMessage("The new password must contain at least 4 characters.", "error");
+      return;
+    }
+
+    if (role === "Teacher" && !selectedTeacher) {
+      showMessage("Please link this Teacher account to a teacher record.", "error");
+      return;
+    }
+
+    if (!editId && (!question || !answer)) {
+      showMessage("Select a recovery question and enter its answer.", "error");
+      return;
+    }
+
+    if (Boolean(question) !== Boolean(answer)) {
+      showMessage("To change recovery details, provide both the question and answer.", "error");
+      return;
+    }
+
+    const duplicate = users.find(item =>
+      username(item).toLowerCase() === name.toLowerCase() &&
+      userId(item) !== String(editId)
+    );
+
+    if (duplicate) {
+      showMessage("That username already exists.", "error");
+      return;
+    }
+
+    const linkedTeacher = teachers.find(item => teacherId(item) === selectedTeacher);
+    const now = new Date().toISOString();
+
+    if (editId) {
+      const index = users.findIndex(item => userId(item) === String(editId));
+
+      if (index < 0) {
+        showMessage("The user record was not found. Refresh and try again.", "error");
+        return;
+      }
+
+      const existing = users[index];
+      const updated = {
+        ...existing,
+        username: name,
+        role,
+        status,
+        active: status === "Active",
+        teacherId: linkedTeacher ? teacherId(linkedTeacher) : "",
+        teacherName: linkedTeacher ? teacherName(linkedTeacher) : "",
+        teacherInitials: linkedTeacher ? teacherInitials(linkedTeacher) : "",
+        updatedAt: now
+      };
+
+      if (password) updated.password = password;
+
+      if (question && answer) {
+        updated.recoveryQuestion = question;
+        updated.recoveryAnswer = answer;
+      }
+
+      users[index] = updated;
+
+      if (!persistUsers()) return;
+      resetForm();
+      renderUsers();
+      updateStatistics();
+      showMessage("User account updated successfully.", "success");
+      return;
+    }
+
+    const newUser = {
+      id: "USR_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),
+      username: name,
+      password,
+      role,
+      status,
+      active: status === "Active",
+      teacherId: linkedTeacher ? teacherId(linkedTeacher) : "",
+      teacherName: linkedTeacher ? teacherName(linkedTeacher) : "",
+      teacherInitials: linkedTeacher ? teacherInitials(linkedTeacher) : "",
+      recoveryQuestion: question,
+      recoveryAnswer: answer,
+      createdAt: now,
+      updatedAt: now
+    };
+
+    users.push(newUser);
+
+    if (!persistUsers()) {
+      users.pop();
+      return;
+    }
+
+    resetForm();
+    renderUsers();
+    updateStatistics();
+    showMessage("User account created successfully.", "success");
+  }
+
+  function editUser(id) {
+    const user = users.find(item => userId(item) === String(id));
+
+    if (!user) {
+      showMessage("User not found. Refresh the page and try again.", "error");
+      return;
+    }
+
+    $("editUserId").value = userId(user);
+    $("username").value = username(user);
+    $("password").value = "";
+    $("role").value = user.role || "";
+    $("status").value = statusOf(user);
+    $("recoveryQuestion").value = user.recoveryQuestion || "";
+    $("recoveryAnswer").value = "";
+    $("recoveryAnswer").placeholder = user.recoveryAnswer
+      ? "Enter a new answer only if changing it"
+      : "Enter recovery answer";
+
+    populateTeachers(user.teacherId || "");
+    $("formTitle").textContent = "Edit User";
+    $("saveUserBtn").textContent = "💾 Update User";
+    $("passwordHelp").textContent = "Leave blank to keep the existing password.";
+    updateRequirements();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function toggleUser(id) {
+    const index = users.findIndex(item => userId(item) === String(id));
+
+    if (index < 0) {
+      showMessage("User record not found.", "error");
+      return;
+    }
+
+    const previous = statusOf(users[index]);
+    const next = previous === "Active" ? "Inactive" : "Active";
+
+    users[index] = {
+      ...users[index],
+      status: next,
+      active: next === "Active",
+      updatedAt: new Date().toISOString()
+    };
+
+    if (!persistUsers()) {
+      users[index].status = previous;
+      users[index].active = previous === "Active";
+      return;
+    }
+
+    renderUsers();
+    updateStatistics();
+    showMessage("Account " + (next === "Active" ? "activated." : "deactivated."), "success");
+  }
+
+  function openDeleteModal(id) {
+    const user = users.find(item => userId(item) === String(id));
+
+    if (!user) {
+      showMessage("User record not found.", "error");
+      return;
+    }
+
+    pendingDeleteId = String(id);
+    $("deleteText").textContent =
+      'Are you sure you want to delete the account "' + username(user) + '"?';
+    $("deleteModal").classList.add("show");
+  }
+
+  function closeDeleteModal() {
+    pendingDeleteId = null;
+    $("deleteModal").classList.remove("show");
+  }
+
+  function confirmDelete() {
+    if (pendingDeleteId === null) return;
+
+    const index = users.findIndex(item => userId(item) === pendingDeleteId);
+
+    if (index < 0) {
+      closeDeleteModal();
+      showMessage("User record not found.", "error");
+      return;
+    }
+
+    const deleted = users.splice(index, 1)[0];
+
+    if (!persistUsers()) {
+      users.splice(index, 0, deleted);
+      closeDeleteModal();
+      return;
+    }
+
+    closeDeleteModal();
+    renderUsers();
+    updateStatistics();
+    showMessage("User account deleted.", "success");
+  }
+
+  function resetForm() {
+    $("userForm").reset();
+    $("editUserId").value = "";
+    $("formTitle").textContent = "Create New User";
+    $("saveUserBtn").textContent = "💾 Save User";
+    $("password").type = "password";
+    $("passwordToggle").textContent = "Show";
+    $("recoveryAnswer").type = "password";
+    $("recoveryAnswer").placeholder = "Enter recovery answer";
+    $("passwordHelp").textContent = "Minimum 4 characters. When editing, leave blank to keep the current password.";
+    $("status").value = "Active";
+    populateTeachers("");
+    updateRequirements();
+  }
+
+  function formatDate(value) {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleDateString("en-KE", {
+      year: "numeric", month: "short", day: "numeric"
+    });
+  }
+
+  function renderUsers() {
+    const body = $("usersTableBody");
+    const search = $("searchInput").value.trim().toLowerCase();
+    const roleFilter = $("roleFilter").value;
+    const statusFilter = $("statusFilter").value;
+
+    const filtered = users.filter(user => {
+      const haystack = [
+        username(user), user.role, user.teacherName, user.teacherInitials
+      ].join(" ").toLowerCase();
+
+      return (!search || haystack.includes(search)) &&
+        (roleFilter === "ALL" || user.role === roleFilter) &&
+        (statusFilter === "ALL" || statusOf(user) === statusFilter);
+    });
+
+    body.replaceChildren();
+
+    if (!filtered.length) {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+      cell.colSpan = 9;
+      cell.className = "empty";
+      cell.textContent = users.length
+        ? "No users match your search or filters."
+        : "No user records found. Create a user above.";
+      row.appendChild(cell);
+      body.appendChild(row);
+      return;
+    }
+
+    filtered.forEach((user, index) => {
+      const row = document.createElement("tr");
+
+      function cell(text) {
+        const td = document.createElement("td");
+        td.textContent = String(text ?? "");
+        row.appendChild(td);
+        return td;
+      }
+
+      cell(index + 1);
+
+      const nameCell = cell("");
+      const strong = document.createElement("strong");
+      strong.textContent = username(user) || "—";
+      nameCell.appendChild(strong);
+
+      const roleCell = cell("");
+      const roleBadge = document.createElement("span");
+      roleBadge.className = "role";
+      roleBadge.textContent = user.role || "—";
+      roleCell.appendChild(roleBadge);
+
+      const linkedTeacher = teachers.find(
+        item => teacherId(item) === String(user.teacherId || "")
+      );
+
+      cell(linkedTeacher ? teacherName(linkedTeacher) : (user.teacherName || "—"));
+      cell(linkedTeacher ? teacherInitials(linkedTeacher) : (user.teacherInitials || "—"));
+      cell(user.recoveryQuestion && user.recoveryAnswer ? "Configured" : "Not set");
+
+      const status = statusOf(user);
+      const statusCell = cell("");
+      const badge = document.createElement("span");
+      badge.className = "status " + status.toLowerCase();
+      badge.textContent = status;
+      statusCell.appendChild(badge);
+
+      cell(formatDate(user.createdAt));
+
+      const actionCell = cell("");
+      const container = document.createElement("div");
+      container.className = "table-actions";
+
+      function actionButton(label, cssClass, handler) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "table-btn " + cssClass;
+        button.textContent = label;
+
+        // Bind the real record ID directly. No inline onclick or quote parsing.
+        button.addEventListener("click", function () {
+          handler(userId(user));
+        });
+
+        container.appendChild(button);
+      }
+
+      actionButton("Edit", "edit-btn", editUser);
+      actionButton(status === "Active" ? "Deactivate" : "Activate", "toggle-btn", toggleUser);
+      actionButton("Delete", "delete-btn", openDeleteModal);
+
+      actionCell.appendChild(container);
+      body.appendChild(row);
+    });
+  }
+
+  function updateStatistics() {
+    $("totalUsers").textContent = users.length;
+    $("activeUsers").textContent = users.filter(user => statusOf(user) === "Active").length;
+    $("teacherUsers").textContent = users.filter(user => user.role === "Teacher").length;
+    $("adminUsers").textContent = users.filter(user =>
+      user.role === "System Administrator" ||
+      user.role === "Principal-Headteacher"
+    ).length;
+  }
+
+  function navigate(page) {
+    window.location.href = page;
+  }
+
+  function logout() {
+    // Prefer the application's existing logout function if available.
+    try {
+      if (typeof window.logoutGBHUser === "function") {
+        window.logoutGBHUser();
+        return;
+      }
+      if (typeof window.logout === "function") {
+        window.logout();
+        return;
+      }
+    } catch (error) {
+      console.error("Existing logout handler failed:", error);
+    }
+
+    // Do not erase user accounts or other application data.
+    localStorage.removeItem("gbhSession");
+    window.location.href = "login.html";
+  }
+
+  function bindEvents() {
+    $("userForm").addEventListener("submit", saveUser);
+    $("clearBtn").addEventListener("click", resetForm);
+    $("passwordToggle").addEventListener("click", togglePassword);
+    $("recoveryToggle").addEventListener("click", toggleRecoveryAnswer);
+    $("teacherId").addEventListener("change", updateTeacherInfo);
+    $("role").addEventListener("change", updateRequirements);
+    $("searchInput").addEventListener("input", renderUsers);
+    $("roleFilter").addEventListener("change", renderUsers);
+    $("statusFilter").addEventListener("change", renderUsers);
+
+    $("closeModalBtn").addEventListener("click", closeDeleteModal);
+    $("cancelDeleteBtn").addEventListener("click", closeDeleteModal);
+    $("confirmDeleteBtn").addEventListener("click", confirmDelete);
+    $("logoutBtn").addEventListener("click", logout);
+
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", () => navigate(button.dataset.page));
+    });
+
+    $("deleteModal").addEventListener("click", event => {
+      if (event.target === $("deleteModal")) closeDeleteModal();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeDeleteModal();
+    });
+  }
+
+  function init() {
+    $("currentYear").textContent = new Date().getFullYear();
+    loadData();
+    showCurrentUser();
+    bindEvents();
+    populateTeachers();
+    updateRequirements();
+    renderUsers();
+    updateStatistics();
+  }
+
+  // Expose handlers for debugging and compatibility with existing page code.
+  window.GBHUsersPage = {
+    reload: function () {
+      loadData();
+      populateTeachers($("teacherId").value);
+      renderUsers();
+      updateStatistics();
+    },
+    editUser,
+    toggleUser,
+    openDeleteModal,
+    closeDeleteModal,
+    resetForm
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

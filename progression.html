@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GREEN HONEY BADGER SYSTEM - Learner Progression</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f1f5f9;
+    color:#172033;
+}
+
+.header{
+    background:linear-gradient(135deg,#064e3b,#047857);
+    color:white;
+    padding:22px 20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.18);
+}
+
+.header h1{
+    margin:0;
+    font-size:24px;
+}
+
+.header p{
+    margin:7px 0 0;
+    opacity:.9;
+    font-size:14px;
+}
+
+.container{
+    max-width:1250px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h2{
+    margin-top:0;
+    color:#065f46;
+    font-size:19px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:15px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+select,
+input{
+    width:100%;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    background:white;
+    font-size:14px;
+}
+
+select:focus,
+input:focus{
+    outline:none;
+    border-color:#059669;
+    box-shadow:0 0 0 2px rgba(5,150,105,.12);
+}
+
+.selection-bar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:12px;
+    margin-top:18px;
+    padding:14px;
+    background:#ecfdf5;
+    border:1px solid #a7f3d0;
+    border-radius:10px;
+}
+
+.select-all{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.select-all input{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+
+.counter{
+    margin-left:auto;
+    font-weight:bold;
+    color:#065f46;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+th{
+    background:#064e3b;
+    color:white;
+    padding:12px 9px;
+    text-align:left;
+    font-size:13px;
+}
+
+td{
+    padding:11px 9px;
+    border-bottom:1px solid #e2e8f0;
+    font-size:14px;
+}
+
+tr:hover td{
+    background:#f8fafc;
+}
+
+.learner-check{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.badge-progress{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge-repeat{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.badge-none{
+    background:#e2e8f0;
+    color:#475569;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    border:none;
+    border-radius:8px;
+    padding:11px 17px;
+    font-size:13px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.btn-progress{
+    background:#059669;
+    color:white;
+}
+
+.btn-repeat{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-reverse{
+    background:#7c3aed;
+    color:white;
+}
+
+.btn-clear{
+    background:#64748b;
+    color:white;
+}
+
+.btn-select{
+    background:#0f766e;
+    color:white;
+}
+
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
+
+.info{
+    background:#eff6ff;
+    border-left:4px solid #2563eb;
+    padding:13px;
+    border-radius:6px;
+    margin-top:15px;
+    font-size:13px;
+}
+
+.warning{
+    background:#fff7ed;
+    border-left:4px solid #ea580c;
+    padding:13px;
+    border-radius:6px;
+    margin-top:15px;
+    font-size:13px;
+}
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:20px;
+}
+
+.modal{
+    background:white;
+    width:100%;
+    max-width:500px;
+    border-radius:14px;
+    padding:24px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.modal h3{
+    margin-top:0;
+    color:#064e3b;
+}
+
+.modal p{
+    line-height:1.6;
+    font-size:14px;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#064e3b;
+    color:white;
+    padding:14px 18px;
+    border-radius:9px;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+    display:none;
+    z-index:10000;
+    max-width:350px;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+    .header h1{
+        font-size:20px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .counter{
+        width:100%;
+        margin-left:0;
+    }
+
+    .actions button{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>GREEN HONEY BADGER SYSTEM</h1>
+    <p>LEARNER PROGRESSION & PROMOTION</p>
+</div>
+
+<div class="container">
+
+    <!-- FILTERS -->
+    <div class="card">
+
+        <h2>📋 Select Academic Context</h2>
+
+        <div class="filters">
+
+            <div>
+                <label for="academicYear">Academic Year</label>
+                <select id="academicYear">
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="term">Term</label>
+                <select id="term">
+                    <option value="TERM 1">TERM 1</option>
+                    <option value="TERM 2">TERM 2</option>
+                    <option value="TERM 3">TERM 3</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="grade">Current Grade</label>
+                <select id="grade">
+                    <option value="">ALL GRADES</option>
+                    <option value="PLAY GROUP">PLAY GROUP</option>
+                    <option value="PP1">PP1</option>
+                    <option value="PP2">PP2</option>
+                    <option value="GRADE 1">GRADE 1</option>
+                    <option value="GRADE 2">GRADE 2</option>
+                    <option value="GRADE 3">GRADE 3</option>
+                    <option value="GRADE 4">GRADE 4</option>
+                    <option value="GRADE 5">GRADE 5</option>
+                    <option value="GRADE 6">GRADE 6</option>
+                    <option value="GRADE 7">GRADE 7</option>
+                    <option value="GRADE 8">GRADE 8</option>
+                    <option value="GRADE 9">GRADE 9</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="stream">Stream</label>
+                <select id="stream">
+                    <option value="">ALL STREAMS</option>
+                    <option value="BLUE">BLUE</option>
+                    <option value="GREEN">GREEN</option>
+                    <option value="RED">RED</option>
+                    <option value="YELLOW">YELLOW</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="info">
+            Select the academic year, term, grade and stream. The system will automatically display
+            learners already stored in the GBH Students module.
+        </div>
+
+    </div>
+
+
+    <!-- LEARNERS -->
+    <div class="card">
+
+        <h2>👨‍🎓 Learners</h2>
+
+        <div class="selection-bar">
+
+            <label class="select-all">
+                <input type="checkbox" id="selectAll">
+                SELECT ALL LEARNERS
+            </label>
+
+            <button class="btn-select" id="selectVisible">
+                SELECT DISPLAYED
+            </button>
+
+            <button class="btn-clear" id="clearSelection">
+                CLEAR SELECTION
+            </button>
+
+            <div class="counter">
+                Selected: <span id="selectedCount">0</span>
+            </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>✓</th>
+                        <th>#</th>
+                        <th>Admission No.</th>
+                        <th>Learner Name</th>
+                        <th>Gender</th>
+                        <th>Grade</th>
+                        <th>Stream</th>
+                        <th>Current Decision</th>
+                    </tr>
+                </thead>
+
+                <tbody id="learnerTable">
+
+                    <tr>
+                        <td colspan="8" class="empty">
+                            Select an academic context to display learners.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="actions">
+
+            <button class="btn-progress" id="progressBtn">
+                🟢 PROGRESS SELECTED
+            </button>
+
+            <button class="btn-repeat" id="repeatBtn">
+                🔴 REPEAT SELECTED
+            </button>
+
+            <button class="btn-reverse" id="reverseBtn">
+                ↩️ REVERSE LAST PROGRESSION
+            </button>
+
+        </div>
+
+        <div class="warning">
+            ⚠️ Progression changes learner academic placement. Always verify the selected
+            learners before confirming the operation.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CONFIRMATION MODAL -->
+
+<div class="modal-overlay" id="modalOverlay">
+
+    <div class="modal">
+
+        <h3 id="modalTitle">Confirm Operation</h3>
+
+        <p id="modalMessage"></p>
+
+        <div class="modal-actions">
+
+            <button class="btn-clear" id="cancelModal">
+                CANCEL
+            </button>
+
+            <button class="btn-progress" id="confirmModal">
+                CONFIRM
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   GREEN HONEY BADGER SYSTEM
+   LEARNER PROGRESSION MODULE
+
+   Existing student storage:
+   localStorage key = students
+
+   Progression history:
+   localStorage key = gbhProgressionHistory
+========================================================= */
+
+
+const STORAGE_KEY = "students";
+const HISTORY_KEY = "gbhProgressionHistory";
+
+
+const gradeOrder = [
+    "PLAY GROUP",
+    "PP1",
+    "PP2",
+    "GRADE 1",
+    "GRADE 2",
+    "GRADE 3",
+    "GRADE 4",
+    "GRADE 5",
+    "GRADE 6",
+    "GRADE 7",
+    "GRADE 8",
+    "GRADE 9"
+];
+
+
+let students = [];
+let visibleStudents = [];
+let pendingAction = null;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const academicYear = document.getElementById("academicYear");
+const term = document.getElementById("term");
+const grade = document.getElementById("grade");
+const stream = document.getElementById("stream");
+
+const selectAll = document.getElementById("selectAll");
+const selectVisible = document.getElementById("selectVisible");
+const clearSelection = document.getElementById("clearSelection");
+
+const learnerTable = document.getElementById("learnerTable");
+const selectedCount = document.getElementById("selectedCount");
+
+const progressBtn = document.getElementById("progressBtn");
+const repeatBtn = document.getElementById("repeatBtn");
+const reverseBtn = document.getElementById("reverseBtn");
+
+const modalOverlay = document.getElementById("modalOverlay");
+const modalTitle = document.getElementById("modalTitle");
+const modalMessage = document.getElementById("modalMessage");
+const cancelModal = document.getElementById("cancelModal");
+const confirmModal = document.getElementById("confirmModal");
+
+const toast = document.getElementById("toast");
+
+
+/* =========================================================
+   LOAD STUDENTS
+========================================================= */
+
+function loadStudents(){
+
+    try{
+
+        const raw = localStorage.getItem(STORAGE_KEY);
+
+        if(!raw){
+            students = [];
+            return;
+        }
+
+        const parsed = JSON.parse(raw);
+
+        if(Array.isArray(parsed)){
+            students = parsed;
+        }else{
+            students = [];
+        }
+
+    }catch(error){
+
+        console.error("Unable to load students:", error);
+
+        students = [];
+    }
+}
+
+
+/* =========================================================
+   SAVE STUDENTS
+========================================================= */
+
+function saveStudents(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(students)
+    );
+}
+
+
+/* =========================================================
+   NORMALIZE STUDENT DATA
+========================================================= */
+
+function getAdmission(student){
+
+    return (
+        student.admissionNumber ||
+        student.adm ||
+        student.admNumber ||
+        student.admission ||
+        ""
+    );
+}
+
+
+function getName(student){
+
+    return (
+        student.studentName ||
+        student.name ||
+        student.learnerName ||
+        ""
+    );
+}
+
+
+function getGender(student){
+
+    return (
+        student.gender ||
+        ""
+    );
+}
+
+
+function getGrade(student){
+
+    return (
+        student.grade ||
+        ""
+    ).toString().trim().toUpperCase();
+}
+
+
+function getStream(student){
+
+    return (
+        student.stream ||
+        ""
+    ).toString().trim().toUpperCase();
+}
+
+
+/* =========================================================
+   FILTER LEARNERS
+========================================================= */
+
+function filterLearners(){
+
+    const selectedGrade = grade.value;
+    const selectedStream = stream.value;
+
+    visibleStudents = students.filter(student => {
+
+        const studentGrade = getGrade(student);
+        const studentStream = getStream(student);
+
+        const gradeMatch =
+            !selectedGrade ||
+            studentGrade === selectedGrade;
+
+        const streamMatch =
+            !selectedStream ||
+            studentStream === selectedStream;
+
+        return gradeMatch && streamMatch;
+    });
+
+    renderLearners();
+}
+
+
+/* =========================================================
+   RENDER LEARNERS
+========================================================= */
+
+function renderLearners(){
+
+    learnerTable.innerHTML = "";
+
+    selectAll.checked = false;
+
+    updateSelectedCount();
+
+    if(visibleStudents.length === 0){
+
+        learnerTable.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty">
+                    No learners found for the selected criteria.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    visibleStudents.forEach((student,index) => {
+
+        const actualIndex = students.indexOf(student);
+
+        const decision =
+            student.gbhProgressionDecision || "";
+
+
+        let badge = `
+            <span class="badge badge-none">
+                NOT PROCESSED
+            </span>
+        `;
+
+
+        if(decision === "PROGRESS"){
+
+            badge = `
+                <span class="badge badge-progress">
+                    PROGRESS
+                </span>
+            `;
+
+        }else if(decision === "REPEAT"){
+
+            badge = `
+                <span class="badge badge-repeat">
+                    REPEAT
+                </span>
+            `;
+        }
+
+
+        const row = document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                <input
+                    type="checkbox"
+                    class="learner-check"
+                    data-index="${actualIndex}"
+                >
+            </td>
+
+            <td>${index + 1}</td>
+
+            <td>${escapeHtml(getAdmission(student))}</td>
+
+            <td>
+                <strong>
+                    ${escapeHtml(getName(student))}
+                </strong>
+            </td>
+
+            <td>${escapeHtml(getGender(student))}</td>
+
+            <td>${escapeHtml(getGrade(student))}</td>
+
+            <td>${escapeHtml(getStream(student))}</td>
+
+            <td>${badge}</td>
+        `;
+
+
+        learnerTable.appendChild(row);
+
+    });
+
+
+    document
+        .querySelectorAll(".learner-check")
+        .forEach(check => {
+
+            check.addEventListener(
+                "change",
+                updateSelectedCount
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   GET SELECTED STUDENT INDEXES
+========================================================= */
+
+function getSelectedIndexes(){
+
+    return Array.from(
+        document.querySelectorAll(".learner-check:checked")
+    ).map(check =>
+        Number(check.dataset.index)
+    );
+}
+
+
+/* =========================================================
+   UPDATE SELECTED COUNT
+========================================================= */
+
+function updateSelectedCount(){
+
+    const selected =
+        document.querySelectorAll(
+            ".learner-check:checked"
+        ).length;
+
+    selectedCount.textContent = selected;
+
+    const total =
+        document.querySelectorAll(
+            ".learner-check"
+        ).length;
+
+    selectAll.checked =
+        total > 0 &&
+        selected === total;
+}
+
+
+/* =========================================================
+   SELECT ALL
+========================================================= */
+
+selectAll.addEventListener("change", function(){
+
+    document
+        .querySelectorAll(".learner-check")
+        .forEach(check => {
+
+            check.checked = selectAll.checked;
+
+        });
+
+    updateSelectedCount();
+
+});
+
+
+/* =========================================================
+   SELECT DISPLAYED
+========================================================= */
+
+selectVisible.addEventListener("click", function(){
+
+    document
+        .querySelectorAll(".learner-check")
+        .forEach(check => {
+
+            check.checked = true;
+
+        });
+
+    updateSelectedCount();
+
+});
+
+
+/* =========================================================
+   CLEAR SELECTION
+========================================================= */
+
+clearSelection.addEventListener("click", function(){
+
+    document
+        .querySelectorAll(".learner-check")
+        .forEach(check => {
+
+            check.checked = false;
+
+        });
+
+    selectAll.checked = false;
+
+    updateSelectedCount();
+
+});
+
+
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+academicYear.addEventListener(
+    "change",
+    filterLearners
+);
+
+term.addEventListener(
+    "change",
+    filterLearners
+);
+
+grade.addEventListener(
+    "change",
+    filterLearners
+);
+
+stream.addEventListener(
+    "change",
+    filterLearners
+);
+
+
+/* =========================================================
+   NEXT GRADE
+========================================================= */
+
+function getNextGrade(currentGrade){
+
+    const index =
+        gradeOrder.indexOf(currentGrade);
+
+    if(index === -1){
+        return null;
+    }
+
+    if(index >= gradeOrder.length - 1){
+        return "COMPLETED";
+    }
+
+    return gradeOrder[index + 1];
+}
+
+
+/* =========================================================
+   PREVIOUS GRADE
+========================================================= */
+
+function getPreviousGrade(currentGrade){
+
+    const index =
+        gradeOrder.indexOf(currentGrade);
+
+    if(index <= 0){
+        return null;
+    }
+
+    return gradeOrder[index - 1];
+}
+
+
+/* =========================================================
+   PROGRESS SELECTED
+========================================================= */
+
+progressBtn.addEventListener("click", function(){
+
+    const indexes = getSelectedIndexes();
+
+    if(indexes.length === 0){
+
+        showToast(
+            "Please select at least one learner."
+        );
+
+        return;
+    }
+
+
+    const selectedLearners =
+        indexes.map(index => students[index]);
+
+
+    const currentGrades =
+        [...new Set(
+            selectedLearners.map(
+                student => getGrade(student)
+            )
+        )];
+
+
+    let destinationText = "";
+
+
+    if(currentGrades.length === 1){
+
+        const next =
+            getNextGrade(currentGrades[0]);
+
+        if(next === "COMPLETED"){
+
+            destinationText =
+                "completion after Grade 9";
+
+        }else{
+
+            destinationText =
+                `${currentGrades[0]} → ${next}`;
+        }
+
+    }else{
+
+        destinationText =
+            "the next appropriate grade";
+    }
+
+
+    pendingAction = {
+        type:"PROGRESS",
+        indexes:indexes
+    };
+
+
+    modalTitle.textContent =
+        "Confirm Learner Progression";
+
+
+    modalMessage.innerHTML = `
+        You are about to <strong>PROGRESS</strong>
+        <strong>${indexes.length}</strong> selected learner(s).
+
+        <br><br>
+
+        Destination:
+        <strong>${destinationText}</strong>
+
+        <br><br>
+
+        The learners' previous academic information
+        will be preserved in the progression history.
+    `;
+
+
+    confirmModal.className =
+        "btn-progress";
+
+    confirmModal.textContent =
+        "CONFIRM PROGRESSION";
+
+
+    modalOverlay.style.display = "flex";
+
+});
+
+
+/* =========================================================
+   REPEAT SELECTED
+========================================================= */
+
+repeatBtn.addEventListener("click", function(){
+
+    const indexes = getSelectedIndexes();
+
+    if(indexes.length === 0){
+
+        showToast(
+            "Please select at least one learner."
+        );
+
+        return;
+    }
+
+
+    pendingAction = {
+        type:"REPEAT",
+        indexes:indexes
+    };
+
+
+    modalTitle.textContent =
+        "Confirm Learner Repetition";
+
+
+    modalMessage.innerHTML = `
+        You are about to mark
+        <strong>${indexes.length}</strong>
+        selected learner(s) as
+
+        <strong>REPEAT</strong>.
+
+        <br><br>
+
+        Their current grade will remain unchanged,
+        but the repetition decision will be recorded.
+    `;
+
+
+    confirmModal.className =
+        "btn-repeat";
+
+    confirmModal.textContent =
+        "CONFIRM REPEAT";
+
+
+    modalOverlay.style.display = "flex";
+
+});
+
+
+/* =========================================================
+   CONFIRM MODAL
+========================================================= */
+
+confirmModal.addEventListener("click", function(){
+
+    if(!pendingAction){
+        return;
+    }
+
+
+    if(pendingAction.type === "PROGRESS"){
+
+        processProgress(
+            pendingAction.indexes
+        );
+
+    }
+
+
+    if(pendingAction.type === "REPEAT"){
+
+        processRepeat(
+            pendingAction.indexes
+        );
+
+    }
+
+
+    pendingAction = null;
+
+    closeModal();
+
+});
+
+
+/* =========================================================
+   PROCESS PROGRESSION
+========================================================= */
+
+function processProgress(indexes){
+
+    const year =
+        Number(academicYear.value);
+
+    const nextYear =
+        year + 1;
+
+
+    const selectedStudents = [];
+
+
+    indexes.forEach(index => {
+
+        const student =
+            students[index];
+
+        if(!student){
+            return;
+        }
+
+
+        const currentGrade =
+            getGrade(student);
+
+        const nextGrade =
+            getNextGrade(currentGrade);
+
+
+        if(!nextGrade){
+            return;
+        }
+
+
+        const historyRecord = {
+
+            id:
+                "PRG-" +
+                Date.now() +
+                "-" +
+                index,
+
+            timestamp:
+                new Date().toISOString(),
+
+            academicYear:
+                String(year),
+
+            term:
+                term.value,
+
+            studentId:
+                student.studentId ||
+                student.id ||
+                getAdmission(student),
+
+            admissionNumber:
+                getAdmission(student),
+
+            learnerName:
+                getName(student),
+
+            previousGrade:
+                currentGrade,
+
+            newGrade:
+                nextGrade,
+
+            previousYear:
+                String(year),
+
+            newYear:
+                String(nextYear),
+
+            previousStream:
+                getStream(student),
+
+            action:
+                "PROGRESS"
+        };
+
+
+        saveHistory(historyRecord);
+
+
+        student.previousGrade =
+            currentGrade;
+
+        student.previousAcademicYear =
+            String(year);
+
+        student.previousStream =
+            getStream(student);
+
+        student.grade =
+            nextGrade;
+
+        student.academicYear =
+            String(nextYear);
+
+        student.gbhProgressionDecision =
+            "PROGRESS";
+
+        student.gbhLastProgression =
+            historyRecord.timestamp;
+
+
+        selectedStudents.push(
+            getName(student)
+        );
+
+    });
+
+
+    saveStudents();
+
+
+    showToast(
+        `${selectedStudents.length} learner(s) successfully progressed.`
+    );
+
+
+    filterLearners();
+
+}
+
+
+/* =========================================================
+   PROCESS REPEAT
+========================================================= */
+
+function processRepeat(indexes){
+
+    const year =
+        Number(academicYear.value);
+
+
+    const selectedStudents = [];
+
+
+    indexes.forEach(index => {
+
+        const student =
+            students[index];
+
+        if(!student){
+            return;
+        }
+
+
+        const currentGrade =
+            getGrade(student);
+
+
+        const historyRecord = {
+
+            id:
+                "REP-" +
+                Date.now() +
+                "-" +
+                index,
+
+            timestamp:
+                new Date().toISOString(),
+
+            academicYear:
+                String(year),
+
+            term:
+                term.value,
+
+            studentId:
+                student.studentId ||
+                student.id ||
+                getAdmission(student),
+
+            admissionNumber:
+                getAdmission(student),
+
+            learnerName:
+                getName(student),
+
+            previousGrade:
+                currentGrade,
+
+            newGrade:
+                currentGrade,
+
+            previousYear:
+                String(year),
+
+            newYear:
+                String(year + 1),
+
+            previousStream:
+                getStream(student),
+
+            action:
+                "REPEAT"
+        };
+
+
+        saveHistory(historyRecord);
+
+
+        student.previousGrade =
+            currentGrade;
+
+        student.previousAcademicYear =
+            String(year);
+
+        student.previousStream =
+            getStream(student);
+
+        student.gbhProgressionDecision =
+            "REPEAT";
+
+        student.gbhLastProgression =
+            historyRecord.timestamp;
+
+
+        selectedStudents.push(
+            getName(student)
+        );
+
+    });
+
+
+    saveStudents();
+
+
+    showToast(
+        `${selectedStudents.length} learner(s) marked as repeating.`
+    );
+
+
+    filterLearners();
+
+}
+
+
+/* =========================================================
+   SAVE HISTORY
+========================================================= */
+
+function saveHistory(record){
+
+    let history = [];
+
+
+    try{
+
+        const raw =
+            localStorage.getItem(HISTORY_KEY);
+
+        if(raw){
+
+            const parsed =
+                JSON.parse(raw);
+
+            if(Array.isArray(parsed)){
+                history = parsed;
+            }
+
+        }
+
+    }catch(error){
+
+        history = [];
+
+    }
+
+
+    history.push(record);
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(history)
+    );
+
+}
+
+
+/* =========================================================
+   REVERSE LAST PROGRESSION
+========================================================= */
+
+reverseBtn.addEventListener("click", function(){
+
+    let history = [];
+
+
+    try{
+
+        const raw =
+            localStorage.getItem(HISTORY_KEY);
+
+        if(raw){
+            history = JSON.parse(raw);
+        }
+
+    }catch(error){
+
+        history = [];
+    }
+
+
+    if(!Array.isArray(history) ||
+       history.length === 0){
+
+        showToast(
+            "There is no progression history to reverse."
+        );
+
+        return;
+    }
+
+
+    const lastRecord =
+        history[history.length - 1];
+
+
+    pendingAction = {
+        type:"REVERSE",
+        record:lastRecord
+    };
+
+
+    modalTitle.textContent =
+        "Reverse Last Progression";
+
+
+    modalMessage.innerHTML = `
+        Reverse the most recent operation?
+
+        <br><br>
+
+        <strong>Learner:</strong>
+        ${escapeHtml(lastRecord.learnerName)}
+
+        <br>
+
+        <strong>Action:</strong>
+        ${escapeHtml(lastRecord.action)}
+
+        <br>
+
+        <strong>Grade:</strong>
+        ${escapeHtml(lastRecord.previousGrade)}
+        →
+        ${escapeHtml(lastRecord.newGrade)}
+
+        <br><br>
+
+        This will restore the learner's previous grade.
+    `;
+
+
+    confirmModal.className =
+        "btn-reverse";
+
+    confirmModal.textContent =
+        "CONFIRM REVERSE";
+
+
+    modalOverlay.style.display = "flex";
+
+});
+
+
+/* =========================================================
+   PROCESS REVERSE
+========================================================= */
+
+function processReverse(record){
+
+    let student = null;
+
+
+    if(record.studentId){
+
+        student =
+            students.find(
+                s =>
+                    String(
+                        s.studentId ||
+                        s.id ||
+                        getAdmission(s)
+                    ) ===
+                    String(record.studentId)
+            );
+
+    }
+
+
+    if(!student){
+
+        student =
+            students.find(
+                s =>
+                    getAdmission(s) ===
+                    record.admissionNumber
+            );
+
+    }
+
+
+    if(!student){
+
+        showToast(
+            "The learner could not be found."
+        );
+
+        return;
+    }
+
+
+    student.grade =
+        record.previousGrade;
+
+    student.academicYear =
+        record.previousYear;
+
+    student.stream =
+        record.previousStream;
+
+    student.gbhProgressionDecision =
+        "";
+
+
+    saveStudents();
+
+
+    let history = [];
+
+
+    try{
+
+        const raw =
+            localStorage.getItem(HISTORY_KEY);
+
+        if(raw){
+            history = JSON.parse(raw);
+        }
+
+    }catch(error){
+
+        history = [];
+    }
+
+
+    history.pop();
+
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(history)
+    );
+
+
+    showToast(
+        `Progression reversed for ${getName(student)}.`
+    );
+
+
+    filterLearners();
+
+}
+
+
+/* =========================================================
+   HANDLE REVERSE CONFIRMATION
+========================================================= */
+
+const originalConfirm =
+    confirmModal.onclick;
+
+
+confirmModal.addEventListener(
+    "click",
+    function(){
+
+        if(
+            pendingAction &&
+            pendingAction.type === "REVERSE"
+        ){
+
+            processReverse(
+                pendingAction.record
+            );
+
+            pendingAction = null;
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+cancelModal.addEventListener(
+    "click",
+    closeModal
+);
+
+
+modalOverlay.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === modalOverlay){
+            closeModal();
+        }
+
+    }
+);
+
+
+function closeModal(){
+
+    modalOverlay.style.display = "none";
+
+    pendingAction = null;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    toast.textContent = message;
+
+    toast.style.display = "block";
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.style.display = "none";
+
+            },
+            3500
+        );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadStudents();
+
+filterLearners();
+
+</script>
+
+</body>
+</html>
